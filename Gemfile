@@ -16,6 +16,9 @@ gem 'simple_form'
 gem 'unicorn'
 gem 'unicorn-rails'
 gem 'upmin-admin'
+
+gem 'twilio-ruby'
+
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller', :platforms=>[:mri_21]
