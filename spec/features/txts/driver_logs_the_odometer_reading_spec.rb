@@ -5,6 +5,10 @@ feature 'Driver logs the odometer reading' do
     Rails.application
   end
 
+  before do
+    Car.create
+  end
+
   scenario 'They receive a reply that the reading has been saved' do
     GatewayRepository.gateway = double
 
