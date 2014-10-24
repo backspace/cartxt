@@ -15,6 +15,6 @@ feature 'Driver checks the status' do
     GatewayRepository.gateway = double
 
     expect(GatewayRepository.gateway).to receive(:deliver).with(from: 'Bot', to: 'Driver', body: "The odometer reading is #{reading}")
-    post '/txts', From: 'Driver', To: 'Bot', Body: 'status'
+    send_txt 'status'
   end
 end
