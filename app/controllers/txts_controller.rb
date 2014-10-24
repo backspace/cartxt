@@ -8,6 +8,6 @@ class TxtsController < ApplicationController
 
   private
   def txt
-    OpenStruct.new(from: params[:From], to: params[:To], body: params[:Body])
+    OpenStruct.new(from: params[:From], to: params[:To], body: params[:Body].strip)
   end
 end
