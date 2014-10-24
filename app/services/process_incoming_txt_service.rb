@@ -4,6 +4,10 @@ class ProcessIncomingTxtService
   end
 
   def process
-    GatewayRepository.gateway.deliver from: @txt.to, to: @txt.from, body: "Set odometer reading to #{@txt.body}"
+    if @txt.body == 'status'
+      GatewayRepository.gateway.deliver from: @txt.to, to: @txt.from, body: "The odometer reading is #{Car.first.odometer_reading}"
+    else
+      GatewayRepository.gateway.deliver from: @txt.to, to: @txt.from, body: "Set odometer reading to #{@txt.body}"
+    end
   end
 end
