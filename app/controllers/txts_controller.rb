@@ -2,7 +2,12 @@ class TxtsController < ApplicationController
   skip_before_filter :verify_authenticity_token, only: :create
 
   def create
-    GatewayRepository.gateway.deliver from: params[:To], to: params[:From], body: "Set odometer reading to #{params[:Body]}"
+    ProcessIncomingTxtService.new(txt).process
     render nothing: true
+  end
+
+  private
+  def txt
+    OpenStruct.new(from: params[:From], to: params[:To], body: params[:Body])
   end
 end
