@@ -1,0 +1,13 @@
+%table
+  %thead
+    %tr
+      %th Date
+      %th From
+      %th To
+      %th Body
+  -@txts.each do |txt|
+    %tr
+      %td=txt.created_at
+      %td=txt.from
+      %td=txt.to
+      %td=txt.body
