@@ -1,0 +1,2 @@
+class Response < OpenStruct
+end

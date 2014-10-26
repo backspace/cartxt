@@ -4,14 +4,24 @@ class ProcessIncomingTxtService
   end
 
   def process
-    if @txt.body == 'status'
-      GatewayRepository.gateway.deliver from: @txt.to, to: @txt.from, body: "The odometer reading is #{Car.first.odometer_reading}"
-    else
-      car = Car.first
-      car.odometer_reading = @txt.body
-      car.save
+    parser = Commands::Parser.new(@txt)
+    command = parser.parse
 
-      GatewayRepository.gateway.deliver from: @txt.to, to: @txt.from, body: "Set odometer reading to #{car.odometer_reading}"
+    command.execute
+
+    command.responses.each do |response|
+      GatewayRepository.gateway.deliver from: number_for(response.from), to: number_for(response.to), body: response.body
+    end
+  end
+
+  private
+  def number_for(participant)
+    # FIXME hack because cars don't yet have a number
+
+    if participant.is_a? Car
+      @txt.to
+    else
+      participant.number
     end
   end
 end

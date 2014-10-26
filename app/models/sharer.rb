@@ -1,0 +1,2 @@
+class Sharer < OpenStruct
+end
