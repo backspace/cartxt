@@ -7,6 +7,8 @@ module Commands
     def parse
       if @txt.body == 'status'
         Status.new(car: Car.first, sharer: Sharer.new(number: @txt.from))
+      elsif @txt.body == 'borrow'
+        Borrow.new(car: Car.first, sharer: Sharer.new(number: @txt.from))
       else
         OdometerReport.new(car: Car.first, sharer: Sharer.new(number: @txt.from), reading: @txt.body)
       end

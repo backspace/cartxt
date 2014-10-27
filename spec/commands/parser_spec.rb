@@ -25,4 +25,15 @@ describe Commands::Parser do
       expect(parsed_command).to be(report_double)
     end
   end
+
+  context 'when the command is a borrow request' do
+    let(:body) { 'borrow' }
+
+    it 'returns a Borrow command' do
+      borrow_double = double
+      expect(Commands::Borrow).to receive(:new).with(car: Car.first, sharer: Sharer.new(number: :from)).and_return borrow_double
+
+      expect(parsed_command).to be(borrow_double)
+    end
+  end
 end
