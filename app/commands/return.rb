@@ -5,13 +5,12 @@ module Commands
     end
 
     def execute
-      if @car.status == 'returned'
-        @responses.push Response.new(from: @car, to: @sharer, body: "The car has already been returned!")
-      else
-        @car.status = 'returned'
-        @car.save
+      if car.may_return?
+        car.return!
 
         @responses.push Response.new(from: @car, to: @sharer, body: "Thanks!")
+      else
+        @responses.push Response.new(from: @car, to: @sharer, body: "The car has already been returned!")
       end
     end
   end

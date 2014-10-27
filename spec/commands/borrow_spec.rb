@@ -2,13 +2,12 @@ describe Commands::Borrow do
   let(:sharer) { :sharer }
 
   context 'when the car is returned' do
-    let(:car) { double(status: 'returned') }
+    let(:car) { double(may_borrow?: true) }
 
     it 'sets the car status to borrowed' do
       borrow = Commands::Borrow.new(car: car, sharer: sharer)
 
-      expect(car).to receive(:status=).with 'borrowed'
-      expect(car).to receive(:save)
+      expect(car).to receive(:borrow!)
 
       borrow.execute
 
@@ -17,12 +16,10 @@ describe Commands::Borrow do
   end
 
   context 'when the car is borrowed' do
-    let(:car) { double(status: 'borrowed') }
+    let(:car) { double(may_borrow?: false) }
 
     it 'rejects the borrow command' do
       borrow = Commands::Borrow.new(car: car, sharer: sharer)
-
-      expect(car).to receive(:status).and_return 'borrowed'
 
       borrow.execute
 

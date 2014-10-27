@@ -2,13 +2,12 @@ describe Commands::Return do
   let(:sharer) { :sharer }
 
   context 'when the car is borrowed' do
-    let(:car) { double(status: 'borrowed') }
+    let(:car) { double(may_return?: true) }
 
     it 'sets the car status to returned' do
       return_command = Commands::Return.new(car: car, sharer: sharer)
 
-      expect(car).to receive(:status=).with 'returned'
-      expect(car).to receive(:save)
+      expect(car).to receive(:return!)
 
       return_command.execute
 
@@ -17,12 +16,10 @@ describe Commands::Return do
   end
 
   context 'when the car is returned' do
-    let(:car) { double(status: 'returned') }
+    let(:car) { double(may_return?: false) }
 
     it 'rejects the return command' do
       return_command = Commands::Return.new(car: car, sharer: sharer)
-
-      expect(car).to receive(:status).and_return 'returned'
 
       return_command.execute
 
