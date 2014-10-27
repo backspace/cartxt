@@ -1,10 +1,7 @@
 module Commands
-  class Borrow
+  class Borrow < AbstractCommand
     def initialize(options)
-      @car = options[:car]
-      @sharer = options[:sharer]
-
-      @responses = []
+      super
     end
 
     def execute
@@ -12,10 +9,6 @@ module Commands
       @car.save
 
       @responses.push Response.new(from: @car, to: @sharer, body: "The car is yours!")
-    end
-
-    def responses
-      @responses
     end
   end
 end

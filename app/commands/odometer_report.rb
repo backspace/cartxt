@@ -1,11 +1,9 @@
 module Commands
-  class OdometerReport
+  class OdometerReport < AbstractCommand
     def initialize(options)
-      @car = options[:car]
-      @sharer = options[:sharer]
-      @reading = options[:reading]
+      super
 
-      @responses = []
+      @reading = options[:reading]
     end
 
     def execute
@@ -13,10 +11,6 @@ module Commands
       @car.save
 
       @responses.push Response.new(from: @car, to: @sharer, body: "Set odometer reading to #{@reading}")
-    end
-
-    def responses
-      @responses
     end
   end
 end
