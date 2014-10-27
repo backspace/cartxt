@@ -24,7 +24,9 @@ class Car < ActiveRecord::Base
   end
 
   def update_odometer(args)
-    reading = args.first
-    self.odometer_reading = reading
+    new_reading = args.first.to_i
+    current_reading = self.odometer_reading || 0
+    raise InvalidOdometerReadingException.new("Cannot accept a lower odometer reading.") if current_reading > new_reading
+    self.odometer_reading = new_reading
   end
 end

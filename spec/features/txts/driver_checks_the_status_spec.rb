@@ -21,7 +21,7 @@ feature 'Driver checks the status' do
   scenario 'They receive a reply after having set the reading' do
     GatewayRepository.gateway = double
 
-    reading = 100
+    reading = 23456
     expect_txt_response "Set odometer reading to #{reading}"
     send_txt reading
 
