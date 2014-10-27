@@ -6,7 +6,7 @@ feature 'Driver borrows the car' do
   end
 
   before do
-    Car.create
+    Car.create(number: 'Bot')
   end
 
   scenario 'They receive a reply that they have borrowed the car' do

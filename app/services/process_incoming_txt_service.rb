@@ -16,12 +16,6 @@ class ProcessIncomingTxtService
 
   private
   def number_for(participant)
-    # FIXME hack because cars don't yet have a number
-
-    if participant.is_a? Car
-      @txt.to
-    else
-      participant.number
-    end
+    participant.number
   end
 end
