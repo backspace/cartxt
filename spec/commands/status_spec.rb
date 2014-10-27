@@ -6,11 +6,6 @@ describe Commands::Status do
     status = Commands::Status.new(car: car, sharer: sharer)
     status.execute
 
-    expect(status.responses.length).to eq(1)
-    response = status.responses.first
-
-    expect(response.from).to eq(car)
-    expect(response.to).to eq(sharer)
-    expect(response.body).to eq("The odometer reading is #{:reading}")
+    expect(status).to have_response_from_car("The odometer reading is #{:reading}")
   end
 end

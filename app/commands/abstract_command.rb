@@ -1,5 +1,7 @@
 module Commands
   class AbstractCommand
+    attr_accessor :car, :sharer
+
     def initialize(options = nil)
       @responses = []
 

@@ -11,11 +11,6 @@ describe Commands::OdometerReport do
 
     report.execute
 
-    expect(report.responses.length).to eq(1)
-    response = report.responses.first
-
-    expect(response.from).to eq(car)
-    expect(response.to).to eq(sharer)
-    expect(response.body).to eq("Set odometer reading to #{reading}")
+    expect(report).to have_response_from_car("Set odometer reading to #{reading}")
   end
 end

@@ -12,12 +12,7 @@ describe Commands::Return do
 
       return_command.execute
 
-      expect(return_command.responses.length).to eq(1)
-      response = return_command.responses.first
-
-      expect(response.from).to eq(car)
-      expect(response.to).to eq(sharer)
-      expect(response.body).to eq("Thanks!")
+      expect(return_command).to have_response_from_car("Thanks!")
     end
   end
 
@@ -31,12 +26,7 @@ describe Commands::Return do
 
       return_command.execute
 
-      expect(return_command.responses.length).to eq(1)
-      response = return_command.responses.first
-
-      expect(response.from).to eq(car)
-      expect(response.to).to eq(sharer)
-      expect(response.body).to eq("The car has already been returned!")
+      expect(return_command).to have_response_from_car("The car has already been returned!")
     end
   end
 end

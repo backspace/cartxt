@@ -12,12 +12,7 @@ describe Commands::Borrow do
 
       borrow.execute
 
-      expect(borrow.responses.length).to eq(1)
-      response = borrow.responses.first
-
-      expect(response.from).to eq(car)
-      expect(response.to).to eq(sharer)
-      expect(response.body).to eq("The car is yours!")
+      expect(borrow).to have_response_from_car("The car is yours!")
     end
   end
 
@@ -31,12 +26,7 @@ describe Commands::Borrow do
 
       borrow.execute
 
-      expect(borrow.responses.length).to eq(1)
-      response = borrow.responses.first
-
-      expect(response.from).to eq(car)
-      expect(response.to).to eq(sharer)
-      expect(response.body).to eq("The car is already being borrowed!")
+      expect(borrow).to have_response_from_car("The car is already being borrowed!")
       end
   end
 end
