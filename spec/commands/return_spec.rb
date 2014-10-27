@@ -11,7 +11,7 @@ describe Commands::Return do
 
       return_command.execute
 
-      expect(return_command).to have_response_from_car("Thanks!")
+      expect(return_command).to have_response_from_car("Thanks! What is the odometer reading?")
     end
   end
 

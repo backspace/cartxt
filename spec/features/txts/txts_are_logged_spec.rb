@@ -11,9 +11,9 @@ feature 'Txts are logged' do
 
     # FIXME must have a car for now
     Car.create(number: 'Bot')
-    send_txt 'hello this is a txt'
+    send_txt 'status'
 
     visit txts_path
-    expect(page).to have_content 'hello this is a txt'
+    expect(page).to have_content 'status'
   end
 end

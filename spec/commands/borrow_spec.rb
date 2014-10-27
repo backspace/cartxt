@@ -11,7 +11,7 @@ describe Commands::Borrow do
 
       borrow.execute
 
-      expect(borrow).to have_response_from_car("The car is yours!")
+      expect(borrow).to have_response_from_car("The car is yours! What is the odometer reading?")
     end
   end
 

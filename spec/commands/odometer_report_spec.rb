@@ -6,8 +6,7 @@ describe Commands::OdometerReport do
   it 'sets the odometer reading and generates a response' do
     report = Commands::OdometerReport.new(car: car, sharer: sharer, reading: reading)
 
-    expect(car).to receive(:odometer_reading=).with(reading)
-    expect(car).to receive(:save)
+    expect(car).to receive(:accept_report!).with(nil, reading)
 
     report.execute
 

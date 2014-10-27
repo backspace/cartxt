@@ -6,7 +6,7 @@ feature 'Driver logs the odometer reading' do
   end
 
   before do
-    Car.create(number: 'Bot')
+    Car.create(number: 'Bot', status: 'borrowed')
   end
 
   scenario 'They receive a reply that the reading has been saved' do

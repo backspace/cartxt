@@ -7,8 +7,7 @@ module Commands
     end
 
     def execute
-      @car.odometer_reading = @reading
-      @car.save
+      @car.accept_report!(nil, @reading)
 
       @responses.push Response.new(from: @car, to: @sharer, body: "Set odometer reading to #{@reading}")
     end

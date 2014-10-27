@@ -8,7 +8,7 @@ feature 'Driver checks the status' do
   let(:reading) { 12345 }
 
   before do
-    car = Car.create(number: 'Bot', odometer_reading: reading)
+    car = Car.create(number: 'Bot', odometer_reading: reading, status: 'borrowed')
   end
 
   scenario 'They receive a reply with the current odometer reading' do

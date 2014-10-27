@@ -8,7 +8,7 @@ module Commands
       if car.may_return?
         car.return!
 
-        @responses.push Response.new(from: @car, to: @sharer, body: "Thanks!")
+        @responses.push Response.new(from: @car, to: @sharer, body: "Thanks! What is the odometer reading?")
       else
         @responses.push Response.new(from: @car, to: @sharer, body: "The car has already been returned!")
       end
