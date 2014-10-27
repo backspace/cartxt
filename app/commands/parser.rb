@@ -9,6 +9,8 @@ module Commands
         Status.new(car: Car.first, sharer: Sharer.new(number: @txt.from))
       elsif @txt.body == 'borrow'
         Borrow.new(car: Car.first, sharer: Sharer.new(number: @txt.from))
+      elsif @txt.body == 'return'
+        Return.new(car: Car.first, sharer: Sharer.new(number: @txt.from))
       else
         OdometerReport.new(car: Car.first, sharer: Sharer.new(number: @txt.from), reading: @txt.body)
       end

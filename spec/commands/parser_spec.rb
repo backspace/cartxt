@@ -36,4 +36,15 @@ describe Commands::Parser do
       expect(parsed_command).to be(borrow_double)
     end
   end
+
+  context 'when the command is a return request' do
+    let(:body) { 'return' }
+
+    it 'returns a Return command' do
+      return_double = double
+      expect(Commands::Return).to receive(:new).with(car: Car.first, sharer: Sharer.new(number: :from)).and_return return_double
+
+      expect(parsed_command).to be(return_double)
+    end
+  end
 end
