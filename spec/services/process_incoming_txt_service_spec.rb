@@ -1,9 +1,6 @@
 describe ProcessIncomingTxtService do
   let(:txt) { Txt.new(from: :from, to: :to, body: :body) }
-
-  before do
-    GatewayRepository.gateway = double
-  end
+  let(:gateway) { double }
 
   it 'delegates to the parser and delivers the responses' do
     parser = double
@@ -17,8 +14,8 @@ describe ProcessIncomingTxtService do
     responses = [response]
     expect(command).to receive(:responses).and_return responses
 
-    expect(GatewayRepository.gateway).to receive(:deliver).with(from: :from, to: :to, body: :body)
+    expect(gateway).to receive(:deliver).with(from: :from, to: :to, body: :body)
 
-    ProcessIncomingTxtService.new(txt).process
+    ProcessIncomingTxtService.new(txt, gateway).process
   end
 end

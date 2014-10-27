@@ -6,7 +6,7 @@ class TxtsController < ApplicationController
   end
 
   def create
-    ProcessIncomingTxtService.new(txt).process
+    ProcessIncomingTxtService.new(txt, gateway).process
     render nothing: true
   end
 
@@ -15,5 +15,18 @@ class TxtsController < ApplicationController
     txt = Txt.new(from: params[:From], to: params[:To], body: params[:Body].strip)
     txt.save
     txt
+  end
+
+  def gateway
+    if ENV['TWILIO_ACCOUNT_SID'].present?
+      @gateway ||= TwilioGateway.new(Twilio::REST::Client.new(ENV['TWILIO_ACCOUNT_SID'], ENV['TWILIO_AUTH_TOKEN']))
+    elsif GatewayRepository.gateway.present?
+      # FIXME figure out better dependency injection for testing?
+      @gateway = GatewayRepository.gateway
+    else
+      @gateway ||= NullGateway.new
+    end
+
+    @gateway
   end
 end

@@ -1,6 +1,7 @@
 class ProcessIncomingTxtService
-  def initialize(txt)
+  def initialize(txt, gateway = NullGateway.new)
     @txt = txt
+    @gateway = gateway
   end
 
   def process
@@ -10,7 +11,7 @@ class ProcessIncomingTxtService
     command.execute
 
     command.responses.each do |response|
-      GatewayRepository.gateway.deliver from: number_for(response.from), to: number_for(response.to), body: response.body
+      @gateway.deliver from: number_for(response.from), to: number_for(response.to), body: response.body
     end
   end
 
