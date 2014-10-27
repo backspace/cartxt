@@ -5,10 +5,14 @@ module Commands
     end
 
     def execute
-      @car.status = 'borrowed'
-      @car.save
+      if @car.status == 'borrowed'
+        @responses.push Response.new(from: @car, to: @sharer, body: "The car is already being borrowed!")
+      else
+        @car.status = 'borrowed'
+        @car.save
 
-      @responses.push Response.new(from: @car, to: @sharer, body: "The car is yours!")
+        @responses.push Response.new(from: @car, to: @sharer, body: "The car is yours!")
+      end
     end
   end
 end
