@@ -10,46 +10,114 @@ describe Commands::Parser do
     expect(Car).to receive(:find_by).with(number: :to).and_return car
   end
 
-  context 'when the command is a status request' do
-    let(:body) { 'status' }
+  context 'when the sender exists' do
+    let(:sharer) { Sharer.create(number: :from) }
 
-    it 'it returns a Status command' do
-      status_double = double
-      expect(Commands::Status).to receive(:new).with(car: car, sharer: Sharer.new(number: :from)).and_return status_double
-
-      expect(parsed_command).to be(status_double)
+    before do
+      sharer.know!
     end
-  end
 
-  context 'when the command is an odometer report' do
-    let(:body) { '555' }
+    let(:body) { 'a name' }
 
-    it 'returns an OdometerReport command' do
-      report_double = double
-      expect(Commands::OdometerReport).to receive(:new).with(car: car, sharer: Sharer.new(number: :from), reading: body).and_return report_double
-      expect(parsed_command).to be(report_double)
+    it 'returns a Name command' do
+      name_double = double
+      expect(Commands::Name).to receive(:new).with(car: car, sharer: sharer, name: body).and_return name_double
+
+      expect(parsed_command).to be(name_double)
     end
-  end
 
-  context 'when the command is a borrow request' do
-    let(:body) { 'borrow' }
+    context 'and is named' do
+      before do
+        sharer.bestow_name!
+      end
 
-    it 'returns a Borrow command' do
-      borrow_double = double
-      expect(Commands::Borrow).to receive(:new).with(car: car, sharer: Sharer.new(number: :from)).and_return borrow_double
+      context 'and is approved' do
+        before do
+          sharer.approve!
+        end
 
-      expect(parsed_command).to be(borrow_double)
-    end
-  end
+        context 'and is an admin' do
+          before do
+            sharer.admin!
+          end
 
-  context 'when the command is a return request' do
-    let(:body) { 'return' }
+          context 'when the command is an approval' do
+            let(:body) { 'approve #somenum' }
 
-    it 'returns a Return command' do
-      return_double = double
-      expect(Commands::Return).to receive(:new).with(car: car, sharer: Sharer.new(number: :from)).and_return return_double
+            it 'returns an Approve command' do
+              approval_double = double
+              expect(Commands::Approve).to receive(:new).with(car: car, sharer: sharer, unapproved_sharer_number: '#somenum').and_return approval_double
 
-      expect(parsed_command).to be(return_double)
+              expect(parsed_command).to be(approval_double)
+            end
+          end
+
+          context 'when the command is a rejection' do
+            let(:body) { 'reject #somenum' }
+
+            it 'returns a Reject command' do
+              reject_double = double
+              expect(Commands::Reject).to receive(:new).with(car: car, sharer: sharer, unapproved_sharer_number: '#somenum').and_return reject_double
+
+              expect(parsed_command).to be(reject_double)
+            end
+          end
+        end
+
+        context 'when the command is a status request' do
+          let(:body) { 'status' }
+
+          it 'it returns a Status command' do
+            status_double = double
+            expect(Commands::Status).to receive(:new).with(car: car, sharer: sharer).and_return status_double
+
+            expect(parsed_command).to be(status_double)
+          end
+        end
+
+        context 'when the command is an odometer report' do
+          let(:body) { '555' }
+
+          it 'returns an OdometerReport command' do
+            report_double = double
+            expect(Commands::OdometerReport).to receive(:new).with(car: car, sharer: sharer, reading: body).and_return report_double
+            expect(parsed_command).to be(report_double)
+          end
+        end
+
+        context 'when the command is a borrow request' do
+          let(:body) { 'borrow' }
+
+          it 'returns a Borrow command' do
+            borrow_double = double
+            expect(Commands::Borrow).to receive(:new).with(car: car, sharer: sharer).and_return borrow_double
+
+            expect(parsed_command).to be(borrow_double)
+          end
+        end
+
+        context 'when the command is a return request' do
+          let(:body) { 'return' }
+
+          it 'returns a Return command' do
+            return_double = double
+            expect(Commands::Return).to receive(:new).with(car: car, sharer: sharer).and_return return_double
+
+            expect(parsed_command).to be(return_double)
+          end
+        end
+
+        context 'when the command is a join request' do
+          let(:body) { 'join' }
+
+          it 'returns a Join command' do
+            join = double
+            expect(Commands::Join).to receive(:new).with(car: car, sharer: sharer).and_return join
+
+            expect(parsed_command).to be(join)
+          end
+        end
+      end
     end
   end
 end
