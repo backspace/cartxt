@@ -19,6 +19,8 @@ module Commands
         Borrow.new(car: car, sharer: sharer)
       elsif @txt.body == 'return'
         Return.new(car: car, sharer: sharer)
+      elsif @txt.body == 'balance'
+        Balance.new(car: car, sharer: sharer)
       elsif @txt.body == 'join'
         Join.new(car: car, sharer: sharer)
       else

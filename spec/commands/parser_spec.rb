@@ -107,6 +107,17 @@ describe Commands::Parser do
           end
         end
 
+        context 'when the command is a balance request' do
+          let(:body) { 'balance' }
+
+          it 'returns a Balance command' do
+            balance_double = double
+            expect(Commands::Balance).to receive(:new).with(car: car, sharer: sharer).and_return balance_double
+
+            expect(parsed_command).to be(balance_double)
+          end
+        end
+
         context 'when the command is a join request' do
           let(:body) { 'join' }
 
