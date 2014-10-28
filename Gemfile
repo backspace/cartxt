@@ -21,6 +21,9 @@ gem 'twilio-ruby'
 
 gem 'aasm'
 
+gem 'momentjs-rails'
+gem 'fullcalendar-rails'
+
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller', :platforms=>[:mri_21]
@@ -44,5 +47,5 @@ group :test do
   gem 'capybara'
   gem 'database_cleaner'
   gem 'launchy'
-  gem 'selenium-webdriver'
+  gem 'poltergeist'
 end

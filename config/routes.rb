@@ -4,4 +4,5 @@ Rails.application.routes.draw do
   devise_for :users
 
   resources :txts, only: [:index, :create]
+  resources :bookings
 end
