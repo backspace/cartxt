@@ -5,16 +5,12 @@ describe Utilities::BookingParser do
     }
   end
 
-  def format_time(time)
-    time.strftime("%Y-%m-%d %l:%M%p")
-  end
-
   it 'parses bookings' do
     examples.each do |string, date_strings|
       dates = Utilities::BookingParser.new(string).parse
 
-      expect(date_strings.first).to eq(format_time(dates.begins_at))
-      expect(date_strings.last).to eq(format_time(dates.ends_at))
+      expect(date_strings.first).to eq(dates.begins_at.to_formatted_s)
+      expect(date_strings.last).to eq(dates.ends_at.to_formatted_s)
     end
   end
 end

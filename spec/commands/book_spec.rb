@@ -4,11 +4,6 @@ describe Commands::Book do
 
   let(:booking_string) { :booking_string }
 
-  # FIXME centralise time formatting?
-  def format_time(time)
-    time.strftime("%Y-%m-%e %l:%M%p")
-  end
-
   it 'delegates to the booking parser and creates a booking' do
     book = Commands::Book.new(car: car, sharer: sharer, booking_string: booking_string)
 
@@ -22,6 +17,6 @@ describe Commands::Book do
 
     book.execute
 
-    expect(book).to have_response_from_car("You have booked the car from #{format_time parsed_booking.begins_at} to #{format_time parsed_booking.ends_at}.")
+    expect(book).to have_response_from_car("You have booked the car from #{parsed_booking.begins_at.to_formatted_s} to #{parsed_booking.ends_at.to_formatted_s}.")
   end
 end

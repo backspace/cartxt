@@ -20,7 +20,7 @@ feature 'Driver borrows a car that has been booked' do
   scenario 'They get a notice of the next booking' do
     GatewayRepository.gateway = double
 
-    expect_txt_response "The car is yours! Note that it is booked as of #{booking_begins_at.strftime("%Y-%m-%e %l:%M%p")}. What is the odometer reading?"
+    expect_txt_response "The car is yours! Note that it is booked as of #{booking_begins_at.to_formatted_s}. What is the odometer reading?"
     send_txt "borrow"
   end
 end
