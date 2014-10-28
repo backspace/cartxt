@@ -118,6 +118,21 @@ describe Commands::Parser do
           end
         end
       end
+
+      context 'and the sender is rejected' do
+        before do
+          sharer.reject!
+        end
+
+        let(:body) { 'anything' }
+
+        it 'returns a ForwardRejection command' do
+          forward = double
+          expect(Commands::ForwardRejection).to receive(:new).with(car: car, sharer: sharer, txt: body).and_return forward
+
+          expect(parsed_command).to be(forward)
+        end
+      end
     end
   end
 end

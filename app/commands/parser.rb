@@ -5,8 +5,9 @@ module Commands
     end
 
     def parse
-      # FIXME handle messages from rejected sharers
-      if sharer.unnamed?
+      if sharer.rejected?
+        ForwardRejection.new(car: car, sharer: sharer, txt: @txt.body)
+      elsif sharer.unnamed?
         Name.new(car: car, sharer: sharer, name: @txt.body)
       elsif sharer.admin? && @txt.body.starts_with?('approve')
         Approve.new(car: car, sharer: sharer, unapproved_sharer_number: @txt.body.split[1..-1].join(" "))
