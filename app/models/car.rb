@@ -1,6 +1,8 @@
 class Car < ActiveRecord::Base
   include AASM
 
+  has_many :bookings
+
   aasm column: :status do
     state :awaiting_final_report
     state :returned, initial: true
@@ -28,5 +30,9 @@ class Car < ActiveRecord::Base
     current_reading = self.odometer_reading || 0
     raise InvalidOdometerReadingException.new("Cannot accept a lower odometer reading.") if current_reading > new_reading
     self.odometer_reading = new_reading
+  end
+
+  def next_booking
+    bookings.upcoming.first
   end
 end
