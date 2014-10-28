@@ -118,6 +118,17 @@ describe Commands::Parser do
           end
         end
 
+        context 'when the command is a book request' do
+          let(:body) { 'book something else and  so on' }
+
+          it 'returns a Book command' do
+            book = double
+            expect(Commands::Book).to receive(:new).with(car: car, sharer: sharer, booking_string: "something else and  so on").and_return book
+
+            expect(parsed_command).to be(book)
+          end
+        end
+
         context 'when the command is a join request' do
           let(:body) { 'join' }
 

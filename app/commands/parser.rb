@@ -23,6 +23,8 @@ module Commands
         Balance.new(car: car, sharer: sharer)
       elsif @txt.body == 'join'
         Join.new(car: car, sharer: sharer)
+      elsif @txt.body.starts_with? 'book'
+        Book.new(car: car, sharer: sharer, booking_string: @txt.body['book '.length..-1])
       else
         OdometerReport.new(car: car, sharer: sharer, reading: @txt.body)
       end
