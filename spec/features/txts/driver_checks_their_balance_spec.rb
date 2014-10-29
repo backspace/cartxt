@@ -5,8 +5,8 @@ feature 'Driver checks their balance' do
     Rails.application
   end
 
-  let!(:car) { Car.create(number: 'Bot') }
-  let!(:sharer) { Sharer.create(number: 'Driver', balance: 12.34) }
+  let!(:car) { FactoryGirl.create :car }
+  let!(:sharer) { FactoryGirl.create :sharer, balance: 12.34 }
 
   scenario 'They receive a reply with their current balance' do
     GatewayRepository.gateway = double

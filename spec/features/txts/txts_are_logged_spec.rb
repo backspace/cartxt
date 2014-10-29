@@ -10,7 +10,7 @@ feature 'Txts are logged' do
     GatewayRepository.gateway = NullGateway.new
 
     # FIXME must have a car for now
-    Car.create(number: 'Bot')
+    FactoryGirl.create(:car)
     send_txt 'status'
 
     visit txts_path

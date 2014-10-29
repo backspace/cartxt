@@ -5,8 +5,8 @@ feature 'Driver takes a trip' do
     Rails.application
   end
 
-  let!(:car) { Car.create(number: 'Bot', rate: 0.32) }
-  let!(:sharer) { Sharer.create(number: 'Driver', status: 'approved', balance: 0.32) }
+  let!(:car) { FactoryGirl.create(:car, rate: 0.32) }
+  let!(:sharer) { FactoryGirl.create :sharer, balance: 0.32 }
 
   scenario 'They receive their total owing at the end' do
     GatewayRepository.gateway = double

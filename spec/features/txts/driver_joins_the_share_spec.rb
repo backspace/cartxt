@@ -9,8 +9,8 @@ feature 'Driver joins the share' do
     Car.create(number: 'Bot')
   end
 
-  let(:joiner) { Sharer.new(name: 'Joiner', number: "#joiner") }
-  let(:admin) { Sharer.create(name: 'Admin', number: "#admin", role: 'admin') }
+  let(:joiner) { FactoryGirl.create :sharer, :unknown, name: "Joiner", number: "#joiner" }
+  let(:admin) { FactoryGirl.create :sharer, :admin, number: '#admin' }
 
   scenario 'They are asked their name and the admin approves' do
     GatewayRepository.gateway = double

@@ -6,11 +6,12 @@ feature 'Rejected sharer sends a txt' do
   end
 
   before do
-    Car.create(number: 'Bot')
+    FactoryGirl.create(:car)
   end
 
-  let(:admin) { Sharer.create(name: 'Admin', number: "#admin", role: 'admin') }
-  let(:rejected) { Sharer.create(name: 'Rejected', number: "#rejected", status: 'rejected') }
+  let(:admin) { FactoryGirl.create :sharer, :admin, number: "#admin" }
+  let(:rejected) { FactoryGirl.create :sharer, :rejected }
+
   let(:txt) { 'Hi!!!!' }
 
   scenario 'Their message is forwarded to the admin' do
