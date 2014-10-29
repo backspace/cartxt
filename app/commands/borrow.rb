@@ -7,9 +7,9 @@ module Commands
     def execute
       if car.may_borrow?
         car.borrow!
-        @responses.push Response.new(from: @car, to: @sharer, body: "The car is yours! #{NextBookingFormatter.new(car: @car).output}What is the odometer reading?")
+        @responses.push Response.new(from: car, to: sharer, body: "The car is yours! #{NextBookingFormatter.new(car: car).output}What is the odometer reading?")
       else
-        @responses.push Response.new(from: @car, to: @sharer, body: "The car is already being borrowed!")
+        @responses.push Response.new(from: car, to: sharer, body: "The car is already being borrowed!")
       end
     end
   end
