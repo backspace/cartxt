@@ -1,5 +1,6 @@
 ready = ->
   $("#bookings").fullCalendar
+    defaultView: 'agendaWeek'
     header:
       left: 'prev,next today'
       center: 'title'
