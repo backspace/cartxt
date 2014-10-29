@@ -1,5 +1,6 @@
 class TxtsController < ApplicationController
   skip_before_filter :verify_authenticity_token, only: :create
+  before_filter :validate_twilio_request, only: :create if Rails.env.production?
 
   def index
     @txts = Txt.all
@@ -28,5 +29,16 @@ class TxtsController < ApplicationController
     end
 
     @gateway
+  end
+
+  # FIXME couples to Twilio
+  def validate_twilio_request
+    # https://github.com/twilio/twilio-ruby/wiki/RequestValidator
+    validator = Twilio::Util::RequestValidator.new(ENV['TWILIO_AUTH_TOKEN'])
+    url = "#{request.protocol}#{request.host_with_port}#{request.fullpath}"
+    parameters = env['rack.request.form_hash']
+    signature = env['HTTP_X_TWILIO_SIGNATURE']
+
+    validator.validate url, parameters, signature
   end
 end
