@@ -9,14 +9,10 @@ describe Commands::Borrow do
 
       expect(car).to receive(:borrow!)
 
-      next_booking_content = "next booking text "
-      next_booking_formatter = double
-      expect(NextBookingFormatter).to receive(:new).with(car: car).and_return next_booking_formatter
-      expect(next_booking_formatter).to receive(:output).and_return next_booking_content
-
+      expect(Responses::Borrow).to receive(:new).with(car: car, sharer: sharer).and_return(response = double)
       borrow.execute
 
-      expect(borrow).to have_response_from_car("The car is yours! #{next_booking_content}What is the odometer reading?")
+      expect(borrow.responses).to include(response)
     end
   end
 
@@ -26,9 +22,11 @@ describe Commands::Borrow do
     it 'rejects the borrow command' do
       borrow = Commands::Borrow.new(car: car, sharer: sharer)
 
+      expect(Responses::BorrowFailure).to receive(:new).with(car: car, sharer: sharer).and_return(response = double)
+
       borrow.execute
 
-      expect(borrow).to have_response_from_car("The car is already being borrowed!")
+      expect(borrow.responses).to include(response)
       end
   end
 end

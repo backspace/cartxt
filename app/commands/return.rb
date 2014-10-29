@@ -8,9 +8,9 @@ module Commands
       if car.may_return?
         car.return!
 
-        append_response "Thanks! What is the odometer reading?"
+        @responses.push Responses::Return.new(car: car, sharer: sharer)
       else
-        append_response "The car has already been returned!"
+        @responses.push Responses::ReturnFailure.new(car: car, sharer: sharer)
       end
     end
   end

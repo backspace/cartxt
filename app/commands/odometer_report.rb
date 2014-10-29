@@ -10,22 +10,19 @@ module Commands
       begin
         car.accept_report!(nil, @reading)
 
-        response_body = "Set odometer reading to #{@reading}"
-
         if car.borrowed?
           Borrowing.create(car: car, sharer: sharer, initial: @reading)
+          @responses.push Responses::OdometerReport.new(car: car, sharer: sharer)
         else
           borrowing = Borrowing.of(car).incomplete.first
 
           borrowing.final = @reading
           borrowing.save
 
-          response_body << ". Your balance is #{ActionController::Base.helpers.number_to_currency(sharer.balance + car.rate*(@reading.to_i - borrowing.initial))}."
+          @responses.push Responses::OdometerReport.new(car: car, sharer: sharer, borrowing: borrowing)
         end
-
-        append_response response_body
       rescue InvalidOdometerReadingException
-        append_response "Unable to set odometer reading to #{@reading}, which is lower than the current reading of #{car.odometer_reading}"
+        @responses.push Responses::OdometerReportFailure.new(car: car, sharer: sharer, reading: @reading)
       end
     end
   end

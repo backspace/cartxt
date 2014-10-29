@@ -11,8 +11,8 @@ module Commands
 
       unapproved_sharer.approve!
 
-      append_response "I have welcomed #{unapproved_sharer.name} to the car share."
-      append_response_to unapproved_sharer, "You were approved by an admin! Welcome to the car share."
+      @responses.push Responses::ApprovalAdmin.new(car: car, admin: sharer, approvee: unapproved_sharer)
+      @responses.push Responses::Approval.new(car: car, approvee: unapproved_sharer)
     end
   end
 end

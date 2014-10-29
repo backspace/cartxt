@@ -4,8 +4,11 @@ describe Commands::Status do
 
   it 'generates a status response' do
     status = Commands::Status.new(car: car, sharer: sharer)
+
+    response = double
+    expect(Responses::Status).to receive(:new).with(car: car, sharer: sharer).and_return response
     status.execute
 
-    expect(status).to have_response_from_car("The odometer reading is #{:reading}")
+    expect(status.responses).to include(response)
   end
 end

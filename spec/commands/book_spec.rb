@@ -13,10 +13,12 @@ describe Commands::Book do
     parsed_booking = double(begins_at: Time.now, ends_at: Time.now + 2.hours)
     expect(booking_parser).to receive(:parse).and_return parsed_booking
 
-    expect(Booking).to receive(:create).with(car: car, sharer: sharer, begins_at: parsed_booking.begins_at, ends_at: parsed_booking.ends_at)
+    expect(Booking).to receive(:create).with(car: car, sharer: sharer, begins_at: parsed_booking.begins_at, ends_at: parsed_booking.ends_at).and_return(booking = double)
+
+    expect(Responses::Book).to receive(:new).with(car: car, sharer: sharer, booking: booking).and_return(response = double)
 
     book.execute
 
-    expect(book).to have_response_from_car("You have booked the car from #{parsed_booking.begins_at.to_formatted_s} to #{parsed_booking.ends_at.to_formatted_s}.")
+    expect(book.responses).to include(response)
   end
 end

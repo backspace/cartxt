@@ -11,8 +11,10 @@ describe Commands::Reject do
 
     expect(unapproved_sharer).to receive(:reject!)
 
+    expect(Responses::Reject).to receive(:new).with(car: car, admin: sharer, rejectee: unapproved_sharer).and_return(response = double)
+
     reject.execute
 
-    expect(reject).to have_responses_from_car_to(sharer => "I silently rejected #{unapproved_sharer.name}, at number #{unapproved_sharer.number}.")
+    expect(reject.responses).to include(response)
   end
 end

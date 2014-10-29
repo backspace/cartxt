@@ -9,9 +9,9 @@ module Commands
     def execute
       parsed_booking = Utilities::BookingParser.new(@booking_string).parse
 
-      Booking.create(car: car, sharer: sharer, begins_at: parsed_booking.begins_at, ends_at: parsed_booking.ends_at)
+      booking = Booking.create(car: car, sharer: sharer, begins_at: parsed_booking.begins_at, ends_at: parsed_booking.ends_at)
 
-      append_response "You have booked the car from #{parsed_booking.begins_at.to_formatted_s} to #{parsed_booking.ends_at.to_formatted_s}."
+      @responses.push Responses::Book.new(car: car, sharer: sharer, booking: booking)
     end
   end
 end

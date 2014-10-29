@@ -11,8 +11,12 @@ describe Commands::Name do
     admin = double(number: :number)
     expect(Sharer).to receive(:admin).and_return [admin]
 
+    expect(Responses::Name).to receive(:new).with(car: car, sharer: sharer).and_return(sharer_response = double)
+    expect(Responses::AdminApprovalRequest).to receive(:new).with(car: car, admin: admin, sharer: sharer).and_return(admin_response = double)
+
     name.execute
 
-    expect(name).to have_responses_from_car_to(sharer => "Nice to meet you, #{new_name}. Please await admin approval.", admin => "#{new_name}, from number #{sharer.number}, would like to join. Reply with \"approve #{sharer.number}\" (or reject).")
+    expect(name.responses).to include(sharer_response)
+    expect(name.responses).to include(admin_response)
   end
 end

@@ -11,9 +11,16 @@ describe Commands::Approve do
 
     expect(unapproved_sharer).to receive(:approve!)
 
+    approval_admin_response = double
+    expect(Responses::ApprovalAdmin).to receive(:new).with(car: car, admin: sharer, approvee: unapproved_sharer).and_return approval_admin_response
+
+    approval_approvee_response = double
+    expect(Responses::Approval).to receive(:new).with(car: car, approvee: unapproved_sharer).and_return approval_approvee_response
+
     approve.execute
 
-    expect(approve).to have_responses_from_car_to(unapproved_sharer => "You were approved by an admin! Welcome to the car share.", sharer => "I have welcomed #{unapproved_sharer.name} to the car share.")
+    expect(approve.responses).to include(approval_admin_response)
+    expect(approve.responses).to include(approval_approvee_response)
   end
 end
 

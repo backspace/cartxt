@@ -7,8 +7,9 @@ describe Commands::Join do
 
     expect(sharer).to receive(:know!)
 
+    expect(Responses::Join).to receive(:new).with(car: car, sharer: sharer).and_return(response = double)
     join.execute
 
-    expect(join).to have_response_from_car("To join the car share, please reply with your name.")
+    expect(join.responses).to include(response)
   end
 end

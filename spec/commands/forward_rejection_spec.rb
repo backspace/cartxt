@@ -9,8 +9,10 @@ describe Commands::ForwardRejection do
     admin = double(number: :number)
     expect(Sharer).to receive(:admin).and_return [admin]
 
+    expect(Responses::ForwardRejection).to receive(:new).with(car: car, admin: admin, rejected_sharer: sharer, rejected_txt: txt).and_return(response = double)
+
     forward.execute
 
-    expect(forward).to have_responses_from_car_to(admin => "Rejected sharer #{sharer.name} at number #{sharer.number} sent this and I ignored it: #{txt}")
+    expect(forward.responses).to include(response)
   end
 end

@@ -9,9 +9,11 @@ describe Commands::Return do
 
       expect(car).to receive(:return!)
 
+      expect(Responses::Return).to receive(:new).with(car: car, sharer: sharer).and_return(response = double)
+
       return_command.execute
 
-      expect(return_command).to have_response_from_car("Thanks! What is the odometer reading?")
+      expect(return_command.responses).to include(response)
     end
   end
 
@@ -21,9 +23,10 @@ describe Commands::Return do
     it 'rejects the return command' do
       return_command = Commands::Return.new(car: car, sharer: sharer)
 
+      expect(Responses::ReturnFailure).to receive(:new).with(car: car, sharer: sharer).and_return(response = double)
       return_command.execute
 
-      expect(return_command).to have_response_from_car("The car has already been returned!")
+      expect(return_command.responses).to include(response)
     end
   end
 end

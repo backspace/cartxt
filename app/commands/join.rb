@@ -7,7 +7,7 @@ module Commands
     def execute
       sharer.know!
 
-      append_response "To join the car share, please reply with your name."
+      @responses.push Responses::Join.new(car: car, sharer: sharer)
     end
   end
 end

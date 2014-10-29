@@ -5,7 +5,7 @@ module Commands
     end
 
     def execute
-      append_response "The odometer reading is #{car.odometer_reading}"
+      @responses.push Responses::Status.new(car: car, sharer: sharer)
     end
   end
 end

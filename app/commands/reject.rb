@@ -11,7 +11,7 @@ module Commands
 
       unapproved_sharer.reject!
 
-      append_response "I silently rejected #{unapproved_sharer.name}, at number #{unapproved_sharer.number}."
+      @responses.push Responses::Reject.new(car: car, admin: sharer, rejectee: unapproved_sharer)
     end
   end
 end

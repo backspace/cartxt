@@ -19,9 +19,11 @@ describe Commands::OdometerReport do
       it 'sets the odometer reading, creates a borrowing, and generates a response' do
         expect(Borrowing).to receive(:create).with(car: car, sharer: sharer, initial: reading)
 
+        expect(Responses::OdometerReport).to receive(:new).with(car: car, sharer: sharer).and_return(response = double)
+
         report.execute
 
-        expect(report).to have_response_from_car("Set odometer reading to #{reading}")
+        expect(report.responses).to include(response)
       end
     end
 
@@ -39,11 +41,11 @@ describe Commands::OdometerReport do
         expect(borrowing).to receive(:final=).with(reading)
         expect(borrowing).to receive(:save)
 
+        expect(Responses::OdometerReport).to receive(:new).with(car: car, sharer: sharer, borrowing: borrowing).and_return(response = double)
+
         report.execute
 
-        balance = sharer.balance + (reading.to_i - borrowing.initial)*car.rate
-
-        expect(report).to have_response_from_car("Set odometer reading to #{reading}. Your balance is $#{balance}0.")
+        expect(report.responses).to include(response)
       end
     end
   end
@@ -53,8 +55,10 @@ describe Commands::OdometerReport do
 
     expect(car).to receive(:accept_report!).with(nil, reading).and_raise InvalidOdometerReadingException
 
+    expect(Responses::OdometerReportFailure).to receive(:new).with(car: car, sharer: sharer, reading: reading).and_return(response = double)
+
     report.execute
 
-    expect(report).to have_response_from_car("Unable to set odometer reading to #{reading}, which is lower than the current reading of #{original_reading}")
+    expect(report.responses).to include(response)
   end
 end

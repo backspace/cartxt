@@ -8,7 +8,7 @@ module Commands
 
     def execute
       Sharer.admin.each do |admin|
-        append_response_to admin, "Rejected sharer #{sharer.name} at number #{sharer.number} sent this and I ignored it: #{@txt}"
+        @responses.push Responses::ForwardRejection.new(car: car, admin: admin, rejected_sharer: sharer, rejected_txt: @txt)
       end
     end
   end
