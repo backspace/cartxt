@@ -37,10 +37,7 @@ img {
 // to make views framework-neutral
 main {
   @extend .container;
-  background-color: #eee;
   padding-bottom: 80px;
-  width: 100%;
-  margin-top: 51px; // accommodate the navbar
   }
 section {
   @extend .row;
@@ -81,4 +78,17 @@ section {
   @extend .btn;
   @extend .btn-primary;
   @extend .btn-xs;
+}
+
+.sidebar {
+  @extend .col-xs-3;
+  @extend .col-md-2;
+}
+
+.content {
+  @extend .col-xs-9;
+  @extend .col-xs-offset-3;
+
+  @extend .col-md-10;
+  @extend .col-md-offset-2;
 }

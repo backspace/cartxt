@@ -9,8 +9,14 @@
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
   %body{class: controller_name, id: action_name}
-    %header
-      = render 'layouts/navigation'
     %main{:role => "main"}
-      = render 'layouts/messages'
-      = yield
+      .sidebar
+        %a.home{href: root_path}
+          %h1
+            =image_tag('car.svg')
+            cartxt
+        %ul.nav
+          =render 'layouts/navigation_links'
+        = render 'layouts/messages'
+      .content
+        = yield
