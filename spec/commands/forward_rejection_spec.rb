@@ -11,6 +11,6 @@ describe Commands::ForwardRejection do
 
     forward.execute
 
-    expect(forward).to have_responses_from_car_to(admin => "Rejected sharer #{sharer.name} at number #{sharer.number} sent this and we ignored it: #{txt}")
+    expect(forward).to have_responses_from_car_to(admin => "Rejected sharer #{sharer.name} at number #{sharer.number} sent this and I ignored it: #{txt}")
   end
 end

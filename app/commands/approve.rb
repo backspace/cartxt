@@ -11,7 +11,7 @@ module Commands
 
       unapproved_sharer.approve!
 
-      append_response "We have welcomed #{unapproved_sharer.name} to the car share."
+      append_response "I have welcomed #{unapproved_sharer.name} to the car share."
       append_response_to unapproved_sharer, "You were approved by an admin! Welcome to the car share."
     end
   end

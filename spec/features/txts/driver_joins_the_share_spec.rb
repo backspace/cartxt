@@ -23,7 +23,7 @@ feature 'Driver joins the share' do
     send_txt_from joiner.number, joiner.name
 
     expect_txt_response_to joiner.number, "You were approved by an admin! Welcome to the car share."
-    expect_txt_response_to admin.number, "We have welcomed #{joiner.name} to the car share."
+    expect_txt_response_to admin.number, "I have welcomed #{joiner.name} to the car share."
     send_txt_from admin.number, "approve #{joiner.number}"
   end
 end

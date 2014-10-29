@@ -11,7 +11,7 @@ module Commands
 
       unapproved_sharer.reject!
 
-      append_response "We silently rejected #{unapproved_sharer.name}, at number #{unapproved_sharer.number}."
+      append_response "I silently rejected #{unapproved_sharer.name}, at number #{unapproved_sharer.number}."
     end
   end
 end

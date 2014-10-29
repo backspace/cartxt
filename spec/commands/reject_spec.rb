@@ -13,6 +13,6 @@ describe Commands::Reject do
 
     reject.execute
 
-    expect(reject).to have_responses_from_car_to(sharer => "We silently rejected #{unapproved_sharer.name}, at number #{unapproved_sharer.number}.")
+    expect(reject).to have_responses_from_car_to(sharer => "I silently rejected #{unapproved_sharer.name}, at number #{unapproved_sharer.number}.")
   end
 end

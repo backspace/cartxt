@@ -16,7 +16,7 @@ feature 'Rejected sharer sends a txt' do
   scenario 'Their message is forwarded to the admin' do
     GatewayRepository.gateway = double
 
-    expect_txt_response_to admin.number, "Rejected sharer #{rejected.name} at number #{rejected.number} sent this and we ignored it: #{txt}"
+    expect_txt_response_to admin.number, "Rejected sharer #{rejected.name} at number #{rejected.number} sent this and I ignored it: #{txt}"
     send_txt_from rejected.number, txt
   end
 end

@@ -13,7 +13,7 @@ describe Commands::Approve do
 
     approve.execute
 
-    expect(approve).to have_responses_from_car_to(unapproved_sharer => "You were approved by an admin! Welcome to the car share.", sharer => "We have welcomed #{unapproved_sharer.name} to the car share.")
+    expect(approve).to have_responses_from_car_to(unapproved_sharer => "You were approved by an admin! Welcome to the car share.", sharer => "I have welcomed #{unapproved_sharer.name} to the car share.")
   end
 end
 
