@@ -23,9 +23,9 @@ module Commands
           response_body << ". Your balance is #{ActionController::Base.helpers.number_to_currency(sharer.balance + car.rate*(@reading.to_i - borrowing.initial))}."
         end
 
-        @responses.push Response.new(from: car, to: sharer, body: response_body)
+        append_response response_body
       rescue InvalidOdometerReadingException
-        @responses.push Response.new(from: car, to: sharer, body: "Unable to set odometer reading to #{@reading}, which is lower than the current reading of #{car.odometer_reading}")
+        append_response "Unable to set odometer reading to #{@reading}, which is lower than the current reading of #{car.odometer_reading}"
       end
     end
   end

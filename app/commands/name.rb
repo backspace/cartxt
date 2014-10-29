@@ -9,10 +9,10 @@ module Commands
     def execute
       sharer.rename!(@new_name)
 
-      @responses.push Response.new(from: car, to: sharer, body: "Nice to meet you, #{@new_name}. Please await admin approval.")
+      append_response "Nice to meet you, #{@new_name}. Please await admin approval."
 
       Sharer.admin.each do |admin|
-        @responses.push Response.new(from: car, to: admin, body: "#{@new_name}, from number #{sharer.number}, would like to join. Reply with \"approve #{sharer.number}\" (or reject).")
+        append_response_to admin, "#{@new_name}, from number #{sharer.number}, would like to join. Reply with \"approve #{sharer.number}\" (or reject)."
       end
     end
   end
