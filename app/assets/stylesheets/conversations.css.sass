@@ -1,4 +1,7 @@
 $magick-offset: 21px
+$bubble-offset: 0
+
+$bubble-outside-margin: 0
 
 $incoming-colour: green
 $incoming-text-colour: white
@@ -13,14 +16,13 @@ $weird-width: 9px
 // adapted from http://codepen.io/2ne/pen/osvpj?editors=010
 
 .conversation
-  width: 400px
+  width: 100%
   position: relative
   box-sizing: border-box
-  overflow-x: hidden
 
   .outgoing, .incoming
     border-radius: 15px
-    margin: 0 15px 10px
+    margin: 0 $bubble-outside-margin 10px
     padding: 15px 20px
     position: relative
 
@@ -40,7 +42,7 @@ $weird-width: 9px
   .incoming
     background-color: $incoming-colour
     color: $incoming-text-colour
-    margin-left: 80px
+    margin-left: $bubble-offset
 
     &:before
       right: -$magick-offset
@@ -50,7 +52,7 @@ $weird-width: 9px
   .outgoing
     background-color: $outgoing-colour
     color: $outgoing-text-colour
-    margin-right: 80px
+    margin-right: $bubble-offset
 
     &:before
       // border-color: $terrible-colour
