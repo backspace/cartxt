@@ -33,4 +33,13 @@ feature 'Driver books a car' do
     booking_time_string = "#{booking_begins_at.strftime("%l:%M")} - #{booking_ends_at.strftime("%l:%M")}"
     expect(page).to have_content(booking_time_string)
   end
+
+  scenario 'They receive a reply that the car is already booked at that time' do
+    existing_booking = Booking.create(car: car, begins_at: booking_begins_at - 15.minutes, ends_at: booking_ends_at + 15.minutes)
+
+    GatewayRepository.gateway = double
+
+    expect_txt_response "Sorry, the car is already booked from #{existing_booking.begins_at.to_formatted_s} to #{existing_booking.ends_at.to_formatted_s}."
+    send_txt_from booker.number, "book from #{booking_begins_at.to_formatted_s} to #{booking_ends_at.to_formatted_s}"
+  end
 end

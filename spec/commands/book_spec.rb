@@ -3,22 +3,51 @@ describe Commands::Book do
   let(:car) { :car }
 
   let(:booking_string) { :booking_string }
+  let(:parsed_booking) { parsed_booking = double(begins_at: Time.now, ends_at: Time.now + 2.hours) }
 
-  it 'delegates to the booking parser and creates a booking' do
-    book = Commands::Book.new(car: car, sharer: sharer, booking_string: booking_string)
-
+  before do
     booking_parser = double
     expect(Utilities::BookingParser).to receive(:new).with(booking_string).and_return booking_parser
 
-    parsed_booking = double(begins_at: Time.now, ends_at: Time.now + 2.hours)
     expect(booking_parser).to receive(:parse).and_return parsed_booking
+  end
 
-    expect(Booking).to receive(:create).with(car: car, sharer: sharer, begins_at: parsed_booking.begins_at, ends_at: parsed_booking.ends_at).and_return(booking = double)
+  context 'when there is no overlapping booking' do
+    before do
+      expect(BookingConflictFinder).to receive(:new).with(car: car, proposed_booking: parsed_booking).and_return(finder = double)
+      expect(finder).to receive(:conflict?).and_return false
+    end
 
-    expect(Responses::Book).to receive(:new).with(car: car, sharer: sharer, booking: booking).and_return(response = double)
+    it 'creates a booking' do
+      book = Commands::Book.new(car: car, sharer: sharer, booking_string: booking_string)
 
-    book.execute
+      expect(Booking).to receive(:create).with(car: car, sharer: sharer, begins_at: parsed_booking.begins_at, ends_at: parsed_booking.ends_at).and_return(booking = double)
 
-    expect(book.responses).to include(response)
+      expect(Responses::Book).to receive(:new).with(car: car, sharer: sharer, booking: booking).and_return(response = double)
+
+      book.execute
+
+      expect(book.responses).to include(response)
+    end
+  end
+
+  context 'when there is an overlapping booking' do
+    let(:conflicting_booking) { :conflicting_booking }
+
+    before do
+      expect(BookingConflictFinder).to receive(:new).with(car: car, proposed_booking: parsed_booking).and_return(finder = double)
+      expect(finder).to receive(:conflict?).and_return true
+      expect(finder).to receive(:conflicting_booking).and_return(conflicting_booking)
+    end
+
+    it 'responds with BookFailure' do
+      book = Commands::Book.new(car: car, sharer: sharer, booking_string: booking_string)
+
+      expect(Responses::BookFailure).to receive(:new).with(car: car, sharer: sharer, conflicting_booking: conflicting_booking).and_return(response = double)
+
+      book.execute
+
+      expect(book.responses).to include(response)
+    end
   end
 end
