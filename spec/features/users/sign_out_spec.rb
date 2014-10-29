@@ -12,7 +12,9 @@ feature 'Sign out', :devise do
     user = FactoryGirl.create(:user)
     signin(user.email, user.password)
     expect(page).to have_content I18n.t 'devise.sessions.signed_in'
-    click_link 'Sign out'
+    within 'nav' do
+      click_link 'Sign out'
+    end
     expect(page).to have_content I18n.t 'devise.sessions.signed_out'
   end
 
