@@ -141,6 +141,15 @@ describe Commands::Parser do
         end
       end
 
+      context 'when the command is a gas purchase' do
+        let(:body) { 'gas X' }
+
+        it 'returns a Gas command' do
+          expect(Commands::Gas).to receive(:new).with(car: car, sharer: sharer, cost_string: 'X').and_return(gas = double)
+          expect(parsed_command).to be(gas)
+        end
+      end
+
       context 'and the sender is rejected' do
         before do
           sharer.reject!
