@@ -82,13 +82,15 @@ section {
 
 .sidebar {
   @extend .col-xs-3;
-  @extend .col-md-2;
+
+  @extend .col-sm-2;
+  @extend .col-sm-offset-2;
 }
 
 .content {
   @extend .col-xs-9;
   @extend .col-xs-offset-3;
 
-  @extend .col-md-10;
-  @extend .col-md-offset-2;
+  @extend .col-sm-4;
+  @extend .col-sm-offset-5;
 }
