@@ -25,6 +25,10 @@ module Commands
         Join.new(car: car, sharer: sharer)
       elsif @txt.body.starts_with? 'book'
         Book.new(car: car, sharer: sharer, booking_string: @txt.body['book '.length..-1])
+      elsif @txt.body == 'confirm'
+        Confirm.new(car: car, sharer: sharer)
+      elsif @txt.body == 'cancel'
+        Cancel.new(car: car, sharer: sharer)
       elsif @txt.body.starts_with? 'gas'
         Gas.new(car: car, sharer: sharer, cost_string: @txt.body[' gas'.length..-1])
       else

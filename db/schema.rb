@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141028181234) do
+ActiveRecord::Schema.define(version: 20141030225131) do
 
   create_table "bookings", force: true do |t|
     t.integer  "car_id"
@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 20141028181234) do
     t.datetime "ends_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "status"
   end
 
   add_index "bookings", ["car_id"], name: "index_bookings_on_car_id"

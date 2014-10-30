@@ -11,11 +11,29 @@ feature 'Driver books a car' do
   let!(:booking_begins_at) { (Time.now + 1.day).change(hour: 15, min: 0, sec: 0) }
   let!(:booking_ends_at) { booking_begins_at + 2.hours }
 
+  def booking_command_for(begins_at, ends_at)
+    "book from #{begins_at.to_formatted_s} to #{ends_at.to_formatted_s}" 
+  end
+
+  def booking_response_for(begins_at, ends_at)
+    "You wish to book the car from #{begins_at.to_formatted_s} to #{ends_at.to_formatted_s}? Reply with 'confirm', try another 'book from X to Y', or 'cancel'."
+  end
+
+  def booking_confirmation_response_for(begins_at, ends_at)
+    "You have booked the car from #{begins_at.to_formatted_s} to #{ends_at.to_formatted_s}."
+  end
+
+  let(:booking_command) { booking_command_for(booking_begins_at, booking_ends_at) }
+  let(:booking_response) { booking_response_for(booking_begins_at, booking_ends_at) }
+
   scenario 'They receive a reply that they have booked the car and the booking is visible on the site', js: true do
     GatewayRepository.gateway = double
 
-    expect_txt_response "You have booked the car from #{booking_begins_at.to_formatted_s} to #{booking_ends_at.to_formatted_s}."
-    send_txt_from booker.number, "book from #{booking_begins_at.to_formatted_s} to #{booking_ends_at.to_formatted_s}"
+    expect_txt_response booking_response
+    send_txt_from booker.number, booking_command
+
+    expect_txt_response booking_confirmation_response_for(booking_begins_at, booking_ends_at)
+    send_txt_from booker.number, "confirm"
 
     user = FactoryGirl.create :user
     signin(user.email, user.password)
@@ -41,5 +59,45 @@ feature 'Driver books a car' do
 
     expect_txt_response "Sorry, the car is already booked from #{existing_booking.begins_at.to_formatted_s} to #{existing_booking.ends_at.to_formatted_s}."
     send_txt_from booker.number, "book from #{booking_begins_at.to_formatted_s} to #{booking_ends_at.to_formatted_s}"
+  end
+
+  scenario 'They change their mind about the booking' do
+    GatewayRepository.gateway = double
+
+    expect_txt_response booking_response
+    send_txt booking_command
+
+    expect_txt_response "Okay, I canceled your booking request."
+    send_txt "cancel"
+  end
+
+  scenario 'They tweak the booking before confirming' do
+    GatewayRepository.gateway = double
+
+    expect_txt_response booking_response
+    send_txt booking_command
+
+    new_begins_at = booking_begins_at + 2.hours
+    new_ends_at = booking_ends_at + 3.hours
+
+    expect_txt_response booking_response_for(new_begins_at, new_ends_at)
+    send_txt booking_command_for(new_begins_at, new_ends_at)
+
+    expect_txt_response booking_confirmation_response_for(new_begins_at, new_ends_at)
+    send_txt "confirm"
+  end
+
+  scenario 'They get a confused response if they have no booking to confirm' do
+    GatewayRepository.gateway = double
+
+    expect_txt_response "Sorry, you have no pending booking to confirm! Try making a booking by sending \"book from X to Y\"."
+    send_txt "confirm"
+  end
+
+  scenario 'They get a confused response if they have no booking to cancel' do
+    GatewayRepository.gateway = double
+
+    expect_txt_response "Sorry, you have no pending booking to cancel! Try making a booking by sending \"book from X to Y\"."
+    send_txt "cancel"
   end
 end

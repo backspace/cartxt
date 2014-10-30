@@ -12,6 +12,29 @@ describe Commands::Book do
     expect(booking_parser).to receive(:parse).and_return parsed_booking
   end
 
+  context 'when there is an unconfirmed booking' do
+    let(:unconfirmed_booking) { double }
+    let(:found_bookings) { [unconfirmed_booking] }
+
+    before do
+      expect(Booking).to receive(:unconfirmed_for).with(car, sharer).and_return(found_bookings)
+    end
+
+    it 'updates the existing booking and responds' do
+      book = Commands::Book.new(car: car, sharer: sharer, booking_string: booking_string)
+
+      expect(Responses::BookUpdate).to receive(:new).with(car: car, sharer: sharer, booking:unconfirmed_booking).and_return(response = double)
+
+      expect(unconfirmed_booking).to receive(:begins_at=).with(parsed_booking.begins_at)
+      expect(unconfirmed_booking).to receive(:ends_at=).with(parsed_booking.ends_at)
+      expect(unconfirmed_booking).to receive(:save)
+
+      book.execute
+
+      expect(book.responses).to include(response)
+    end
+  end
+
   context 'when there is no overlapping booking' do
     before do
       expect(BookingConflictFinder).to receive(:new).with(car: car, proposed_booking: parsed_booking).and_return(finder = double)

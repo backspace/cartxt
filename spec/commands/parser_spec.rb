@@ -150,6 +150,24 @@ describe Commands::Parser do
         end
       end
 
+      context 'when the command is a booking confirmation' do
+        let(:body) { 'confirm' }
+
+        it 'returns a Confirm command' do
+          expect(Commands::Confirm).to receive(:new).with(car: car, sharer: sharer).and_return(confirm = double)
+          expect(parsed_command).to be(confirm)
+        end
+      end
+
+      context 'when the command is a booking cancellation' do
+        let(:body) { 'cancel' }
+
+        it 'returns a Cancel command' do
+          expect(Commands::Cancel).to receive(:new).with(car: car, sharer: sharer).and_return(cancel = double)
+          expect(parsed_command).to be(cancel)
+        end
+      end
+
       context 'and the sender is rejected' do
         before do
           sharer.reject!
