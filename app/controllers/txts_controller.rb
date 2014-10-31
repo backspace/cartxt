@@ -7,7 +7,17 @@ class TxtsController < ApplicationController
   end
 
   def create
-    ProcessIncomingTxtService.new(txt, gateway).process
+    begin
+      ProcessIncomingTxtService.new(txt, gateway).process
+    rescue Exception => e
+      error_txt = Txt.new(from: params[:To], to: params[:From], body: "Sorry, there was an error! This is a work in progress.")
+
+      gateway.deliver(from: error_txt.from, to: error_txt.to, body: error_txt.body)
+      error_txt.save
+
+      ExceptionNotifier.notify_exception(exception, env: request.env)
+    end
+
     render nothing: true
   end
 
