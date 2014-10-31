@@ -7,7 +7,7 @@ class NextBookingFormatter
     next_booking = @car.next_booking
 
     if next_booking.present?
-      "Note that it is booked as of #{next_booking.begins_at.to_formatted_s}. "
+      "Note that it is booked as of #{next_booking.begins_at.to_formatted_s}."
     else
       ""
     end
