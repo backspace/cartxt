@@ -14,7 +14,7 @@ feature 'Driver takes a trip' do
     expect_txt_response "I am yours! #{car.location_information} #{car.lockbox_information} What is my odometer reading?"
     send_txt "borrow"
 
-    expect_txt_response "Thanks, I updated the records with a reading of 0km."
+    expect_txt_response "Thanks, I updated the records with a reading of 0km. When our time together is finished, just say \"return\". If you buy gas, say \"gas 25.50\" or however much you spend, and make sure to save the receipt!"
     send_txt "0"
 
     expect_txt_response "Thanks for the ride! What is my odometer reading?"
