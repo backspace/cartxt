@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141031010320) do
+ActiveRecord::Schema.define(version: 20141031012040) do
 
   create_table "bookings", force: true do |t|
     t.integer  "car_id"
@@ -62,7 +62,10 @@ ActiveRecord::Schema.define(version: 20141031010320) do
     t.string   "body"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "originator_id"
   end
+
+  add_index "txts", ["originator_id"], name: "index_txts_on_originator_id"
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false

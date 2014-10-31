@@ -11,7 +11,9 @@ class ProcessIncomingTxtService
     command.execute
 
     command.responses.each do |response|
-      @gateway.deliver from: number_for(response.from), to: number_for(response.to), body: response.body
+      outgoing_txt = Txt.new(from: number_for(response.from), to: number_for(response.to), body: response.body, originator: @txt)
+      outgoing_txt.save
+      @gateway.deliver from: outgoing_txt.from, to: outgoing_txt.to, body: outgoing_txt.body
     end
   end
 
