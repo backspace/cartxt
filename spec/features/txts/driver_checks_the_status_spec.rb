@@ -5,27 +5,25 @@ feature 'Driver checks the status' do
     Rails.application
   end
 
-  let(:reading) { 12345 }
+  context 'when the car is being borrowed' do
+    let!(:car) { FactoryGirl.create(:car, :borrowed) }
 
-  before do
-    FactoryGirl.create(:car, :borrowed, odometer_reading: reading)
+    scenario 'they receive a reply that the car is not available' do
+      GatewayRepository.gateway = double
+
+      expect_txt_response "Sorry, I am being borrowed."
+      send_txt 'status'
+    end
   end
 
-  scenario 'They receive a reply with the current odometer reading' do
-    GatewayRepository.gateway = double
+  context 'when the car is returned' do
+    let!(:car) { FactoryGirl.create(:car) }
 
-    expect_txt_response "The odometer reading is #{reading}"
-    send_txt 'status'
-  end
+    scenario 'they receive a reply that the car is available' do
+      GatewayRepository.gateway = double
 
-  scenario 'They receive a reply after having set the reading' do
-    GatewayRepository.gateway = double
-
-    reading = 23456
-    expect_txt_response "Set odometer reading to #{reading}"
-    send_txt reading
-
-    expect_txt_response "The odometer reading is #{reading}"
-    send_txt 'status'
+      expect_txt_response "I am available to borrow!"
+      send_txt 'status'
+    end
   end
 end
