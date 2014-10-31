@@ -44,6 +44,7 @@ Rails.application.configure do
     user_name: ENV["SMTP_USERNAME"],
     password: ENV["SMTP_PASSWORD"],
     authentication: ENV["SMTP_AUTHENTICATION"],
-    enable_starttls_auto: ENV["SMTP_STARTTLS"]
+    enable_starttls_auto: ENV["SMTP_STARTTLS"],
+    openssl_verify_mode: ENV["SMTP_OPENSSL_VERIFY_MODE"]
   }
 end
