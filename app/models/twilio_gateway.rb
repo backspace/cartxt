@@ -4,7 +4,7 @@ class TwilioGateway
   end
 
   def deliver(options)
-    @client.account.sms.messages.create(
+    @client.account.messages.create(
       to: options[:to],
       from: options[:from],
       body: options[:body]
