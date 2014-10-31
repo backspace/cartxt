@@ -11,19 +11,16 @@ feature 'Driver takes a trip' do
   scenario 'They receive their total owing at the end' do
     GatewayRepository.gateway = double
 
-    expect_txt_response "The car is yours! #{car.location_information} #{car.lockbox_information} What is the odometer reading?"
+    expect_txt_response "I am yours! #{car.location_information} #{car.lockbox_information} What is my odometer reading?"
     send_txt "borrow"
 
-    expect_txt_response "Set odometer reading to 0"
+    expect_txt_response "Thanks, I updated the records with a reading of 0km."
     send_txt "0"
 
-    expect_txt_response "Thanks! What is the odometer reading?"
+    expect_txt_response "Thanks for the ride! What is my odometer reading?"
     send_txt "return"
 
-    expect_txt_response "Set odometer reading to 200. Your balance is $64.32."
+    expect_txt_response "Thanks, I updated the records with a reading of 200km. Wow, we drove 200km! That brings your balance to $64.32."
     send_txt "200"
-
-    expect_txt_response "Your current balance is $64.32."
-    send_txt "balance"
-   end
+  end
 end

@@ -4,4 +4,8 @@ class Borrowing < ActiveRecord::Base
 
   scope :of, ->(car) { where(car_id: car.id) }
   scope :incomplete, -> { where(final: nil) }
+
+  def span
+    final - initial
+  end
 end

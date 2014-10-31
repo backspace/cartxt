@@ -16,11 +16,11 @@ feature 'Driver books a car' do
   end
 
   def booking_response_for(begins_at, ends_at)
-    "You wish to book the car from #{begins_at.to_formatted_s} to #{ends_at.to_formatted_s}? Reply with 'confirm', try another 'book from X to Y', or 'cancel'."
+    "You wish to book me from #{begins_at.to_formatted_s} to #{ends_at.to_formatted_s}? Reply with 'confirm', try another 'book from X to Y', or 'cancel'."
   end
 
   def booking_confirmation_response_for(begins_at, ends_at)
-    "You have booked the car from #{begins_at.to_formatted_s} to #{ends_at.to_formatted_s}. I am parked somewhere. When the time comes, send \"borrow\"."
+    "You have booked me from #{begins_at.to_formatted_s} to #{ends_at.to_formatted_s}. I am parked somewhere. When the time comes, send \"borrow\"."
   end
 
   let(:booking_command) { booking_command_for(booking_begins_at, booking_ends_at) }
@@ -57,7 +57,7 @@ feature 'Driver books a car' do
 
     GatewayRepository.gateway = double
 
-    expect_txt_response "Sorry, the car is already booked from #{existing_booking.begins_at.to_formatted_s} to #{existing_booking.ends_at.to_formatted_s}."
+    expect_txt_response "Sorry, I am already booked from #{existing_booking.begins_at.to_formatted_s} to #{existing_booking.ends_at.to_formatted_s}."
     send_txt_from booker.number, "book from #{booking_begins_at.to_formatted_s} to #{booking_ends_at.to_formatted_s}"
   end
 

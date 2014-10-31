@@ -7,10 +7,10 @@ module Responses
     end
 
     def body
-      body = "Set odometer reading to #{@car.odometer_reading}"
+      body = "Thanks, I updated the records with a reading of #{@car.odometer_reading}km."
 
       unless @car.borrowed?
-        body << ". Your balance is #{ActionController::Base.helpers.number_to_currency(@sharer.balance)}."
+        body << " Wow, we drove #{@borrowing.span}km! That brings your balance to #{ActionController::Base.helpers.number_to_currency(@sharer.balance)}."
       end
 
       body

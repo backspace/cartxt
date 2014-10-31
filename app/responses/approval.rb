@@ -6,7 +6,7 @@ module Responses
     end
 
     def body
-      "You were approved by an admin! Welcome to the car share."
+      "You are now approved to share me."
     end
   end
 end

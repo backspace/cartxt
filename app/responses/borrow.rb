@@ -1,7 +1,7 @@
 module Responses
   class Borrow < AbstractResponse
     def body
-      "The car is yours!#{details} #{NextBookingFormatter.new(car: @from).output}What is the odometer reading?"
+      "I am yours!#{details} #{NextBookingFormatter.new(car: @from).output}What is my odometer reading?"
     end
 
     private

@@ -7,7 +7,7 @@ module Responses
     end
 
     def body
-      "You wish to book the car from #{@booking.begins_at.to_formatted_s} to #{@booking.ends_at.to_formatted_s}? Reply with 'confirm', try another 'book from X to Y', or 'cancel'."
+      "You wish to book me from #{@booking.begins_at.to_formatted_s} to #{@booking.ends_at.to_formatted_s}? Reply with 'confirm', try another 'book from X to Y', or 'cancel'."
     end
   end
 end

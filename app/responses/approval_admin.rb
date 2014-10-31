@@ -8,7 +8,7 @@ module Responses
     end
 
     def body
-      "I have welcomed #{@approvee.name} to the car share."
+      "I have welcomed #{@approvee.name} to share me."
     end
   end
 end

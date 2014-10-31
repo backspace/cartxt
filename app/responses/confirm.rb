@@ -6,7 +6,7 @@ module Responses
     end
 
     def body
-      "You have booked the car from #{@booking.begins_at.to_formatted_s} to #{@booking.ends_at.to_formatted_s}.#{location} When the time comes, send \"borrow\"."
+      "You have booked me from #{@booking.begins_at.to_formatted_s} to #{@booking.ends_at.to_formatted_s}.#{location} When the time comes, send \"borrow\"."
     end
 
     private
