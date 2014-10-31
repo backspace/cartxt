@@ -10,27 +10,27 @@ module Commands
       elsif sharer.unnamed?
         Name.new(car: car, sharer: sharer, name: @txt.body)
       elsif sharer.admin? && @txt.body.starts_with?('approve')
-        Approve.new(car: car, sharer: sharer, unapproved_sharer_number: @txt.body.split[1..-1].join(" "))
+        Approve.new(car: car, sharer: sharer, unapproved_sharer_number: command_parameters)
       elsif sharer.admin? && @txt.body.starts_with?('reject')
-        Reject.new(car: car, sharer: sharer, unapproved_sharer_number: @txt.body.split[1..-1].join(" "))
-      elsif @txt.body == 'status'
+        Reject.new(car: car, sharer: sharer, unapproved_sharer_number: command_parameters)
+      elsif command == 'status'
         Status.new(car: car, sharer: sharer)
-      elsif @txt.body == 'borrow'
+      elsif command == 'borrow'
         Borrow.new(car: car, sharer: sharer)
-      elsif @txt.body == 'return'
+      elsif command == 'return'
         Return.new(car: car, sharer: sharer)
-      elsif @txt.body == 'balance'
+      elsif command == 'balance'
         Balance.new(car: car, sharer: sharer)
-      elsif @txt.body == 'join'
+      elsif command == 'join'
         Join.new(car: car, sharer: sharer)
-      elsif @txt.body.starts_with? 'book'
-        Book.new(car: car, sharer: sharer, booking_string: @txt.body['book '.length..-1])
-      elsif @txt.body == 'confirm'
+      elsif command == 'book'
+        Book.new(car: car, sharer: sharer, booking_string: command_parameters)
+      elsif command == 'confirm'
         Confirm.new(car: car, sharer: sharer)
-      elsif @txt.body == 'cancel'
+      elsif command == 'cancel'
         Cancel.new(car: car, sharer: sharer)
-      elsif @txt.body.starts_with? 'gas'
-        Gas.new(car: car, sharer: sharer, cost_string: @txt.body[' gas'.length..-1])
+      elsif command == 'gas'
+        Gas.new(car: car, sharer: sharer, cost_string: command_parameters)
       else
         OdometerReport.new(car: car, sharer: sharer, reading: @txt.body)
       end
@@ -44,5 +44,18 @@ module Commands
     def sharer
       Sharer.find_by(number: @txt.from) || Sharer.new(number: @txt.from)
     end
+
+    def command
+      @txt.body.split.first.downcase
+    end
+
+    def command_parameters
+      if @txt.body.include? " "
+        @txt.body[@txt.body.index(" ") + 1..-1]
+      else
+        ""
+      end
+    end
+
   end
 end
