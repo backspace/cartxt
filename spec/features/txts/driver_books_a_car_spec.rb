@@ -5,7 +5,7 @@ feature 'Driver books a car' do
     Rails.application
   end
 
-  let!(:car) { FactoryGirl.create :car }
+  let!(:car) { FactoryGirl.create :car, location_information: "I am parked somewhere." }
   let!(:booker) { FactoryGirl.create :sharer }
 
   let!(:booking_begins_at) { (Time.now + 1.day).change(hour: 15, min: 0, sec: 0) }
@@ -20,7 +20,7 @@ feature 'Driver books a car' do
   end
 
   def booking_confirmation_response_for(begins_at, ends_at)
-    "You have booked the car from #{begins_at.to_formatted_s} to #{ends_at.to_formatted_s}."
+    "You have booked the car from #{begins_at.to_formatted_s} to #{ends_at.to_formatted_s}. I am parked somewhere. When the time comes, send \"borrow\"."
   end
 
   let(:booking_command) { booking_command_for(booking_begins_at, booking_ends_at) }
