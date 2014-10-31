@@ -24,6 +24,8 @@ gem 'aasm'
 gem 'momentjs-rails'
 gem 'fullcalendar-rails'
 
+gem 'exception_notification'
+
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller', :platforms=>[:mri_21]

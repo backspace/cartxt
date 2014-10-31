@@ -87,3 +87,10 @@ Rails.application.configure do
     enable_starttls_auto: ENV["SMTP_STARTTLS"]
   }
 end
+
+Cartxt::Application.config.middleware.use ExceptionNotification::Rack,
+  :email => {
+    :email_prefix => "[cartxt] ",
+    :sender_address => %{"car" <car@chromatin.ca>},
+    :exception_recipients => %w{car@chromatin.ca}
+  }
