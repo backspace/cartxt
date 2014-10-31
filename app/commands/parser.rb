@@ -9,9 +9,9 @@ module Commands
         ForwardRejection.new(car: car, sharer: sharer, txt: @txt.body)
       elsif sharer.unnamed?
         Name.new(car: car, sharer: sharer, name: @txt.body)
-      elsif sharer.admin? && @txt.body.starts_with?('approve')
+      elsif sharer.admin? && command == 'approve'
         Approve.new(car: car, sharer: sharer, unapproved_sharer_number: command_parameters)
-      elsif sharer.admin? && @txt.body.starts_with?('reject')
+      elsif sharer.admin? && command == 'reject'
         Reject.new(car: car, sharer: sharer, unapproved_sharer_number: command_parameters)
       elsif command == 'status'
         Status.new(car: car, sharer: sharer)
