@@ -12,10 +12,12 @@ class TxtsController < ApplicationController
     rescue StandardError => exception
       error_txt = Txt.new(from: params[:To], to: params[:From], body: "Sorry, there was an error! This is a work in progress.")
 
-      gateway.deliver(from: error_txt.from, to: error_txt.to, body: error_txt.body)
+      gateway.deliver(from: error_txt.from, to: error_txt.to, body: error_txt.body) unless Rails.env.test?
       error_txt.save
 
       ExceptionNotifier.notify_exception(exception, env: request.env)
+
+      throw exception if Rails.env.test?
     end
 
     render nothing: true
