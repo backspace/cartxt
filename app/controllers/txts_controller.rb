@@ -9,7 +9,7 @@ class TxtsController < ApplicationController
   def create
     begin
       ProcessIncomingTxtService.new(txt, gateway).process
-    rescue Exception => exception
+    rescue StandardError => exception
       error_txt = Txt.new(from: params[:To], to: params[:From], body: "Sorry, there was an error! This is a work in progress.")
 
       gateway.deliver(from: error_txt.from, to: error_txt.to, body: error_txt.body)
