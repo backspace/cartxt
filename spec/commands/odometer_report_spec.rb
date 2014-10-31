@@ -32,7 +32,7 @@ describe Commands::OdometerReport do
         expect(car).to receive(:borrowed?).and_return false
       end
 
-      it 'sets the odometer reading, completes the borrowing, and generates a response' do
+      it 'sets the odometer reading, completes the borrowing, updates the sharer balance, and generates a response' do
         borrowings = double
         borrowing = double(initial: 0)
         expect(Borrowing).to receive(:of).with(car).and_return borrowings
@@ -40,6 +40,10 @@ describe Commands::OdometerReport do
 
         expect(borrowing).to receive(:final=).with(reading)
         expect(borrowing).to receive(:save)
+
+        expect(borrowing).to receive(:final).and_return(reading)
+        expect(sharer).to receive(:balance=).with(sharer.balance + car.rate*(reading - borrowing.initial))
+        expect(sharer).to receive(:save)
 
         expect(Responses::OdometerReport).to receive(:new).with(car: car, sharer: sharer, borrowing: borrowing).and_return(response = double)
 

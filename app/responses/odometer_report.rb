@@ -10,7 +10,7 @@ module Responses
       body = "Set odometer reading to #{@car.odometer_reading}"
 
       unless @car.borrowed?
-        body << ". Your balance is #{ActionController::Base.helpers.number_to_currency(@sharer.balance + @car.rate*(@car.odometer_reading - @borrowing.initial))}."
+        body << ". Your balance is #{ActionController::Base.helpers.number_to_currency(@sharer.balance)}."
       end
 
       body

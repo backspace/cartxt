@@ -6,6 +6,7 @@ module Commands
       @reading = options[:reading]
     end
 
+    # FIXME so many responsibilities!
     def execute
       begin
         car.accept_report!(nil, @reading)
@@ -18,6 +19,9 @@ module Commands
 
           borrowing.final = @reading
           borrowing.save
+
+          sharer.balance = sharer.balance + car.rate*(borrowing.final - borrowing.initial)
+          sharer.save
 
           @responses.push Responses::OdometerReport.new(car: car, sharer: sharer, borrowing: borrowing)
         end

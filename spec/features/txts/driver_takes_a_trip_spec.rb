@@ -22,5 +22,8 @@ feature 'Driver takes a trip' do
 
     expect_txt_response "Set odometer reading to 200. Your balance is $64.32."
     send_txt "200"
-  end
+
+    expect_txt_response "Your current balance is $64.32."
+    send_txt "balance"
+   end
 end
