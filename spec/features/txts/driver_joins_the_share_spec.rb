@@ -5,9 +5,7 @@ feature 'Driver joins the share' do
     Rails.application
   end
 
-  before do
-    Car.create(number: 'Bot')
-  end
+  let!(:car) { FactoryGirl.create :car, number: 'Bot', description: "I am an ugly car." }
 
   let(:joiner) { FactoryGirl.create :sharer, :unknown, name: "Joiner", number: "#joiner" }
   let(:admin) { FactoryGirl.create :sharer, :admin, number: '#admin' }
@@ -15,7 +13,7 @@ feature 'Driver joins the share' do
   scenario 'They are asked their name and the admin approves' do
     GatewayRepository.gateway = double
 
-    expect_txt_response_to joiner.number, "Hello there! To join in sharing me, please reply with your name."
+    expect_txt_response_to joiner.number, "Hello there! #{car.description} To join in sharing me, please reply with your name."
     send_txt_from joiner.number, 'join'
 
     expect_txt_response_to joiner.number, "Nice to meet you, #{joiner.name}. Please wait while I check in."

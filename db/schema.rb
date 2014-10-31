@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141031012040) do
+ActiveRecord::Schema.define(version: 20141031202116) do
 
   create_table "bookings", force: true do |t|
     t.integer  "car_id"
@@ -44,6 +44,7 @@ ActiveRecord::Schema.define(version: 20141031012040) do
     t.float    "rate"
     t.string   "location_information"
     t.string   "lockbox_information"
+    t.string   "description"
   end
 
   create_table "sharers", force: true do |t|
