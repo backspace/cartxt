@@ -16,8 +16,9 @@
             =image_tag('car.svg')
             cartxt
         .lead txt-driven<br/>car-share
-        %ul.nav
-          =render 'layouts/navigation_links'
+        %nav
+          %ul.nav
+            =render 'layouts/navigation_links'
         = render 'layouts/messages'
       .content
         = yield
