@@ -23,16 +23,23 @@ feature 'Driver books a car' do
     "You have booked me from #{begins_at.to_formatted_s} to #{ends_at.to_formatted_s}. I am parked somewhere. When the time comes, send \"borrow\"."
   end
 
+  def admin_booking_notification_for(sharer, begins_at, ends_at)
+    "#{sharer.name}, at number #{sharer.number}, has booked me from #{begins_at.to_formatted_s} to #{ends_at.to_formatted_s}."
+  end
+
   let(:booking_command) { booking_command_for(booking_begins_at, booking_ends_at) }
   let(:booking_response) { booking_response_for(booking_begins_at, booking_ends_at) }
 
-  scenario 'They receive a reply that they have booked the car and the booking is visible on the site', js: true do
+  scenario 'They receive a reply that they have booked the car, admins are notified, and the booking is visible on the site', js: true do
     GatewayRepository.gateway = double
 
     expect_txt_response booking_response
     send_txt_from booker.number, booking_command
 
+    nosy_admin = FactoryGirl.create :sharer, :admin, :notified_of_bookings
+
     expect_txt_response booking_confirmation_response_for(booking_begins_at, booking_ends_at)
+    expect_txt_response_to nosy_admin.number, admin_booking_notification_for(booker, booking_begins_at, booking_ends_at)
     send_txt_from booker.number, "confirm"
 
     user = FactoryGirl.create :user

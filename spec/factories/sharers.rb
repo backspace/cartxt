@@ -14,5 +14,9 @@ FactoryGirl.define do
     trait :admin do
       role 'admin'
     end
+
+    trait :notified_of_bookings do
+      notify_of_bookings true
+    end
   end
 end

@@ -20,9 +20,14 @@ describe Commands::Confirm do
       expect(Responses::Confirm).to receive(:new).with(car: car, sharer: sharer, booking: unconfirmed_booking).and_return(response = double)
       expect(unconfirmed_booking).to receive(:confirm!)
 
+      expect(Sharer).to receive(:admin).and_return(admins = double)
+      expect(admins).to receive(:notify_of_bookings).and_return([admin = double])
+      expect(Responses::ConfirmAdminNotification).to receive(:new).with(car: car, booker: sharer, admin: admin, booking: unconfirmed_booking).and_return(notification = double)
+
       confirm.execute
 
       expect(confirm.responses).to include(response)
+      expect(confirm.responses).to include(notification)
     end
   end
 

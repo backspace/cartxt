@@ -3,6 +3,8 @@ class Sharer < ActiveRecord::Base
 
   enum role: [:user, :admin]
 
+  scope :notify_of_bookings, -> { where(notify_of_bookings: true) }
+
   def set_default_role
     self.role ||= :user
   end
