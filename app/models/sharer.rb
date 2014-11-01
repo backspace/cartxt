@@ -4,6 +4,7 @@ class Sharer < ActiveRecord::Base
   enum role: [:user, :admin]
 
   scope :notify_of_bookings, -> { where(notify_of_bookings: true) }
+  scope :receive_copies, -> {where(receive_copies: true) }
 
   def set_default_role
     self.role ||= :user
