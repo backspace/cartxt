@@ -26,7 +26,7 @@ feature 'Driver books a car' do
   end
 
   def admin_booking_notification_for(sharer, begins_at, ends_at)
-    "#{sharer.name}, at number #{sharer.number}, has booked me #{Formatters::Booking.new(OpenStruct.new(begins_at: begins_at, ends_at: ends_at)).format}."
+    "#{sharer.name} #{sharer.number}, has booked me #{Formatters::Booking.new(OpenStruct.new(begins_at: begins_at, ends_at: ends_at)).format}."
   end
 
   let(:booking_command) { booking_command_for(booking_begins_at, booking_ends_at) }

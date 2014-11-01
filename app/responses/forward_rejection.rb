@@ -8,7 +8,7 @@ module Responses
     end
 
     def body
-      "Rejected sharer #{@rejected_sharer.name} at number #{@rejected_sharer.number} sent this and I ignored it: #{@rejected_txt}"
+      "Rejected sharer #{Formatters::Sharer.new(@rejected_sharer).format} sent this and I ignored it: #{@rejected_txt}"
     end
   end
 end

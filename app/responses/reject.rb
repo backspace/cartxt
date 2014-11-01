@@ -7,7 +7,7 @@ module Responses
     end
 
     def body
-      "I silently rejected #{@rejectee.name}, at number #{@rejectee.number}."
+      "I silently rejected #{Formatters::Sharer.new(@rejectee).format}."
     end
   end
 end

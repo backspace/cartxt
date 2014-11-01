@@ -9,7 +9,7 @@ module Responses
     end
 
     def body
-      "#{@booker.name}, at number #{@booker.number}, has booked me #{Formatters::Booking.new(@booking).format}."
+      "#{Formatters::Sharer.new(@booker).format}, has booked me #{Formatters::Booking.new(@booking).format}."
     end
   end
 end
