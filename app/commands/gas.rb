@@ -14,7 +14,7 @@ module Commands
 
     private
     def parsed_cost
-      @parsed_cost ||= @cost_string.to_f
+      @parsed_cost ||= Utilities::CurrencyParser.new(@cost_string).parse
     end
   end
 end
