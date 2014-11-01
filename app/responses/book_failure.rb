@@ -6,7 +6,7 @@ module Responses
     end
 
     def body
-      "Sorry, I am already booked from #{@conflicting_booking.begins_at.to_formatted_s} to #{@conflicting_booking.ends_at.to_formatted_s}."
+      "Sorry, I am already booked #{Formatters::Booking.new(@conflicting_booking).format}."
     end
   end
 end

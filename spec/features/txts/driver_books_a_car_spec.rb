@@ -15,16 +15,18 @@ feature 'Driver books a car' do
     "book from #{begins_at.to_formatted_s} to #{ends_at.to_formatted_s}" 
   end
 
+  # FIXME maybe questionable to use a formatter here?
+
   def booking_response_for(begins_at, ends_at)
-    "You wish to book me from #{begins_at.to_formatted_s} to #{ends_at.to_formatted_s}? Reply with 'confirm', try another 'book from X to Y', or 'cancel'."
+    "You wish to book me #{Formatters::Booking.new(OpenStruct.new(begins_at: begins_at, ends_at: ends_at)).format}? Reply with 'confirm', try another 'book from X to Y', or 'cancel'."
   end
 
   def booking_confirmation_response_for(begins_at, ends_at)
-    "You have booked me from #{begins_at.to_formatted_s} to #{ends_at.to_formatted_s}. I am parked somewhere. When the time comes, send \"borrow\"."
+    "You have booked me #{Formatters::Booking.new(OpenStruct.new(begins_at: begins_at, ends_at: ends_at)).format}. I am parked somewhere. When the time comes, send \"borrow\"."
   end
 
   def admin_booking_notification_for(sharer, begins_at, ends_at)
-    "#{sharer.name}, at number #{sharer.number}, has booked me from #{begins_at.to_formatted_s} to #{ends_at.to_formatted_s}."
+    "#{sharer.name}, at number #{sharer.number}, has booked me #{Formatters::Booking.new(OpenStruct.new(begins_at: begins_at, ends_at: ends_at)).format}."
   end
 
   let(:booking_command) { booking_command_for(booking_begins_at, booking_ends_at) }
@@ -64,7 +66,7 @@ feature 'Driver books a car' do
 
     GatewayRepository.gateway = double
 
-    expect_txt_response "Sorry, I am already booked from #{existing_booking.begins_at.to_formatted_s} to #{existing_booking.ends_at.to_formatted_s}."
+    expect_txt_response "Sorry, I am already booked #{Formatters::Booking.new(existing_booking).format}."
     send_txt_from booker.number, "book from #{booking_begins_at.to_formatted_s} to #{booking_ends_at.to_formatted_s}"
   end
 

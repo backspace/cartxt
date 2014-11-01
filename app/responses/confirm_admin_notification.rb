@@ -9,7 +9,7 @@ module Responses
     end
 
     def body
-      "#{@booker.name}, at number #{@booker.number}, has booked me from #{@booking.begins_at.to_formatted_s} to #{@booking.ends_at.to_formatted_s}."
+      "#{@booker.name}, at number #{@booker.number}, has booked me #{Formatters::Booking.new(@booking).format}."
     end
   end
 end
