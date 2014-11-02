@@ -2,6 +2,8 @@ class TxtsController < ApplicationController
   skip_before_filter :verify_authenticity_token, only: :create
   before_filter :validate_twilio_request, only: :create if Rails.env.production?
 
+  before_filter :require_admin, only: :index
+
   def index
     @txts = Txt.all
   end
@@ -52,5 +54,11 @@ class TxtsController < ApplicationController
     signature = env['HTTP_X_TWILIO_SIGNATURE']
 
     validator.validate url, parameters, signature
+  end
+
+  def require_admin
+    authenticate_user!
+
+    redirect_to root_path unless current_user.admin?
   end
 end

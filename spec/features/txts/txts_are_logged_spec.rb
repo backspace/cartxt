@@ -9,6 +9,10 @@ feature 'Txts are logged' do
     # FIXME centralise gateway double?
     GatewayRepository.gateway = NullGateway.new
 
+    # FIXME use Warden login?
+    admin = FactoryGirl.create(:user, :admin)
+    signin(admin.email, admin.password)
+
     # FIXME must have a car for now
     FactoryGirl.create(:car)
     send_txt 'status'
