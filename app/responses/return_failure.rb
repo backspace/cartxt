@@ -1,6 +1,6 @@
 module Responses
-  class ReturnFailure < AbstractResponse
-    def body
+  class ReturnFailure < DynamicResponse
+    def default_body
       "The car has already been returned!"
     end
   end

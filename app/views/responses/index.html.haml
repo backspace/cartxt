@@ -1,0 +1,6 @@
+-@responses.each do |klass, response_model|
+  %h2=klass.name.demodulize
+  =form_for response_model do |f|
+    =f.hidden_field :name
+    =f.text_area :body, id: response_model.name
+    =f.submit 'Save', id: "#{response_model.name}_submit"

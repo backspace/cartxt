@@ -55,10 +55,4 @@ class TxtsController < ApplicationController
 
     validator.validate url, parameters, signature
   end
-
-  def require_admin
-    authenticate_user!
-
-    redirect_to root_path unless current_user.admin?
-  end
 end

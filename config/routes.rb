@@ -8,4 +8,5 @@ Rails.application.routes.draw do
 
   resources :txts, only: [:index, :create]
   resources :bookings
+  resources :responses
 end

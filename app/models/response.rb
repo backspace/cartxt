@@ -1,2 +1,2 @@
-class Response < OpenStruct
+class Response < ActiveRecord::Base
 end
