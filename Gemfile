@@ -24,6 +24,8 @@ gem 'aasm'
 gem 'momentjs-rails'
 gem 'fullcalendar-rails'
 
+gem 'liquid'
+
 gem 'exception_notification'
 
 group :development do

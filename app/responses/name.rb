@@ -1,7 +1,7 @@
 module Responses
-  class Name < AbstractResponse
-    def body
-      "Nice to meet you, #{@to.name}. Please wait while I check in."
+  class Name < DynamicResponse
+    def default_body
+      "Nice to meet you, {{sender_name}}. Please wait while I check in."
     end
   end
 end

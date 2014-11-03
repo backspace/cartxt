@@ -1,11 +1,7 @@
 module Responses
   class DynamicResponse < AbstractResponse
     def body
-      if find_response
-        find_response.body
-      else
-        default_body
-      end
+      Liquid::Template.parse(unrendered_body).render('sender_name' => @sharer.name)
     end
 
     def self.find_or_build_response
@@ -21,6 +17,14 @@ module Responses
 
     def searchable_class_name
       self.class.name.demodulize.underscore
+    end
+
+    def unrendered_body
+      if find_response
+        find_response.body
+      else
+        default_body
+      end
     end
   end
 end

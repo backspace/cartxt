@@ -2,7 +2,7 @@ class ResponsesController < ApplicationController
   before_filter :require_admin
 
   def index
-    @responses = [Responses::ReturnFailure].reduce({}) do |hash, klass|
+    @responses = [Responses::ReturnFailure, Responses::Name].reduce({}) do |hash, klass|
       hash[klass] = klass.find_or_build_response
       hash
     end
