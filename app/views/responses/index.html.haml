@@ -3,10 +3,12 @@
     %tr
       %th Name
       %th Description
+      %th Default response
   -@responses.each do |klass, response_model|
     %tr
       %td=klass.name.demodulize
       %td=klass.description
+      %td=klass.default_body
       %td
         =form_for response_model do |f|
           =f.hidden_field :name
