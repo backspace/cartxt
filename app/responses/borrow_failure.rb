@@ -1,6 +1,6 @@
 module Responses
-  class BorrowFailure < AbstractResponse
-    def body
+  class BorrowFailure < DynamicResponse
+    def default_body
       "Sorry, I am already being borrowed!"
     end
   end

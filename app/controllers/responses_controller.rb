@@ -2,7 +2,7 @@ class ResponsesController < ApplicationController
   before_filter :require_admin
 
   def index
-    @responses = [Responses::ReturnFailure, Responses::Name].reduce({}) do |hash, klass|
+    @responses = dynamic_response_classes.reduce({}) do |hash, klass|
       hash[klass] = klass.find_or_build_response
       hash
     end
@@ -25,5 +25,10 @@ class ResponsesController < ApplicationController
   private
   def response_params
     params.require(:response).permit(:name, :body)
+  end
+
+  def dynamic_response_classes
+    Dir[Rails.root.join("app", "responses", "*.rb")].each {|file| require file}
+    Responses::DynamicResponse.descendants
   end
 end
