@@ -66,7 +66,7 @@ module Responses
     end
 
     def filters
-      [Responses::Filters::Currency]
+      [Responses::Filters::Currency, Responses::Filters::Spacing]
     end
   end
 end

@@ -39,7 +39,7 @@ describe Responses::DynamicResponse do
     expect(Responses::Presenters::Car).to receive(:new).with(car).and_return car_presenter = double
     expect(Responses::Presenters::Test).to receive(:new).with(test_object).and_return test_object_presenter = double
 
-    expect(template).to receive(:render).with({'sender' => sender_presenter, 'car' => car_presenter, 'an_integer' => an_integer, 'test_object' => test_object_presenter, 'a_string' => a_string}, filters: [Responses::Filters::Currency]).and_return(rendered = :rendered)
+    expect(template).to receive(:render).with({'sender' => sender_presenter, 'car' => car_presenter, 'an_integer' => an_integer, 'test_object' => test_object_presenter, 'a_string' => a_string}, filters: [Responses::Filters::Currency, Responses::Filters::Spacing]).and_return(rendered = :rendered)
     expect(response_body).to eq(rendered)
   end
 end
