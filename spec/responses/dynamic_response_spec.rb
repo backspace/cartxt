@@ -5,6 +5,7 @@ describe Responses::DynamicResponse do
   let(:car) { double(:car) }
   let(:an_integer) { 30 }
   let(:test_object) { double(:test_object) }
+  let(:a_string) { "string" }
 
   module Responses
     module Presenters
@@ -17,6 +18,7 @@ describe Responses::DynamicResponse do
     class Test < DynamicResponse
       expose :an_integer
       expose :test_object, class: Responses::Presenters::Test
+      expose :a_string, input_name: :differently_named_string
 
       def self.default_body
         "This is the default body."
@@ -25,7 +27,7 @@ describe Responses::DynamicResponse do
   end
 
   def response_body
-    Responses::Test.new(sharer: sharer, car: car, an_integer: an_integer, test_object: test_object).body
+    Responses::Test.new(sharer: sharer, car: car, an_integer: an_integer, test_object: test_object, differently_named_string: a_string).body
   end
 
   it 'returns the rendered body' do
@@ -37,7 +39,7 @@ describe Responses::DynamicResponse do
     expect(Responses::Presenters::Car).to receive(:new).with(car).and_return car_presenter = double
     expect(Responses::Presenters::Test).to receive(:new).with(test_object).and_return test_object_presenter = double
 
-    expect(template).to receive(:render).with('sender' => sender_presenter, 'car' => car_presenter, 'an_integer' => an_integer, 'test_object' => test_object_presenter).and_return(rendered = :rendered)
+    expect(template).to receive(:render).with('sender' => sender_presenter, 'car' => car_presenter, 'an_integer' => an_integer, 'test_object' => test_object_presenter, 'a_string' => a_string).and_return(rendered = :rendered)
     expect(response_body).to eq(rendered)
   end
 end

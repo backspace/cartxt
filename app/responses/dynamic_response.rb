@@ -54,8 +54,14 @@ module Responses
     end
 
     def extract_exposed_options(options)
-      @@exposed.keys.each do |instance_variable|
-        instance_variable_set "@#{instance_variable}", options[instance_variable]
+      @@exposed.each do |instance_variable, options_hash|
+        if options_hash[:input_name].present?
+          options_value = options[options_hash[:input_name]]
+        else
+          options_value = options[instance_variable]
+        end
+
+        instance_variable_set "@#{instance_variable}", options_value
       end
     end
   end
