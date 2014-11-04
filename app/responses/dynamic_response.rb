@@ -5,14 +5,12 @@ module Responses
     end
 
     def self.find_or_build_response
-      # FIXME hackery
-      instance = new({})
-      instance.send(:find_response) || Response.new(name: instance.send(:searchable_class_name))
+      Utilities::DynamicResponseFinder.new(self).response
     end
 
     private
     def find_response
-      @response_model ||= Response.find_by(name: searchable_class_name)
+      self.class.find_or_build_response
     end
 
     def searchable_class_name
@@ -20,11 +18,7 @@ module Responses
     end
 
     def unrendered_body
-      if find_response
-        find_response.body
-      else
-        default_body
-      end
+      find_response.body
     end
 
     def self.description(description = nil)
