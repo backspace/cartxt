@@ -1,7 +1,7 @@
 module Responses
   module Presenters
     class Car < Liquid::Drop
-      delegate :returned?, to: :@car
+      delegate :returned?, :location_information, to: :@car
 
       def initialize(car)
         @car = car
