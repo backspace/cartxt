@@ -1,7 +1,7 @@
 module Responses
   class DynamicResponse < AbstractResponse
     def body
-      Liquid::Template.parse(unrendered_body).render('sender' => Responses::Presenters::Sharer.new(@sharer))
+      Liquid::Template.parse(unrendered_body).render('sender' => Responses::Presenters::Sharer.new(@sharer), 'car' => Responses::Presenters::Car.new(@car))
     end
 
     def self.find_or_build_response

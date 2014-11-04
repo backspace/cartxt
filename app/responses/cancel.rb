@@ -1,11 +1,13 @@
 module Responses
-  class Cancel < AbstractResponse
+  class Cancel < DynamicResponse
+    description "Sent when a sharer cancels a proposed booking."
+
     def initialize(options)
       super
       @booking = options[:booking]
     end
 
-    def body
+    def self.default_body
       "Okay, I canceled your booking request."
     end
   end

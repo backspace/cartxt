@@ -2,6 +2,7 @@ describe Responses::DynamicResponse do
   let(:default_body) { "This is the default body." }
 
   let(:sharer) { double(name: :name) }
+  let(:car) { double }
 
   module Responses
     class Test < DynamicResponse
@@ -12,7 +13,7 @@ describe Responses::DynamicResponse do
   end
 
   def response_body
-    Responses::Test.new(sharer: sharer).body
+    Responses::Test.new(sharer: sharer, car: car).body
   end
 
   it 'returns the rendered body' do
@@ -21,7 +22,9 @@ describe Responses::DynamicResponse do
     expect(Liquid::Template).to receive(:parse).with(body).and_return(template = double)
 
     expect(Responses::Presenters::Sharer).to receive(:new).with(sharer).and_return sender = double
-    expect(template).to receive(:render).with('sender' => sender).and_return(rendered = :rendered)
+    expect(Responses::Presenters::Car).to receive(:new).with(car).and_return car = double
+
+    expect(template).to receive(:render).with('sender' => sender, 'car' => car).and_return(rendered = :rendered)
     expect(response_body).to eq(rendered)
   end
 end
