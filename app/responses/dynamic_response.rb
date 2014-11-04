@@ -13,10 +13,6 @@ module Responses
       self.class.find_or_build_response
     end
 
-    def searchable_class_name
-      self.class.name.demodulize.underscore
-    end
-
     def unrendered_body
       find_response.body
     end
