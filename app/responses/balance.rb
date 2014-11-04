@@ -1,12 +1,7 @@
 module Responses
-  class Balance < AbstractResponse
-    def initialize(options)
-      @from = options[:car]
-      @to = options[:sharer]
-    end
-
-    def body
-      "Your current balance is #{ActionController::Base.helpers.number_to_currency(@to.balance)}."
+  class Balance < DynamicResponse
+    def self.default_body
+      "Your current balance is {{sender.balance | as_currency}}."
     end
   end
 end

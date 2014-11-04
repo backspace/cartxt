@@ -9,7 +9,7 @@ module Responses
     end
 
     def body
-      Liquid::Template.parse(unrendered_body).render(template_parameters)
+      Liquid::Template.parse(unrendered_body).render(template_parameters, filters: filters)
     end
 
     def self.find_or_build_response
@@ -63,6 +63,10 @@ module Responses
 
         instance_variable_set "@#{instance_variable}", options_value
       end
+    end
+
+    def filters
+      [Responses::Filters::Currency]
     end
   end
 end
