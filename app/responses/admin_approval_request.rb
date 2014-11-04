@@ -1,14 +1,14 @@
 module Responses
-  class AdminApprovalRequest < AbstractResponse
+  class AdminApprovalRequest < DynamicResponse
+    expose :prospective_approvee, class: Responses::Presenters::Sharer, input_name: :sharer
+
     def initialize(options)
       super
-
       @to = options[:admin]
-      @prospective_approvee = options[:sharer]
     end
 
-    def body
-      "#{@prospective_approvee.name}, from number #{@prospective_approvee.number}, would like to join. Reply with \"approve #{@prospective_approvee.number}\" (or reject)."
+    def self.default_body
+      "{{prospective_approvee.name}}, from number {{prospective_approvee.number}}, would like to join. Reply with \"approve {{prospective_approvee.number}}\" (or reject)."
     end
   end
 end
