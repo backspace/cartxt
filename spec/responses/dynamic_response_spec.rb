@@ -2,18 +2,30 @@ describe Responses::DynamicResponse do
   let(:default_body) { "This is the default body." }
 
   let(:sharer) { double(name: :name) }
-  let(:car) { double }
+  let(:car) { double(:car) }
+  let(:an_integer) { 30 }
+  let(:test_object) { double(:test_object) }
 
   module Responses
+    module Presenters
+      class Test
+        def initialize(object)
+        end
+      end
+    end
+
     class Test < DynamicResponse
-      def default_body
+      expose :an_integer
+      expose :test_object, class: Responses::Presenters::Test
+
+      def self.default_body
         "This is the default body."
       end
     end
   end
 
   def response_body
-    Responses::Test.new(sharer: sharer, car: car).body
+    Responses::Test.new(sharer: sharer, car: car, an_integer: an_integer, test_object: test_object).body
   end
 
   it 'returns the rendered body' do
@@ -21,10 +33,11 @@ describe Responses::DynamicResponse do
     expect(finder).to receive(:response).and_return response = double(body: body = double)
     expect(Liquid::Template).to receive(:parse).with(body).and_return(template = double)
 
-    expect(Responses::Presenters::Sharer).to receive(:new).with(sharer).and_return sender = double
-    expect(Responses::Presenters::Car).to receive(:new).with(car).and_return car = double
+    expect(Responses::Presenters::Sharer).to receive(:new).with(sharer).and_return sender_presenter = double
+    expect(Responses::Presenters::Car).to receive(:new).with(car).and_return car_presenter = double
+    expect(Responses::Presenters::Test).to receive(:new).with(test_object).and_return test_object_presenter = double
 
-    expect(template).to receive(:render).with('sender' => sender, 'car' => car).and_return(rendered = :rendered)
+    expect(template).to receive(:render).with('sender' => sender_presenter, 'car' => car_presenter, 'an_integer' => an_integer, 'test_object' => test_object_presenter).and_return(rendered = :rendered)
     expect(response_body).to eq(rendered)
   end
 end
