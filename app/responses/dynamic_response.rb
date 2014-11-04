@@ -26,5 +26,13 @@ module Responses
         default_body
       end
     end
+
+    def self.description(description = nil)
+      if description
+        @description = description
+      else
+        @description
+      end
+    end
   end
 end
