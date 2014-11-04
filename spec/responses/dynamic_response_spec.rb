@@ -19,7 +19,9 @@ describe Responses::DynamicResponse do
     expect(Utilities::DynamicResponseFinder).to receive(:new).with(Responses::Test).and_return finder = double
     expect(finder).to receive(:response).and_return response = double(body: body = double)
     expect(Liquid::Template).to receive(:parse).with(body).and_return(template = double)
-    expect(template).to receive(:render).with('sender_name' => sharer.name).and_return(rendered = :rendered)
+
+    expect(Responses::Presenters::Sharer).to receive(:new).with(sharer).and_return sender = double
+    expect(template).to receive(:render).with('sender' => sender).and_return(rendered = :rendered)
     expect(response_body).to eq(rendered)
   end
 end

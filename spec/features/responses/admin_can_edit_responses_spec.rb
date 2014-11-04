@@ -31,7 +31,7 @@ feature "Admin can edit responses" do
     sharer.status = "unnamed"
     sharer.save
 
-    name_response = "Hello, {{sender_name}}!"
+    name_response = "Hello, {{sender.name}}!"
 
     GatewayRepository.gateway = double
 
