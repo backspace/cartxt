@@ -1,15 +1,16 @@
 module Responses
-  class ConfirmAdminNotification < AbstractResponse
+  class ConfirmAdminNotification < DynamicResponse
+    expose :booker, class: Presenters::Sharer
+    expose :booking, class: Presenters::Booking
+
     def initialize(options)
       super
 
       @to = options[:admin]
-      @booker = options[:booker]
-      @booking = options[:booking]
     end
 
-    def body
-      "#{Formatters::Sharer.new(@booker).format}, has booked me #{Formatters::Booking.new(@booking).format}."
+    def self.default_body
+      "{{booker.formatted}}, has booked me {{booking.formatted}}."
     end
   end
 end

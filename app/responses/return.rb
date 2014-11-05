@@ -1,7 +1,7 @@
 module Responses
-  class Return < AbstractResponse
-    def body
-      "Thanks for the ride! #{afterspace_potential_content([@car.location_information, @car.lockbox_information])}What is my odometer reading?"
+  class Return < DynamicResponse
+    def self.default_body
+      "Thanks for the ride! {{car.location_information | with_conditional_following_space }}{{car.lockbox_information | with_conditional_following_space }}What is my odometer reading?"
     end
   end
 end

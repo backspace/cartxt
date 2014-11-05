@@ -1,25 +1,9 @@
 module Responses
-  class Gas < AbstractResponse
-    def initialize(options)
-      super
-      @cost = options[:cost]
-    end
+  class Gas < DynamicResponse
+    expose :cost
 
-    def body
-      "Deducted your gas cost of #{formatted_cost}. Your balance is now #{formatted_balance}. Please submit the receipt when you return the key."
-    end
-
-    private
-    def formatted_cost
-      format(@cost)
-    end
-
-    def formatted_balance
-      format(@sharer.balance)
-    end
-
-    def format(number)
-      ActionController::Base.helpers.number_to_currency(number)
+    def self.default_body
+      "Deducted your gas cost of {{cost | as_currency }}. Your balance is now {{sender.balance | as_currency}}. Please submit the receipt when you return the key."
     end
   end
 end

@@ -1,13 +1,14 @@
 module Responses
-  class Reject < AbstractResponse
+  class Reject < DynamicResponse
+    expose :rejectee, class: Presenters::Sharer
+
     def initialize(options)
       super
       @to = options[:admin]
-      @rejectee = options[:rejectee]
     end
 
-    def body
-      "I silently rejected #{Formatters::Sharer.new(@rejectee).format}."
+    def self.default_body
+      "I silently rejected {{rejectee.formatted}}."
     end
   end
 end

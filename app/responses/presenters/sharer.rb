@@ -6,6 +6,10 @@ module Responses
       def initialize(sharer)
         @sharer = sharer
       end
+
+      def formatted
+        Formatters::Sharer.new(@sharer).format
+      end
     end
   end
 end
