@@ -2,6 +2,7 @@ class BookingConflictFinder
   def initialize(options)
     @car = options[:car]
     @proposed_booking = options[:proposed_booking]
+    @excluding = options[:excluding]
 
     find_conflicting_booking
   end
@@ -16,7 +17,7 @@ class BookingConflictFinder
 
   private
   def find_conflicting_booking
-    conflicting_bookings = @car.bookings.overlapping(@proposed_booking.begins_at, @proposed_booking.ends_at)
+    conflicting_bookings = @car.bookings.overlapping(@proposed_booking.begins_at, @proposed_booking.ends_at) - [@excluding]
 
     @conflict = conflicting_bookings.present?
     @conflicting_booking = conflicting_bookings.first
