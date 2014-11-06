@@ -12,7 +12,7 @@ module Commands
         car.accept_report!(nil, @reading)
 
         if car.borrowed?
-          Borrowing.create(car: car, sharer: sharer, initial: @reading)
+          Borrowing.create(car: car, sharer: sharer, initial: @reading, rate: car.rate)
           @responses.push Responses::OdometerReport.new(car: car, sharer: sharer)
         else
           borrowing = Borrowing.of(car).incomplete.first
