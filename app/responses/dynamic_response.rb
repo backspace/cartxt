@@ -1,11 +1,16 @@
 module Responses
-  class DynamicResponse < AbstractResponse
+  class DynamicResponse
+    attr_reader :from, :to
+
     @@exposed = {}
 
     def initialize(options)
-      super
-
       extract_exposed_options(options)
+
+      @sharer = @sender
+
+      @from = @car
+      @to = @sharer
     end
 
     def body
@@ -38,7 +43,7 @@ module Responses
     end
 
     def template_parameters
-      default_parameters = {'sender' => Responses::Presenters::Sharer.new(@sharer), 'car' => Responses::Presenters::Car.new(@car)}
+      parameters = {}
 
       @@exposed.each do |instance_variable, options_hash|
         presenter_class = options_hash[:class]
@@ -47,10 +52,10 @@ module Responses
 
         template_parameter = presenter_class.new(template_parameter) if presenter_class.present?
 
-        default_parameters[instance_variable.to_s] = template_parameter
+        parameters[instance_variable.to_s] = template_parameter
       end
 
-      default_parameters
+      parameters
     end
 
     def extract_exposed_options(options)
@@ -68,5 +73,9 @@ module Responses
     def filters
       [Responses::Filters::Currency, Responses::Filters::Spacing]
     end
+
+    # FIXME any way to have these at the top?
+    expose :car, class: Presenters::Car
+    expose :sender, class: Presenters::Sharer, input_name: :sharer
   end
 end
