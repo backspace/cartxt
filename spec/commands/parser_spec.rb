@@ -62,6 +62,15 @@ describe Commands::Parser do
               expect(parsed_command).to be(reject_double)
             end
           end
+
+          context 'when the command is a payment collection' do
+            let(:body) { 'collect X Y' }
+
+            it 'returns a Collect command' do
+              expect(Commands::Collect).to receive(:new).with(car: car, sharer: sharer, collection_string: 'X Y').and_return(collect = double)
+              expect(parsed_command).to be(collect)
+            end
+          end
         end
 
         context 'when the command is a status request' do
@@ -147,6 +156,15 @@ describe Commands::Parser do
         it 'returns a Gas command' do
           expect(Commands::Gas).to receive(:new).with(car: car, sharer: sharer, cost_string: 'X').and_return(gas = double)
           expect(parsed_command).to be(gas)
+        end
+      end
+
+      context 'when the command is a payment' do
+        let(:body) { 'pay X' }
+
+        it 'returns a Pay command' do
+          expect(Commands::Pay).to receive(:new).with(car: car, sharer: sharer, amount_string: 'X').and_return(pay = double)
+          expect(parsed_command).to be(pay)
         end
       end
 

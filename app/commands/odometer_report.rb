@@ -20,7 +20,10 @@ module Commands
           borrowing.final = @reading
           borrowing.save
 
-          sharer.balance = sharer.balance + car.rate*(borrowing.final - borrowing.initial)
+          balance_change = car.rate*(borrowing.final - borrowing.initial)
+          Transaction.create(origin: borrowing, sharer: sharer, amount: balance_change)
+
+          sharer.balance = sharer.balance + balance_change
           sharer.save
 
           @responses.push Responses::OdometerReport.new(car: car, sharer: sharer, borrowing: borrowing)

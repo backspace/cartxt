@@ -1,7 +1,7 @@
 module Responses
   module Presenters
     class Sharer < Liquid::Drop
-      delegate :name, :number, :balance, to: :@sharer
+      delegate :name, :number, :balance, :pending_payments, :pending_balance, to: :@sharer
 
       def initialize(sharer)
         @sharer = sharer

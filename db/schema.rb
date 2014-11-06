@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141106150514) do
+ActiveRecord::Schema.define(version: 20141106180847) do
 
   create_table "bookings", force: true do |t|
     t.integer  "car_id"
@@ -65,7 +65,20 @@ ActiveRecord::Schema.define(version: 20141106150514) do
     t.float    "balance",            default: 0.0
     t.boolean  "notify_of_bookings"
     t.boolean  "receive_copies"
+    t.float    "pending_payments",   default: 0.0
   end
+
+  create_table "transactions", force: true do |t|
+    t.float    "amount"
+    t.integer  "origin_id"
+    t.string   "origin_type"
+    t.integer  "sharer_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "transactions", ["origin_id", "origin_type"], name: "index_transactions_on_origin_id_and_origin_type"
+  add_index "transactions", ["sharer_id"], name: "index_transactions_on_sharer_id"
 
   create_table "txts", force: true do |t|
     t.string   "from"

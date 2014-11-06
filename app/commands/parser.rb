@@ -13,6 +13,8 @@ module Commands
         Approve.new(car: car, sharer: sharer, unapproved_sharer_number: command_parameters)
       elsif sharer.admin? && command == 'reject'
         Reject.new(car: car, sharer: sharer, unapproved_sharer_number: command_parameters)
+      elsif sharer.admin? && command == 'collect'
+        Collect.new(car: car, sharer: sharer, collection_string: command_parameters)
       elsif command == 'status'
         Status.new(car: car, sharer: sharer)
       elsif command == 'borrow'
@@ -31,6 +33,8 @@ module Commands
         Cancel.new(car: car, sharer: sharer)
       elsif command == 'gas'
         Gas.new(car: car, sharer: sharer, cost_string: command_parameters)
+      elsif command == 'pay'
+        Pay.new(car: car, sharer: sharer, amount_string: command_parameters)
       else
         OdometerReport.new(car: car, sharer: sharer, reading: @txt.body)
       end

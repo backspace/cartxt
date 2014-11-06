@@ -6,7 +6,7 @@ module Commands
     end
 
     def execute
-      sharer.balance = sharer.balance - parsed_cost
+      sharer.pending_payments = sharer.pending_payments + parsed_cost
       sharer.save
 
       @responses.push Responses::Gas.new(car: car, sharer: sharer, cost: parsed_cost)

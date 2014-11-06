@@ -42,7 +42,11 @@ describe Commands::OdometerReport do
         expect(borrowing).to receive(:save)
 
         expect(borrowing).to receive(:final).and_return(reading)
-        expect(sharer).to receive(:balance=).with(sharer.balance + borrowing.rate*(reading - borrowing.initial))
+
+        balance_change = borrowing.rate*(reading - borrowing.initial)
+        expect(Transaction).to receive(:create).with(amount: balance_change, origin: borrowing, sharer: sharer)
+
+        expect(sharer).to receive(:balance=).with(sharer.balance + balance_change)
         expect(sharer).to receive(:save)
 
         expect(Responses::OdometerReport).to receive(:new).with(car: car, sharer: sharer, borrowing: borrowing).and_return(response = double)

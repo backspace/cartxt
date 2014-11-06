@@ -39,4 +39,8 @@ class Sharer < ActiveRecord::Base
     self.name = new_name
     save
   end
+
+  def pending_balance
+    balance - pending_payments
+  end
 end
