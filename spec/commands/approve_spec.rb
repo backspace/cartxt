@@ -12,10 +12,10 @@ describe Commands::Approve do
     expect(unapproved_sharer).to receive(:approve!)
 
     approval_admin_response = double
-    expect(Responses::ApprovalAdmin).to receive(:new).with(car: car, admin: sharer, approvee: unapproved_sharer).and_return approval_admin_response
+    expect(Responses::ApproveAdmin).to receive(:new).with(car: car, admin: sharer, approvee: unapproved_sharer).and_return approval_admin_response
 
     approval_approvee_response = double
-    expect(Responses::Approval).to receive(:new).with(car: car, approvee: unapproved_sharer).and_return approval_approvee_response
+    expect(Responses::Approve).to receive(:new).with(car: car, approvee: unapproved_sharer).and_return approval_approvee_response
 
     approve.execute
 

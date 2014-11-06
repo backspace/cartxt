@@ -12,7 +12,7 @@ describe Commands::Name do
     expect(Sharer).to receive(:admin).and_return [admin]
 
     expect(Responses::Name).to receive(:new).with(car: car, sharer: sharer).and_return(sharer_response = double)
-    expect(Responses::AdminApprovalRequest).to receive(:new).with(car: car, admin: admin, sharer: sharer).and_return(admin_response = double)
+    expect(Responses::ApproveAdminRequest).to receive(:new).with(car: car, admin: admin, sharer: sharer).and_return(admin_response = double)
 
     name.execute
 

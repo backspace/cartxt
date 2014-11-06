@@ -1,5 +1,5 @@
 module Responses
-  class ApprovalAdmin < DynamicResponse
+  class ApproveAdmin < DynamicResponse
     expose :approvee, class: Responses::Presenters::Sharer
 
     def initialize(options)

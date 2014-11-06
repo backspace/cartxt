@@ -11,8 +11,8 @@ module Commands
 
       unapproved_sharer.approve!
 
-      @responses.push Responses::ApprovalAdmin.new(car: car, admin: sharer, approvee: unapproved_sharer)
-      @responses.push Responses::Approval.new(car: car, approvee: unapproved_sharer)
+      @responses.push Responses::ApproveAdmin.new(car: car, admin: sharer, approvee: unapproved_sharer)
+      @responses.push Responses::Approve.new(car: car, approvee: unapproved_sharer)
     end
   end
 end

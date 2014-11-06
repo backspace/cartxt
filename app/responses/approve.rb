@@ -1,5 +1,5 @@
 module Responses
-  class Approval < DynamicResponse
+  class Approve < DynamicResponse
     description "Sent after an admin approves a new car-sharer."
 
     def initialize(options)

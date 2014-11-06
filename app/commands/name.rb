@@ -12,7 +12,7 @@ module Commands
       @responses.push Responses::Name.new(car: car, sharer: sharer)
 
       Sharer.admin.each do |admin|
-        @responses.push Responses::AdminApprovalRequest.new(car: car, sharer: sharer, admin: admin)
+        @responses.push Responses::ApproveAdminRequest.new(car: car, sharer: sharer, admin: admin)
       end
     end
   end
