@@ -2,7 +2,8 @@ module Responses
   class DynamicResponse
     attr_reader :from, :to
 
-    @@exposed = {}
+    class_attribute :exposed
+    self.exposed = {}
 
     def initialize(options)
       extract_exposed_options(options)
@@ -39,13 +40,15 @@ module Responses
     end
 
     def self.expose(instance_variable, options_hash = {})
-      @@exposed[instance_variable] = options_hash
+      new_hash = {}
+      new_hash[instance_variable] = options_hash
+      self.exposed = self.exposed.merge(new_hash)
     end
 
     def template_parameters
       parameters = {}
 
-      @@exposed.each do |instance_variable, options_hash|
+      self.class.exposed.each do |instance_variable, options_hash|
         presenter_class = options_hash[:class]
 
         template_parameter = instance_variable_get "@#{instance_variable}"
@@ -59,7 +62,7 @@ module Responses
     end
 
     def extract_exposed_options(options)
-      @@exposed.each do |instance_variable, options_hash|
+      self.class.exposed.each do |instance_variable, options_hash|
         if options_hash[:input_name].present?
           options_value = options[options_hash[:input_name]]
         else
@@ -75,7 +78,7 @@ module Responses
     end
 
     # FIXME any way to have these at the top?
-    expose :car, class: Presenters::Car
-    expose :sender, class: Presenters::Sharer, input_name: :sharer
+    expose :car, class: Responses::Presenters::Car
+    expose :sender, class: Responses::Presenters::Sharer, input_name: :sharer
   end
 end
