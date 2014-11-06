@@ -5,7 +5,7 @@ feature 'Driver borrows a car that has been booked' do
     Rails.application
   end
 
-  let!(:car) { FactoryGirl.create :car }
+  let!(:car) { FactoryGirl.create :car, rate: 1 }
 
   let!(:booker) { FactoryGirl.create :sharer }
   let!(:borrower) { FactoryGirl.create :sharer, number: '#borrower' }
@@ -20,7 +20,7 @@ feature 'Driver borrows a car that has been booked' do
   scenario 'They get a notice of the next booking' do
     GatewayRepository.gateway = double
 
-    expect_txt_response_to borrower.number, "I am yours! Note that it is booked as of #{booking_begins_at.to_formatted_s}. What is my odometer reading?"
+    expect_txt_response_to borrower.number, "I am yours! My current rate is $1.00/km. Note that it is booked as of #{booking_begins_at.to_formatted_s}. What is my odometer reading?"
     send_txt_from borrower.number, "borrow"
   end
 end
