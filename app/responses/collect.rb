@@ -1,5 +1,7 @@
 module Responses
   class Collect < DynamicResponse
+    description "Sent when an admin has recorded receiving a payment."
+
     expose :amount
     expose :collectee, presenter: "Sharer"
 

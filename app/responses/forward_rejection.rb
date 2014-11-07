@@ -1,5 +1,7 @@
 module Responses
   class ForwardRejection < DynamicResponse
+    description "Sent to admins when a sharer who has been rejected sends a message."
+
     expose :rejected_sharer, presenter: "Sharer"
     expose :rejected_txt
 

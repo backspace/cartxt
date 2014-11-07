@@ -1,5 +1,7 @@
 module Responses
   class ApproveAdminRequest < DynamicResponse
+    description "Asks an admin to approve a new sharer."
+
     expose :prospective_approvee, presenter: "Sharer", input_name: :sharer
 
     default_body "{{prospective_approvee.name}}, from number {{prospective_approvee.number}}, would like to join. Reply with \"approve {{prospective_approvee.number}}\" (or reject)."

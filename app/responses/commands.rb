@@ -1,5 +1,7 @@
 module Responses
   class Commands < DynamicResponse
+    description "Lists the available commands."
+
     default_body <<-TXT.strip_heredoc
       Available commands:
 
