@@ -8,7 +8,7 @@ module Responses
     end
 
     def self.default_body
-      "{{sender.formatted }} is submitting a payment of {{amount | as_currency }}."
+      "{{sender.formatted}} is submitting a payment of {{amount | as_currency }}."
     end
   end
 end
