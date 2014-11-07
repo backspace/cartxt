@@ -20,7 +20,7 @@ feature 'Driver joins the share' do
     expect_txt_response_to admin.number, "#{joiner.name}, from number #{joiner.number}, would like to join. Reply with \"approve #{joiner.number}\" (or reject)."
     send_txt_from joiner.number, joiner.name
 
-    expect_txt_response_to joiner.number, "You are now approved to share me."
+    expect_txt_response_to joiner.number, "You are now approved to share me. I understand commands like \"book\", \"borrow\", and \"status\". For a list of commands say \"commands\" and for help on a specific command like \"book\", say \"commands book\"."
     expect_txt_response_to admin.number, "I have welcomed #{joiner.name} to share me."
     send_txt_from admin.number, "approve #{joiner.number}"
   end

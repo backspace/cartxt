@@ -36,7 +36,7 @@ module Parsers
       elsif command == 'pay'
         Commands::Pay.new(car: car, sharer: sharer, amount_string: command_parameters)
       elsif command == 'commands'
-        Commands::Commands.new(car: car, sharer: sharer)
+        Commands::Commands.new(car: car, sharer: sharer, parameter: command_parameters)
       else
         Commands::OdometerReport.new(car: car, sharer: sharer, reading: @txt.body)
       end

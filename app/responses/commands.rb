@@ -13,6 +13,10 @@ module Responses
         pay
 
         status
+
+
+        For help on a specific command, say:
+        \"commands commandname\"
       TXT
     end
   end

@@ -74,11 +74,11 @@ describe Parsers::Command do
         end
 
         context 'when the command is the command request' do
-          let(:body) { 'commands' }
+          let(:body) { 'commands x' }
 
           it 'returns the Commands command' do
             commands_double = double
-            expect(Commands::Commands).to receive(:new).with(car: car, sharer: sharer).and_return commands_double
+            expect(Commands::Commands).to receive(:new).with(car: car, sharer: sharer, parameter: 'x').and_return commands_double
 
             expect(parsed_command).to be(commands_double)
           end
