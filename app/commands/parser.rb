@@ -35,6 +35,8 @@ module Commands
         Gas.new(car: car, sharer: sharer, cost_string: command_parameters)
       elsif command == 'pay'
         Pay.new(car: car, sharer: sharer, amount_string: command_parameters)
+      elsif command == 'commands'
+        Commands.new(car: car, sharer: sharer)
       else
         OdometerReport.new(car: car, sharer: sharer, reading: @txt.body)
       end

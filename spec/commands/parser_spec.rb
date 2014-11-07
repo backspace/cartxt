@@ -73,6 +73,17 @@ describe Commands::Parser do
           end
         end
 
+        context 'when the command is the command request' do
+          let(:body) { 'commands' }
+
+          it 'returns the Commands command' do
+            commands_double = double
+            expect(Commands::Commands).to receive(:new).with(car: car, sharer: sharer).and_return commands_double
+
+            expect(parsed_command).to be(commands_double)
+          end
+        end
+
         context 'when the command is a status request' do
           let(:body) { 'status' }
 
