@@ -29,6 +29,6 @@ class ResponsesController < ApplicationController
 
   def dynamic_response_classes
     Dir[Rails.root.join("app", "responses", "*.rb")].each {|file| require file}
-    Responses::DynamicResponse.descendants
+    Responses::DynamicResponse.descendants.sort_by{|klass| klass.name}
   end
 end
