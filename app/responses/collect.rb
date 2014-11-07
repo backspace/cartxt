@@ -1,7 +1,7 @@
 module Responses
   class Collect < DynamicResponse
     expose :amount
-    expose :collectee, class: Presenters::Sharer
+    expose :collectee, presenter: "Sharer"
 
     def initialize(options)
       super

@@ -1,6 +1,6 @@
 module Responses
   class ForwardRejection < DynamicResponse
-    expose :rejected_sharer, class: Presenters::Sharer
+    expose :rejected_sharer, presenter: "Sharer"
     expose :rejected_txt
 
     def initialize(options)

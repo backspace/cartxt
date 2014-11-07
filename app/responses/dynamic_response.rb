@@ -49,11 +49,14 @@ module Responses
       parameters = {}
 
       self.class.exposed.each do |instance_variable, options_hash|
-        presenter_class = options_hash[:class]
-
         template_parameter = instance_variable_get "@#{instance_variable}"
 
-        template_parameter = presenter_class.new(template_parameter) if presenter_class.present?
+        presenter_class_name = options_hash[:presenter]
+
+        if presenter_class_name.present?
+          presenter_class = "Responses::Presenters::#{presenter_class_name}".constantize
+          template_parameter = presenter_class.new(template_parameter)
+        end
 
         parameters[instance_variable.to_s] = template_parameter
       end
@@ -78,7 +81,7 @@ module Responses
     end
 
     # FIXME any way to have these at the top?
-    expose :car, class: Responses::Presenters::Car
-    expose :sender, class: Responses::Presenters::Sharer, input_name: :sharer
+    expose :car, presenter: "Car"
+    expose :sender, presenter: "Sharer", input_name: :sharer
   end
 end

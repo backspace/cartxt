@@ -1,7 +1,7 @@
 module Responses
   class ConfirmAdminNotification < DynamicResponse
-    expose :booker, class: Presenters::Sharer
-    expose :booking, class: Presenters::Booking
+    expose :booker, presenter: "Sharer"
+    expose :booking, presenter: "Booking"
 
     def initialize(options)
       super

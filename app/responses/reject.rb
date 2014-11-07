@@ -1,6 +1,6 @@
 module Responses
   class Reject < DynamicResponse
-    expose :rejectee, class: Presenters::Sharer
+    expose :rejectee, presenter: "Sharer"
 
     def initialize(options)
       super

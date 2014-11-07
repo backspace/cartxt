@@ -17,7 +17,7 @@ describe Responses::DynamicResponse do
 
     class Test < DynamicResponse
       expose :an_integer
-      expose :test_object, class: Responses::Presenters::Test
+      expose :test_object, presenter: "Test"
       expose :a_string, input_name: :differently_named_string
 
       def self.default_body

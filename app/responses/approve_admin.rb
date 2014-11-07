@@ -1,6 +1,6 @@
 module Responses
   class ApproveAdmin < DynamicResponse
-    expose :approvee, class: Responses::Presenters::Sharer
+    expose :approvee, presenter: "Sharer"
 
     def initialize(options)
       super
