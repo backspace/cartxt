@@ -1,4 +1,4 @@
-describe Utilities::CurrencyParser do
+describe Parsers::Currency do
   let(:examples) do
     {
       '$5.00' => 5.0,
@@ -9,7 +9,7 @@ describe Utilities::CurrencyParser do
 
   it 'parses currency values' do
     examples.each do |string, value|
-      result = Utilities::CurrencyParser.new(string).parse
+      result = Parsers::Currency.new(string).parse
       expect(result).to eq(value)
     end
   end

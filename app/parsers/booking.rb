@@ -1,5 +1,5 @@
-module Utilities
-  class BookingParser
+module Parsers
+  class Booking
     def initialize(string)
       @string = string
     end

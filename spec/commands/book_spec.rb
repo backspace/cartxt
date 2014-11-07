@@ -7,7 +7,7 @@ describe Commands::Book do
 
   before do
     booking_parser = double
-    expect(Utilities::BookingParser).to receive(:new).with(booking_string).and_return booking_parser
+    expect(Parsers::Booking).to receive(:new).with(booking_string).and_return booking_parser
 
     expect(booking_parser).to receive(:parse).and_return parsed_booking
   end

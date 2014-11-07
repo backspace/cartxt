@@ -8,7 +8,7 @@ describe Commands::Collect do
   it 'deducts the cost from the pending payments, balance, and responds' do
     collect = Commands::Collect.new(car: car, sharer: admin, collection_string: collection_string)
 
-    expect(Utilities::CurrencyParser).to receive(:new).with("2").and_return(parser = double)
+    expect(Parsers::Currency).to receive(:new).with("2").and_return(parser = double)
     expect(parser).to receive(:parse).and_return(parsed_cost = 2)
 
     expect(Sharer).to receive(:find_by).with(number: "#SharerNumber").and_return(sharer)

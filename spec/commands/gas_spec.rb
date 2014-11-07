@@ -7,7 +7,7 @@ describe Commands::Gas do
   it 'deducts the cost from the balance and responds' do
     gas = Commands::Gas.new(car: car, sharer: sharer, cost_string: cost_string)
 
-    expect(Utilities::CurrencyParser).to receive(:new).with(cost_string).and_return(parser = double)
+    expect(Parsers::Currency).to receive(:new).with(cost_string).and_return(parser = double)
     expect(parser).to receive(:parse).and_return(parsed_cost = 2)
 
     expect(sharer).to receive(:pending_payments=).with(sharer.pending_payments + parsed_cost)

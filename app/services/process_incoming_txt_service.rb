@@ -5,7 +5,7 @@ class ProcessIncomingTxtService
   end
 
   def process
-    parser = Commands::Parser.new(@txt)
+    parser = Parsers::Command.new(@txt)
     command = parser.parse
 
     command.execute

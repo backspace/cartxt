@@ -7,7 +7,7 @@ module Commands
     end
 
     def execute
-      parsed_booking = Utilities::BookingParser.new(@booking_string).parse
+      parsed_booking = Parsers::Booking.new(@booking_string).parse
 
       unconfirmed_bookings = Booking.unconfirmed_for(@car, @sharer)
 

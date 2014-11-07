@@ -4,7 +4,7 @@ describe ProcessIncomingTxtService do
 
   it 'delegates to the parser and delivers the responses' do
     parser = double
-    expect(Commands::Parser).to receive(:new).with(txt).and_return parser
+    expect(Parsers::Command).to receive(:new).with(txt).and_return parser
 
     command = double
     expect(parser).to receive(:parse).and_return command

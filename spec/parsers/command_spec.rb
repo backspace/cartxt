@@ -1,9 +1,9 @@
-describe Commands::Parser do
+describe Parsers::Command do
   let(:txt) { Txt.new(from: :from, to: :to, body: body) }
   let(:car) { :car }
 
   def parsed_command
-    Commands::Parser.new(txt).parse
+    Parsers::Command.new(txt).parse
   end
 
   before do

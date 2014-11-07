@@ -18,7 +18,7 @@ module Commands
 
     private
     def parsed_amount
-      @parsed_amount ||= Utilities::CurrencyParser.new(@collection_string.split.first).parse
+      @parsed_amount ||= Parsers::Currency.new(@collection_string.split.first).parse
     end
 
     def collectee

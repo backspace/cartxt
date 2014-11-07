@@ -1,5 +1,5 @@
-module Utilities
-  class CurrencyParser
+module Parsers
+  class Currency
     def initialize(string)
       @string = string
     end

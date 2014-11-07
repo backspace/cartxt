@@ -7,7 +7,7 @@ describe Commands::Pay do
   it "adds the amount to the sharer's pending payments" do
     pay = Commands::Pay.new(car: car, sharer: sharer, amount_string: amount_string)
 
-    expect(Utilities::CurrencyParser).to receive(:new).with(amount_string).and_return(parser = double(:currency_parser))
+    expect(Parsers::Currency).to receive(:new).with(amount_string).and_return(parser = double(:currency_parser))
     expect(parser).to receive(:parse).and_return(parsed_amount = 2)
 
     expect(sharer).to receive(:pending_payments=).with(sharer.pending_payments + parsed_amount)
