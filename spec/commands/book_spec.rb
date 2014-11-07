@@ -29,7 +29,7 @@ describe Commands::Book do
       it 'updates the existing booking and responds' do
         book = Commands::Book.new(car: car, sharer: sharer, booking_string: booking_string)
 
-        expect(Responses::BookUpdate).to receive(:new).with(car: car, sharer: sharer, booking:unconfirmed_booking).and_return(response = double)
+        expect(Responses::Book).to receive(:new).with(car: car, sharer: sharer, booking:unconfirmed_booking).and_return(response = double)
 
         expect(unconfirmed_booking).to receive(:begins_at=).with(parsed_booking.begins_at)
         expect(unconfirmed_booking).to receive(:ends_at=).with(parsed_booking.ends_at)

@@ -20,9 +20,7 @@ describe Responses::DynamicResponse do
       expose :test_object, presenter: "Test"
       expose :a_string, input_name: :differently_named_string
 
-      def self.default_body
-        "This is the default body."
-      end
+      default_body "This is the default body."
     end
   end
 

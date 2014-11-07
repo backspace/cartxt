@@ -28,7 +28,7 @@ module Commands
           unconfirmed_booking.ends_at = parsed_booking.ends_at
           unconfirmed_booking.save
 
-          @responses.push Responses::BookUpdate.new(car: car, sharer: sharer, booking: unconfirmed_booking)
+          @responses.push Responses::Book.new(car: car, sharer: sharer, booking: unconfirmed_booking)
         end
       else
         conflict_finder = BookingConflictFinder.new(car: car, proposed_booking: parsed_booking)

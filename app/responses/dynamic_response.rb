@@ -39,6 +39,14 @@ module Responses
       end
     end
 
+    def self.default_body(default_body = nil)
+      if default_body
+        @default_body = default_body
+      else
+        @default_body
+      end
+    end
+
     def self.expose(instance_variable, options_hash = {})
       new_hash = {}
       new_hash[instance_variable] = options_hash
