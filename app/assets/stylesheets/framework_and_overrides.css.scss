@@ -94,3 +94,57 @@ section {
   @extend .col-sm-4;
   @extend .col-sm-offset-5;
 }
+
+body.wide {
+  .sidebar-container {
+    @extend .row;
+  }
+
+  .content-container {
+    @extend .row;
+  }
+
+  .sidebar {
+    position: relative;
+
+    @extend .col-xs-12;
+    @extend .col-sm-12;
+    @extend .col-md-12;
+    @extend .col-lg-12;
+
+    @extend .col-xs-offset-0;
+    @extend .col-sm-offset-0;
+    @extend .col-md-offset-0;
+    @extend .col-lg-offset-0;
+
+    .lead, .title {
+      display: none;
+    }
+
+    a.home, nav {
+      float: left;
+    }
+
+    ul {
+      float: left;
+
+      li {
+        display: inline;
+        float: left;
+        margin-right: 1em;
+      }
+    }
+  }
+
+  .content {
+    @extend .col-xs-12;
+    @extend .col-sm-12;
+    @extend .col-md-12;
+    @extend .col-lg-12;
+
+    @extend .col-xs-offset-0;
+    @extend .col-sm-offset-0;
+    @extend .col-md-offset-0;
+    @extend .col-lg-offset-0;
+  }
+}
