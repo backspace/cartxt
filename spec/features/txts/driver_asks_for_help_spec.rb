@@ -41,7 +41,8 @@ feature 'Driver asks for help' do
     expect_txt_response "balance: tells you your current balance owing, including any payments you have made that have not been received."
     send_txt "commands balance"
 
-    expect_txt_response "book: lets you book the car in the future. For now, it is brittle and requests must be of this form: \"book from YYYY-MM-DD HH:MM to YYYY-MM-DD HH:MM\"."
+    # FIXME is it useful to repeat the default bodies in this spec?
+    expect_txt_response Responses::CommandsBook.default_body
     send_txt "commands book"
 
     expect_txt_response "confirm: when you have issued a \"book\" command, use \"confirm\" to confirm that the booking start and end were correctly interpreted."

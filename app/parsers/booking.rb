@@ -10,7 +10,7 @@ module Parsers
     end
 
     private
-    ON_DATE_FROM_TIME_TO_TIME = /on (.*) from (.*) to (.*)/
+    ON_DATE_FROM_TIME_TO_TIME = /(on )?(.*) from (.*) to (.*)/
     FROM_DATETIME_TO_DATETIME = /from (.*) to (.*)/
 
     def matches?(regex)
@@ -18,18 +18,18 @@ module Parsers
     end
 
     def parse_from_datetime_to_datetime
-      begins_at_string, ends_at_string = @string.strip.split("from ").join("").split(" to ")
+      @string =~ FROM_DATETIME_TO_DATETIME
 
-      begins_at = Time.zone.parse(begins_at_string)
-      ends_at = Time.zone.parse(ends_at_string)
+      begins_at = Chronic.parse("#{$1}")
+      ends_at = Chronic.parse("#{$2}")
 
       OpenStruct.new(begins_at: begins_at, ends_at: ends_at)
     end
 
     def parse_on_date_from_time_to_time
       @string =~ ON_DATE_FROM_TIME_TO_TIME
-      begins_at = Time.zone.parse("#{$1} #{$2}")
-      ends_at = Time.zone.parse("#{$1} #{$3}")
+      begins_at = Chronic.parse("#{$2} #{$3}")
+      ends_at = Chronic.parse("#{$2} #{$4}")
 
       OpenStruct.new(begins_at: begins_at, ends_at: ends_at)
     end

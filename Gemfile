@@ -26,6 +26,8 @@ gem 'fullcalendar-rails'
 
 gem 'liquid'
 
+gem 'chronic'
+
 gem 'exception_notification'
 
 group :development do
