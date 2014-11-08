@@ -9,7 +9,7 @@ module Responses
 
       def responses
         if @validator.conflict?
-          [Responses::BookFailure.new(car: @car, sharer: @sharer, conflicting_booking: @validator.conflicting_booking)]
+          [Responses::BookConflictFailure.new(car: @car, sharer: @sharer, conflicting_booking: @validator.conflicting_booking)]
         elsif @validator.past?
           [Responses::BookPastFailure.new(car: @car, sharer: @sharer, booking: @validator.booking)]
         elsif @validator.reversed?

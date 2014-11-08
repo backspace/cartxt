@@ -1,5 +1,5 @@
 module Responses
-  class BookFailure < DynamicResponse
+  class BookConflictFailure < DynamicResponse
     description "Sent when a booking is blocked by an existing booking that overlaps with the proposed one."
 
     expose :conflicting_booking, presenter: "Booking"
