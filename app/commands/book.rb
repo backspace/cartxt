@@ -11,14 +11,16 @@ module Commands
 
       Services::DeletesUnconfirmedBookings.new(@car, @sharer).delete_unconfirmed_bookings
 
-      conflict_finder = BookingConflictFinder.new(car: car, proposed_booking: parsed_booking)
+      validator = Validators::Booking.new(car: car, booking: parsed_booking)
 
-      if conflict_finder.conflict?
-        @responses.push Responses::BookFailure.new(car: car, sharer: sharer, conflicting_booking: conflict_finder.conflicting_booking)
-      else
+      if validator.valid?
         booking = Booking.create(car: car, sharer: sharer, begins_at: parsed_booking.begins_at, ends_at: parsed_booking.ends_at)
 
         @responses.push Responses::Book.new(car: car, sharer: sharer, booking: booking)
+      else
+        Responses::Generators::BookFailure.new(car: car, sharer: sharer, validator: validator).responses.each do |response|
+          @responses.push response
+        end
       end
     end
   end

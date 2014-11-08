@@ -12,10 +12,10 @@ describe Commands::Book do
     expect(booking_parser).to receive(:parse).and_return parsed_booking
   end
 
-  context 'when there is no overlapping booking' do
+  context 'when the booking is valid' do
     before do
-      expect(BookingConflictFinder).to receive(:new).with(car: car, proposed_booking: parsed_booking).and_return(finder = double)
-      expect(finder).to receive(:conflict?).and_return false
+      expect(Validators::Booking).to receive(:new).with(car: car, booking: parsed_booking).and_return validator = double
+      expect(validator).to receive(:valid?).and_return true
     end
 
     it 'deletes existing bookings, creates a booking, and responds' do
@@ -34,22 +34,20 @@ describe Commands::Book do
     end
   end
 
-  context 'when there is an overlapping booking' do
-    let(:conflicting_booking) { double(:conflicting_booking) }
-
+  context 'when the booking is invalid' do
     before do
-      expect(BookingConflictFinder).to receive(:new).with(car: car, proposed_booking: parsed_booking).and_return(finder = double)
-      expect(finder).to receive(:conflict?).and_return true
-      expect(finder).to receive(:conflicting_booking).and_return(conflicting_booking)
+      expect(Validators::Booking).to receive(:new).with(car: car, booking: parsed_booking).and_return @validator = double
+      expect(@validator).to receive(:valid?).and_return false
     end
 
-    it 'deletes existing bookings and responds with BookFailure' do
+    it 'deletes existing bookings and delegates to the BookFailure generator' do
       expect(Services::DeletesUnconfirmedBookings).to receive(:new).with(car, sharer).and_return deleter = double
       expect(deleter).to receive(:delete_unconfirmed_bookings)
 
       book = Commands::Book.new(car: car, sharer: sharer, booking_string: booking_string)
 
-      expect(Responses::BookFailure).to receive(:new).with(car: car, sharer: sharer, conflicting_booking: conflicting_booking).and_return(response = double)
+      expect(Responses::Generators::BookFailure).to receive(:new).with(car: car, sharer: sharer, validator: @validator).and_return generator = double
+      expect(generator).to receive(:responses).and_return [response = double]
 
       book.execute
 
