@@ -9,8 +9,8 @@ describe Parsers::Booking do
     examples.each do |string, date_strings|
       dates = Parsers::Booking.new(string).parse
 
-      expect(date_strings.first).to eq(dates.begins_at.to_formatted_s)
-      expect(date_strings.last).to eq(dates.ends_at.to_formatted_s)
+      expect(dates.begins_at.to_formatted_s).to eq(date_strings.first)
+      expect(dates.ends_at.to_formatted_s).to eq(date_strings.last)
     end
   end
 end
