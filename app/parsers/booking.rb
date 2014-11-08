@@ -2,6 +2,8 @@ module Parsers
   class Booking
     def initialize(string)
       @string = string
+
+      Chronic.time_class = Time.zone
     end
 
     def parse
