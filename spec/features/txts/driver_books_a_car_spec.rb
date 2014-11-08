@@ -123,4 +123,11 @@ feature 'Driver books a car' do
     expect_txt_response "Sorry, you cannot book me in the past. You tried to book me #{format_booking(past_begins_at, past_ends_at)}."
     send_txt booking_command_for(past_begins_at, past_ends_at)
   end
+
+  scenario "They get a failure if the booking end is before the beginning" do
+    GatewayRepository.gateway = double
+
+    expect_txt_response "Sorry, you cannot make a booking where the end is before the beginning. You tried to book me #{format_booking(booking_ends_at, booking_begins_at)}."
+    send_txt booking_command_for(booking_ends_at, booking_begins_at)
+  end
 end

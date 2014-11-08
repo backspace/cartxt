@@ -12,6 +12,8 @@ module Responses
           [Responses::BookFailure.new(car: @car, sharer: @sharer, conflicting_booking: @validator.conflicting_booking)]
         elsif @validator.past?
           [Responses::BookPastFailure.new(car: @car, sharer: @sharer, booking: @validator.booking)]
+        elsif @validator.reversed?
+          [Responses::BookReversedFailure.new(car: @car, sharer: @sharer, booking: @validator.booking)]
         end
       end
     end

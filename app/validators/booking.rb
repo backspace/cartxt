@@ -12,7 +12,8 @@ module Validators
     def valid?
       @reason = nil
 
-      @reason = :past if booking_in_past
+      @reason = :reversed if booking_reversed?
+      @reason = :past if booking_in_past?
       @reason = :conflict if @conflict_finder.conflict?
 
       @reason == nil
@@ -26,6 +27,10 @@ module Validators
       @reason == :past
     end
 
+    def reversed?
+      @reason == :reversed
+    end
+
     def conflicting_booking
       @conflict_finder.conflicting_booking
     end
@@ -35,8 +40,12 @@ module Validators
     end
 
     private
-    def booking_in_past
+    def booking_in_past?
       @booking.begins_at < Time.now || @booking.ends_at < Time.now
+    end
+
+    def booking_reversed?
+      @booking.ends_at < @booking.begins_at
     end
   end
 end
