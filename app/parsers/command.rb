@@ -29,8 +29,8 @@ module Parsers
         Commands::Book.new(car: car, sharer: sharer, booking_string: command_parameters)
       elsif command == 'confirm'
         Commands::Confirm.new(car: car, sharer: sharer)
-      elsif command == 'cancel'
-        Commands::Cancel.new(car: car, sharer: sharer)
+      elsif command == 'abandon'
+        Commands::Abandon.new(car: car, sharer: sharer)
       elsif command == 'gas'
         Commands::Gas.new(car: car, sharer: sharer, cost_string: command_parameters)
       elsif command == 'pay'

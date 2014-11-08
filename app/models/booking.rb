@@ -17,7 +17,7 @@ class Booking < ActiveRecord::Base
     end
   end
 
-  def cancel!
+  def abandon!
     self.delete
   end
 end

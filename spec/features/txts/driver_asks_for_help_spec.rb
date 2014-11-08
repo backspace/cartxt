@@ -13,7 +13,7 @@ feature 'Driver asks for help' do
       Available commands:
 
       balance
-      book, confirm, cancel
+      book, confirm, abandon
       borrow, return
 
       gas
@@ -48,8 +48,8 @@ feature 'Driver asks for help' do
     expect_txt_response "confirm: when you have issued a \"book\" command, use \"confirm\" to confirm that the booking start and end were correctly interpreted."
     send_txt "commands confirm"
 
-    expect_txt_response "cancel: when you have issued a \"book\" command, use \"cancel\" to cancel it before confirming it."
-    send_txt "commands cancel"
+    expect_txt_response "abandon: when you have issued a \"book\" command, use \"abandon\" to abandon it before confirming it."
+    send_txt "commands abandon"
 
     expect_txt_response "borrow: start the process of borrowing the car right now."
     send_txt "commands borrow"

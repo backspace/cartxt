@@ -8,7 +8,7 @@ module Commands
         balance
         book
         confirm
-        cancel
+        abandon
         borrow
         return
         gas

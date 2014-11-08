@@ -22,7 +22,7 @@ feature 'Driver books a car' do
   # FIXME maybe questionable to use a formatter here?
 
   def booking_response_for(begins_at, ends_at)
-    "You wish to book me #{Formatters::Booking.new(OpenStruct.new(begins_at: begins_at, ends_at: ends_at)).format}? Reply with 'confirm', try another 'book from X to Y', or 'cancel'."
+    "You wish to book me #{Formatters::Booking.new(OpenStruct.new(begins_at: begins_at, ends_at: ends_at)).format}? Reply with 'confirm', try another 'book from X to Y', or 'abandon'."
   end
 
   def booking_confirmation_response_for(begins_at, ends_at)
@@ -80,8 +80,8 @@ feature 'Driver books a car' do
     expect_txt_response booking_response
     send_txt booking_command
 
-    expect_txt_response "Okay, I canceled your booking request."
-    send_txt "cancel"
+    expect_txt_response "Okay, I abandoned your booking request."
+    send_txt "abandon"
   end
 
   scenario 'They tweak the booking before confirming' do
@@ -107,11 +107,11 @@ feature 'Driver books a car' do
     send_txt "confirm"
   end
 
-  scenario 'They get a confused response if they have no booking to cancel' do
+  scenario 'They get a confused response if they have no booking to abandon' do
     GatewayRepository.gateway = double
 
-    expect_txt_response "Sorry, you have no pending booking to cancel! Try making a booking by sending \"book from X to Y\"."
-    send_txt "cancel"
+    expect_txt_response "Sorry, you have no pending booking to abandon! Try making a booking by sending \"book from X to Y\"."
+    send_txt "abandon"
   end
 
   scenario 'They get a failure if the booking is in the past' do

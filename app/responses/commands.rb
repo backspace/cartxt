@@ -6,7 +6,7 @@ module Responses
       Available commands:
 
       balance
-      book, confirm, cancel
+      book, confirm, abandon
       borrow, return
 
       gas
