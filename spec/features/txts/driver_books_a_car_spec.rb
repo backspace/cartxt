@@ -15,6 +15,10 @@ feature 'Driver books a car' do
     "book from #{begins_at.to_formatted_s} to #{ends_at.to_formatted_s}" 
   end
 
+  def format_booking(begins_at, ends_at)
+    Formatters::Booking.new(OpenStruct.new(begins_at: begins_at, ends_at: ends_at)).format
+  end
+
   # FIXME maybe questionable to use a formatter here?
 
   def booking_response_for(begins_at, ends_at)
@@ -108,5 +112,15 @@ feature 'Driver books a car' do
 
     expect_txt_response "Sorry, you have no pending booking to cancel! Try making a booking by sending \"book from X to Y\"."
     send_txt "cancel"
+  end
+
+  scenario 'They get a failure if the booking is in the past' do
+    GatewayRepository.gateway = double
+
+    past_begins_at = booking_begins_at - 5.days
+    past_ends_at = booking_ends_at - 5.days
+
+    expect_txt_response "Sorry, you cannot book me in the past. You tried to book me #{format_booking(past_begins_at, past_ends_at)}."
+    send_txt booking_command_for(past_begins_at, past_ends_at)
   end
 end
