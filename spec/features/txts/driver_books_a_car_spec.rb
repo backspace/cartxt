@@ -31,14 +31,14 @@ feature 'Driver books a car', :txt do
   let(:booking_response) { booking_response_for(booking_begins_at, booking_ends_at) }
 
   scenario 'They receive a reply that they have booked the car, admins are notified, and the booking is visible on the site', js: true do
-    expect_txt_response booking_response
-    send_txt_from booker.number, booking_command
+    expect(booker.number => booking_command).to produce_response booking_response
 
     nosy_admin = FactoryGirl.create :sharer, :admin, :notified_of_bookings
 
-    expect_txt_response booking_confirmation_response_for(booking_begins_at, booking_ends_at)
-    expect_txt_response_to nosy_admin.number, admin_booking_notification_for(booker, booking_begins_at, booking_ends_at)
-    send_txt_from booker.number, "confirm"
+    expect(booker.number => "confirm").to produce_responses({
+      nosy_admin.number => admin_booking_notification_for(booker, booking_begins_at, booking_ends_at),
+      booker.number => booking_confirmation_response_for(booking_begins_at, booking_ends_at)
+    })
 
     user = FactoryGirl.create :user
     signin(user.email, user.password)
@@ -60,52 +60,40 @@ feature 'Driver books a car', :txt do
   scenario 'They receive a reply that the car is already booked at that time' do
     existing_booking = Booking.create(car: car, begins_at: booking_begins_at - 15.minutes, ends_at: booking_ends_at + 15.minutes)
 
-    expect_txt_response "Sorry, I am already booked #{Formatters::Booking.new(existing_booking).format}."
-    send_txt_from booker.number, "book from #{booking_begins_at.to_formatted_s} to #{booking_ends_at.to_formatted_s}"
+    expect(booker.number => booking_command_for(booking_begins_at, booking_ends_at)).to produce_response "Sorry, I am already booked #{Formatters::Booking.new(existing_booking).format}."
   end
 
   scenario 'They change their mind about the booking' do
-    expect_txt_response booking_response
-    send_txt booking_command
-
-    expect_txt_response "Okay, I abandoned your booking request."
-    send_txt "abandon"
+    expect(booking_command).to produce_response booking_response
+    expect("abandon").to produce_response "Okay, I abandoned your booking request."
   end
 
   scenario 'They tweak the booking before confirming' do
-    expect_txt_response booking_response
-    send_txt booking_command
+    expect(booking_command).to produce_response booking_response
 
     new_begins_at = booking_begins_at + 2.hours
     new_ends_at = booking_ends_at + 3.hours
 
-    expect_txt_response booking_response_for(new_begins_at, new_ends_at)
-    send_txt booking_command_for(new_begins_at, new_ends_at)
-
-    expect_txt_response booking_confirmation_response_for(new_begins_at, new_ends_at)
-    send_txt "confirm"
+    expect(booking_command_for(new_begins_at, new_ends_at)).to produce_response(booking_response_for(new_begins_at, new_ends_at))
+    expect("confirm").to produce_response(booking_confirmation_response_for(new_begins_at, new_ends_at))
   end
 
   scenario 'They get a confused response if they have no booking to confirm' do
-    expect_txt_response "Sorry, you have no pending booking to confirm! Try making a booking by sending \"book from X to Y\"."
-    send_txt "confirm"
+    expect("confirm").to produce_response "Sorry, you have no pending booking to confirm! Try making a booking by sending \"book from X to Y\"."
   end
 
   scenario 'They get a confused response if they have no booking to abandon' do
-    expect_txt_response "Sorry, you have no pending booking to abandon! Try making a booking by sending \"book from X to Y\"."
-    send_txt "abandon"
+    expect("abandon").to produce_response "Sorry, you have no pending booking to abandon! Try making a booking by sending \"book from X to Y\"."
   end
 
   scenario 'They get a failure if the booking is in the past' do
     past_begins_at = booking_begins_at - 5.days
     past_ends_at = booking_ends_at - 5.days
 
-    expect_txt_response "Sorry, you cannot book me in the past. You tried to book me #{format_booking(past_begins_at, past_ends_at)}."
-    send_txt booking_command_for(past_begins_at, past_ends_at)
+    expect(booking_command_for(past_begins_at, past_ends_at)).to produce_response "Sorry, you cannot book me in the past. You tried to book me #{format_booking(past_begins_at, past_ends_at)}."
   end
 
   scenario "They get a failure if the booking end is before the beginning" do
-    expect_txt_response "Sorry, you cannot make a booking where the end is before the beginning. You tried to book me #{format_booking(booking_ends_at, booking_begins_at)}."
-    send_txt booking_command_for(booking_ends_at, booking_begins_at)
+    expect(booking_command_for(booking_ends_at, booking_begins_at)).to produce_response "Sorry, you cannot make a booking where the end is before the beginning. You tried to book me #{format_booking(booking_ends_at, booking_begins_at)}."
   end
 end

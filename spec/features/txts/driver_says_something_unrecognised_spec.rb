@@ -3,7 +3,6 @@ feature 'Driver says something unrecognised', :txt do
   let!(:sharer) { FactoryGirl.create :sharer }
 
   scenario "They receive the commands response" do
-    expect_txt_response Responses::Commands.default_body
-    send_txt "hello"
+    expect("hello").to produce_response Responses::Commands.default_body
   end
 end

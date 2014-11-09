@@ -10,7 +10,6 @@ feature 'Driver logs the odometer reading', :txt do
     @car.odometer_reading = 100
     @car.save
 
-    expect_txt_response "Unable to set odometer reading to 50, which is lower than the current reading of 100"
-    send_txt "50"
+    expect("50").to produce_response "Unable to set odometer reading to 50, which is lower than the current reading of 100"
   end
 end

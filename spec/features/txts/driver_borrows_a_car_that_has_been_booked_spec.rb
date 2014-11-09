@@ -12,7 +12,6 @@ feature 'Driver borrows a car that has been booked', :txt do
   end
 
   scenario 'They get a notice of the next booking' do
-    expect_txt_response_to borrower.number, "I am yours! My current rate is $1.00/km. Note that it is booked as of #{booking_begins_at.to_formatted_s}. What is my odometer reading?"
-    send_txt_from borrower.number, "borrow"
+    expect(borrower.number => "borrow").to produce_response(borrower.number => "I am yours! My current rate is $1.00/km. Note that it is booked as of #{booking_begins_at.to_formatted_s}. What is my odometer reading?")
   end
 end

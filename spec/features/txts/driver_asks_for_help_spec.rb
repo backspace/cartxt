@@ -23,38 +23,28 @@ feature 'Driver asks for help', :txt do
   end
 
   scenario 'They ask for the commands' do
-    expect_txt_response commands_response
-    send_txt "commands"
+    expect("commands").to produce_response(commands_response)
   end
 
   scenario 'They ask for help on different commands' do
-    expect_txt_response "balance: tells you your current balance owing, including any payments you have made that have not been received."
-    send_txt "commands balance"
+    expect("commands balance").to produce_response "balance: tells you your current balance owing, including any payments you have made that have not been received."
 
     # FIXME is it useful to repeat the default bodies in this spec?
-    expect_txt_response Responses::CommandsBook.default_body
-    send_txt "commands book"
+    expect("commands book").to produce_response Responses::CommandsBook.default_body
 
-    expect_txt_response "confirm: when you have issued a \"book\" command, use \"confirm\" to confirm that the booking start and end were correctly interpreted."
-    send_txt "commands confirm"
+    expect("commands confirm").to produce_response "confirm: when you have issued a \"book\" command, use \"confirm\" to confirm that the booking start and end were correctly interpreted."
 
-    expect_txt_response "abandon: when you have issued a \"book\" command, use \"abandon\" to abandon it before confirming it."
-    send_txt "commands abandon"
+    expect("commands abandon").to produce_response "abandon: when you have issued a \"book\" command, use \"abandon\" to abandon it before confirming it."
 
-    expect_txt_response "borrow: start the process of borrowing the car right now."
-    send_txt "commands borrow"
+    expect("commands borrow").to produce_response "borrow: start the process of borrowing the car right now."
 
-    expect_txt_response "return: after you are done with the car, say \"return\" to start the process of returning it."
-    send_txt "commands return"
+    expect("commands return").to produce_response "return: after you are done with the car, say \"return\" to start the process of returning it."
 
-    expect_txt_response "gas: when you are borrowing the car and need to buy gas, send \"gas 15.50\" or however much you buy. Submit the receipt when you return the key and the gas will be subtracted from your balance owing."
-    send_txt "commands gas"
+    expect("commands gas").to produce_response "gas: when you are borrowing the car and need to buy gas, send \"gas 15.50\" or however much you buy. Submit the receipt when you return the key and the gas will be subtracted from your balance owing."
 
-    expect_txt_response "pay: to register and submit a payment, send \"pay 13.50\" or however much you submit. Place your payment with the key and it will be subtracted from your balance owing when it is collected."
-    send_txt "commands pay"
+    expect("commands pay").to produce_response "pay: to register and submit a payment, send \"pay 13.50\" or however much you submit. Place your payment with the key and it will be subtracted from your balance owing when it is collected."
 
-    expect_txt_response "status: tells you whether the car is currently available."
-    send_txt "commands status"
+    expect("commands status").to produce_response "status: tells you whether the car is currently available."
   end
 
   context 'when they are an admin' do
@@ -64,15 +54,16 @@ feature 'Driver asks for help', :txt do
     end
 
     scenario "They also receive the admin commands response" do
-      expect_txt_response commands_response
-      expect_txt_response <<-TXT.strip_heredoc
+      expect("commands").to produce_responses [
+        commands_response,
+        <<-TXT.strip_heredoc
         Admin commands:
 
         approve, reject
         collect
         who
-      TXT
-      send_txt "commands"
+        TXT
+      ]
     end
   end
 end

@@ -5,8 +5,7 @@ feature 'Driver checks the status', :txt do
     let!(:car) { FactoryGirl.create(:car, :borrowed) }
 
     scenario 'they receive a reply that the car is not available' do
-      expect_txt_response "Sorry, I am being borrowed."
-      send_txt 'status'
+      expect("status").to produce_response "Sorry, I am being borrowed."
     end
   end
 
@@ -14,8 +13,7 @@ feature 'Driver checks the status', :txt do
     let!(:car) { FactoryGirl.create(:car) }
 
     scenario 'they receive a reply that the car is available' do
-      expect_txt_response "I am available to borrow!"
-      send_txt 'status'
+      expect("status").to produce_response "I am available to borrow!"
     end
   end
 end
