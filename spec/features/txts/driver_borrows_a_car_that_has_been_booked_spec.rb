@@ -1,10 +1,4 @@
 feature 'Driver borrows a car that has been booked', :txt do
-  include Rack::Test::Methods
-
-  def app
-    Rails.application
-  end
-
   let!(:car) { FactoryGirl.create :car, rate: 1 }
 
   let!(:booker) { FactoryGirl.create :sharer }

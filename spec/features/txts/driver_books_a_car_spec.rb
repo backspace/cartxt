@@ -1,10 +1,4 @@
 feature 'Driver books a car', :txt do
-  include Rack::Test::Methods
-
-  def app
-    Rails.application
-  end
-
   let!(:car) { FactoryGirl.create :car, location_information: "I am parked somewhere." }
   let!(:booker) { FactoryGirl.create :sharer }
 

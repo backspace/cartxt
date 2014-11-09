@@ -1,10 +1,4 @@
 feature 'Rejected sharer sends a txt', :txt do
-  include Rack::Test::Methods
-
-  def app
-    Rails.application
-  end
-
   before do
     FactoryGirl.create(:car)
   end

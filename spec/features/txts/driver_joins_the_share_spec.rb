@@ -1,10 +1,4 @@
 feature 'Driver joins the share', :txt do
-  include Rack::Test::Methods
-
-  def app
-    Rails.application
-  end
-
   let!(:car) { FactoryGirl.create :car, number: 'Bot', description: "I am an ugly car." }
 
   let(:joiner) { FactoryGirl.create :sharer, :unknown, name: "Joiner", number: "#joiner" }

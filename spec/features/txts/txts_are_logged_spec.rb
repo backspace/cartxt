@@ -1,10 +1,4 @@
 feature 'Txts are logged', :txt do
-  include Rack::Test::Methods
-
-  def app
-    Rails.application
-  end
-
   scenario 'A user can view the txts' do
     # FIXME centralise gateway double?
     GatewayRepository.gateway = NullGateway.new

@@ -1,10 +1,4 @@
 feature 'Driver logs the odometer reading', :txt do
-  include Rack::Test::Methods
-
-  def app
-    Rails.application
-  end
-
   before do
     @car = Car.new(number: 'Bot', status: 'borrowed')
     @car.save

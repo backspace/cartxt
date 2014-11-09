@@ -1,10 +1,4 @@
 feature 'Driver asks for help', :txt do
-  include Rack::Test::Methods
-
-  def app
-    Rails.application
-  end
-
   let!(:car) { FactoryGirl.create :car }
   let!(:sharer) { FactoryGirl.create :sharer }
 

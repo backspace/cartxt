@@ -1,10 +1,4 @@
 feature 'Admin checks who is sharing', :txt do
-  include Rack::Test::Methods
-
-  def app
-    Rails.application
-  end
-
   let!(:car) { FactoryGirl.create :car }
 
   let!(:admin) { FactoryGirl.create :sharer, :admin, name: "Admin", balance: 10, pending_payments: 5.50 }

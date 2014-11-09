@@ -1,10 +1,4 @@
 feature 'Driver checks the status', :txt do
-  include Rack::Test::Methods
-
-  def app
-    Rails.application
-  end
-
   let!(:sharer) { FactoryGirl.create :sharer }
 
   context 'when the car is being borrowed' do
