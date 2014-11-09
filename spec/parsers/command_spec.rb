@@ -206,6 +206,15 @@ describe Parsers::Command do
         end
       end
 
+      context 'when the command is unknown' do
+        let(:body) { 'something' }
+
+        it 'returns the Commands command' do
+          expect(Commands::Commands).to receive(:new).with(car: car, sharer: sharer).and_return(commands = double)
+          expect(parsed_command).to be(commands)
+        end
+      end
+
       context 'and the sender is rejected' do
         before do
           sharer.reject!

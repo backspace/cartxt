@@ -39,8 +39,10 @@ module Parsers
         Commands::Pay.new(car: car, sharer: sharer, amount_string: command_parameters)
       elsif command == 'commands'
         Commands::Commands.new(car: car, sharer: sharer, parameter: command_parameters)
-      else
+      elsif command_is_integer?
         Commands::OdometerReport.new(car: car, sharer: sharer, reading: @txt.body)
+      else
+        Commands::Commands.new(car: car, sharer: sharer)
       end
     end
 
@@ -65,5 +67,8 @@ module Parsers
       end
     end
 
+    def command_is_integer?
+      command.to_i.to_s == command
+    end
   end
 end
