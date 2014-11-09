@@ -7,6 +7,7 @@ module Responses
 
       approve, reject
       collect
+      who
     TXT
   end
 end

@@ -15,6 +15,8 @@ module Parsers
         Commands::Reject.new(car: car, sharer: sharer, unapproved_sharer_number: command_parameters)
       elsif sharer.admin? && command == 'collect'
         Commands::Collect.new(car: car, sharer: sharer, collection_string: command_parameters)
+      elsif sharer.admin? && command == 'who'
+        Commands::Who.new(car: car, sharer: sharer)
       elsif command == 'status'
         Commands::Status.new(car: car, sharer: sharer)
       elsif command == 'borrow'

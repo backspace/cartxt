@@ -82,6 +82,7 @@ feature 'Driver asks for help' do
 
         approve, reject
         collect
+        who
       TXT
       send_txt "commands"
     end

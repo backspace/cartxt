@@ -43,4 +43,8 @@ class Sharer < ActiveRecord::Base
   def pending_balance
     balance - pending_payments
   end
+
+  def pending_payments?
+    pending_payments > 0
+  end
 end

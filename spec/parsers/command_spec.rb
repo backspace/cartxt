@@ -71,6 +71,15 @@ describe Parsers::Command do
               expect(parsed_command).to be(collect)
             end
           end
+
+          context "when the command is a who request" do
+            let(:body) { "who" }
+
+            it "returns a Who command" do
+              expect(Commands::Who).to receive(:new).with(car: car, sharer: sharer).and_return(who = double)
+              expect(parsed_command).to be(who)
+            end
+          end
         end
 
         context 'when the command is the command request' do
