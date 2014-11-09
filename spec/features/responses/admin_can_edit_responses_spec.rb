@@ -9,7 +9,6 @@ feature "Admin can edit responses" do
   let!(:sharer) { FactoryGirl.create(:sharer) }
 
   before do
-    # FIXME Use Warden login
     admin = FactoryGirl.create(:user, :admin)
     signin(admin.email, admin.password)
   end
