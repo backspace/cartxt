@@ -6,9 +6,13 @@ module Commands
 
     def execute
       if car.may_return?
-        car.return!
+        if car.borrowed_by? sharer
+          car.return!
 
-        @responses.push Responses::Return.new(car: car, sharer: sharer)
+          @responses.push Responses::Return.new(car: car, sharer: sharer)
+        else
+          @responses.push Responses::ReturnNotBorrowerFailure.new(car: car, sharer: sharer)
+        end
       else
         @responses.push Responses::ReturnFailure.new(car: car, sharer: sharer)
       end

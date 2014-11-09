@@ -2,6 +2,7 @@ class Car < ActiveRecord::Base
   include AASM
 
   has_many :bookings
+  has_many :borrowings
 
   aasm column: :status do
     state :awaiting_final_report
@@ -34,5 +35,10 @@ class Car < ActiveRecord::Base
 
   def next_booking
     bookings.upcoming.first
+  end
+
+  def borrowed_by?(sharer)
+    # FIXME assumes one current borrowing
+    borrowings.incomplete.first.sharer == sharer
   end
 end
