@@ -5,6 +5,8 @@ feature 'Driver checks the status' do
     Rails.application
   end
 
+  let!(:sharer) { FactoryGirl.create :sharer }
+
   context 'when the car is being borrowed' do
     let!(:car) { FactoryGirl.create(:car, :borrowed) }
 

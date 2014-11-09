@@ -1,6 +1,10 @@
 FactoryGirl.define do
+  sequence :number do |n|
+    "##{n}"
+  end
+
   factory :sharer do
-    number 'Driver'
+    number
     status 'approved'
 
     trait :unknown do

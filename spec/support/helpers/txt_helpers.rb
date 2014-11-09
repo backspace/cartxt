@@ -1,7 +1,7 @@
 module Features
   module TxtHelpers
     def send_txt(body)
-      send_txt_from('Driver', body)
+      send_txt_from(Sharer.first.number, body)
     end
 
     def send_txt_from(from, body)
@@ -9,7 +9,7 @@ module Features
     end
 
     def expect_txt_response(body)
-      expect_txt_response_to 'Driver', body
+      expect_txt_response_to Sharer.first.number, body
     end
 
     def expect_txt_response_to(to, body)

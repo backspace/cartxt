@@ -15,6 +15,7 @@ feature 'Txts are logged' do
 
     # FIXME must have a car for now
     FactoryGirl.create(:car)
+    FactoryGirl.create :sharer
     send_txt 'status'
 
     visit txts_path
