@@ -1,3 +1,4 @@
+-car = Car.new
 
 .section
   .conversation
@@ -5,11 +6,11 @@
     .incoming Hello there! To join the car share, please reply with your name.
     .outgoing Nancy
     .incoming Nice to meet you, Nancy. Please wait while I check in.
-    .incoming You were approved by an admin! Welcome to the me share.
+    .incoming=render_response(Responses::Approve)
 
   .conversation
     .outgoing status
-    .incoming I am available.
+    .incoming=render_response(Responses::Status, car: car)
     .outgoing borrow
     .incoming I am yours! I am parked behind 100 Ridgeway Road. The lockbox combination is 8421.
 
