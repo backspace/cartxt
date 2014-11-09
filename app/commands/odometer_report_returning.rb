@@ -17,7 +17,7 @@ module Commands
       sharer.balance = sharer.balance + balance_change
       sharer.save
 
-      @responses.push Responses::OdometerReport.new(car: car, sharer: sharer, borrowing: borrowing)
+      @responses.push Responses::OdometerReportReturning.new(car: car, sharer: sharer, borrowing: borrowing)
     end
   end
 end
