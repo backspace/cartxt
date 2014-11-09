@@ -16,14 +16,14 @@ describe Commands::OdometerReport do
         expect(car).to receive(:borrowed?).and_return(true)
       end
 
-      it 'sets the odometer reading, creates a borrowing, and generates a response' do
-        expect(Borrowing).to receive(:create).with(car: car, sharer: sharer, initial: reading, rate: car.rate)
-
-        expect(Responses::OdometerReport).to receive(:new).with(car: car, sharer: sharer).and_return(response = double)
+      it "delegates to borrowing odometer report" do
+        expect(Commands::OdometerReportBorrowing).to receive(:new).with(car: car, sharer: sharer, reading: reading).and_return(delegate = double)
+        expect(delegate).to receive(:execute)
+        expect(delegate).to receive(:responses).and_return(responses = double)
 
         report.execute
 
-        expect(report.responses).to include(response)
+        expect(report.responses).to eq(responses)
       end
     end
 
@@ -32,28 +32,14 @@ describe Commands::OdometerReport do
         expect(car).to receive(:borrowed?).and_return false
       end
 
-      it 'sets the odometer reading, completes the borrowing, updates the sharer balance, and generates a response' do
-        borrowings = double
-        borrowing = double(initial: 0, rate: car.rate)
-        expect(Borrowing).to receive(:of).with(car).and_return borrowings
-        expect(borrowings).to receive(:incomplete).and_return [borrowing]
-
-        expect(borrowing).to receive(:final=).with(reading)
-        expect(borrowing).to receive(:save)
-
-        expect(borrowing).to receive(:final).and_return(reading)
-
-        balance_change = borrowing.rate*(reading - borrowing.initial)
-        expect(Transaction).to receive(:create).with(amount: balance_change, origin: borrowing, sharer: sharer)
-
-        expect(sharer).to receive(:balance=).with(sharer.balance + balance_change)
-        expect(sharer).to receive(:save)
-
-        expect(Responses::OdometerReport).to receive(:new).with(car: car, sharer: sharer, borrowing: borrowing).and_return(response = double)
+      it "delegates to returning odometer report" do
+        expect(Commands::OdometerReportReturning).to receive(:new).with(car: car, sharer: sharer, reading: reading).and_return(delegate = double)
+        expect(delegate).to receive(:execute)
+        expect(delegate).to receive(:responses).and_return(responses = double)
 
         report.execute
 
-        expect(report.responses).to include(response)
+        expect(report.responses).to eq(responses)
       end
     end
   end
