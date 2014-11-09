@@ -7,7 +7,8 @@ describe Commands::OdometerReportReturning do
 
   it 'sets the odometer reading, completes the borrowing, updates the sharer balance, and generates a response' do
     borrowings = double
-    borrowing = double(initial: 0, rate: car.rate)
+    borrowing_rate = 0.5
+    borrowing = double(initial: 0, rate: borrowing_rate)
     expect(Borrowing).to receive(:of).with(car).and_return borrowings
     expect(borrowings).to receive(:incomplete).and_return [borrowing]
 

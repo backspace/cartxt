@@ -11,7 +11,7 @@ module Commands
       borrowing.final = @reading
       borrowing.save
 
-      balance_change = car.rate*(borrowing.final - borrowing.initial)
+      balance_change = borrowing.rate*(borrowing.final - borrowing.initial)
       Transaction.create(origin: borrowing, sharer: sharer, amount: balance_change)
 
       sharer.balance = sharer.balance + balance_change
