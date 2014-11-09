@@ -1,4 +1,4 @@
-feature 'Driver says something unrecognised' do
+feature 'Driver says something unrecognised', :txt do
   include Rack::Test::Methods
 
   def app
@@ -9,8 +9,6 @@ feature 'Driver says something unrecognised' do
   let!(:sharer) { FactoryGirl.create :sharer }
 
   scenario "They receive the commands response" do
-    GatewayRepository.gateway = double
-
     expect_txt_response Responses::Commands.default_body
     send_txt "hello"
   end

@@ -1,4 +1,4 @@
-feature 'Driver joins the share' do
+feature 'Driver joins the share', :txt do
   include Rack::Test::Methods
 
   def app
@@ -11,8 +11,6 @@ feature 'Driver joins the share' do
   let(:admin) { FactoryGirl.create :sharer, :admin, number: '#admin' }
 
   scenario 'They are asked their name and the admin approves' do
-    GatewayRepository.gateway = double
-
     expect_txt_response_to joiner.number, "Hello there! #{car.description} To join in sharing me, please reply with your name."
     send_txt_from joiner.number, 'join'
 

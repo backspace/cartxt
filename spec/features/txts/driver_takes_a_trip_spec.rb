@@ -1,4 +1,4 @@
-feature 'Driver takes a trip' do
+feature 'Driver takes a trip', :txt do
   include Rack::Test::Methods
 
   def app
@@ -9,8 +9,6 @@ feature 'Driver takes a trip' do
   let!(:sharer) { FactoryGirl.create :sharer, balance: 0.32 }
 
   scenario 'They receive their total owing at the end' do
-    GatewayRepository.gateway = double
-
     expect_txt_response "I am yours! My current rate is $0.32/km. #{car.location_information} #{car.lockbox_information} What is my odometer reading?"
     send_txt "borrow"
 

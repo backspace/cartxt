@@ -1,4 +1,4 @@
-feature 'Driver borrows a car that has been booked' do
+feature 'Driver borrows a car that has been booked', :txt do
   include Rack::Test::Methods
 
   def app
@@ -18,8 +18,6 @@ feature 'Driver borrows a car that has been booked' do
   end
 
   scenario 'They get a notice of the next booking' do
-    GatewayRepository.gateway = double
-
     expect_txt_response_to borrower.number, "I am yours! My current rate is $1.00/km. Note that it is booked as of #{booking_begins_at.to_formatted_s}. What is my odometer reading?"
     send_txt_from borrower.number, "borrow"
   end

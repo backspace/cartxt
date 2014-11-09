@@ -1,4 +1,4 @@
-feature 'Driver checks and updates their balance' do
+feature 'Driver checks and updates their balance', :txt do
   include Rack::Test::Methods
 
   def app
@@ -10,8 +10,6 @@ feature 'Driver checks and updates their balance' do
   let!(:admin) { FactoryGirl.create :sharer, :admin, number: '#admin' }
 
   scenario 'They receive a reply with their current balance' do
-    GatewayRepository.gateway = double
-
     expect_txt_response "Your balance owing is $12.34, with pending payments of $0.00."
     send_txt "balance"
 

@@ -1,4 +1,4 @@
-feature 'Driver books a car' do
+feature 'Driver books a car', :txt do
   include Rack::Test::Methods
 
   def app
@@ -37,8 +37,6 @@ feature 'Driver books a car' do
   let(:booking_response) { booking_response_for(booking_begins_at, booking_ends_at) }
 
   scenario 'They receive a reply that they have booked the car, admins are notified, and the booking is visible on the site', js: true do
-    GatewayRepository.gateway = double
-
     expect_txt_response booking_response
     send_txt_from booker.number, booking_command
 
@@ -68,15 +66,11 @@ feature 'Driver books a car' do
   scenario 'They receive a reply that the car is already booked at that time' do
     existing_booking = Booking.create(car: car, begins_at: booking_begins_at - 15.minutes, ends_at: booking_ends_at + 15.minutes)
 
-    GatewayRepository.gateway = double
-
     expect_txt_response "Sorry, I am already booked #{Formatters::Booking.new(existing_booking).format}."
     send_txt_from booker.number, "book from #{booking_begins_at.to_formatted_s} to #{booking_ends_at.to_formatted_s}"
   end
 
   scenario 'They change their mind about the booking' do
-    GatewayRepository.gateway = double
-
     expect_txt_response booking_response
     send_txt booking_command
 
@@ -85,8 +79,6 @@ feature 'Driver books a car' do
   end
 
   scenario 'They tweak the booking before confirming' do
-    GatewayRepository.gateway = double
-
     expect_txt_response booking_response
     send_txt booking_command
 
@@ -101,22 +93,16 @@ feature 'Driver books a car' do
   end
 
   scenario 'They get a confused response if they have no booking to confirm' do
-    GatewayRepository.gateway = double
-
     expect_txt_response "Sorry, you have no pending booking to confirm! Try making a booking by sending \"book from X to Y\"."
     send_txt "confirm"
   end
 
   scenario 'They get a confused response if they have no booking to abandon' do
-    GatewayRepository.gateway = double
-
     expect_txt_response "Sorry, you have no pending booking to abandon! Try making a booking by sending \"book from X to Y\"."
     send_txt "abandon"
   end
 
   scenario 'They get a failure if the booking is in the past' do
-    GatewayRepository.gateway = double
-
     past_begins_at = booking_begins_at - 5.days
     past_ends_at = booking_ends_at - 5.days
 
@@ -125,8 +111,6 @@ feature 'Driver books a car' do
   end
 
   scenario "They get a failure if the booking end is before the beginning" do
-    GatewayRepository.gateway = double
-
     expect_txt_response "Sorry, you cannot make a booking where the end is before the beginning. You tried to book me #{format_booking(booking_ends_at, booking_begins_at)}."
     send_txt booking_command_for(booking_ends_at, booking_begins_at)
   end

@@ -1,4 +1,4 @@
-feature 'Driver asks for help' do
+feature 'Driver asks for help', :txt do
   include Rack::Test::Methods
 
   def app
@@ -29,15 +29,11 @@ feature 'Driver asks for help' do
   end
 
   scenario 'They ask for the commands' do
-    GatewayRepository.gateway = double
-
     expect_txt_response commands_response
     send_txt "commands"
   end
 
   scenario 'They ask for help on different commands' do
-    GatewayRepository.gateway = double
-
     expect_txt_response "balance: tells you your current balance owing, including any payments you have made that have not been received."
     send_txt "commands balance"
 
@@ -74,8 +70,6 @@ feature 'Driver asks for help' do
     end
 
     scenario "They also receive the admin commands response" do
-      GatewayRepository.gateway = double
-
       expect_txt_response commands_response
       expect_txt_response <<-TXT.strip_heredoc
         Admin commands:

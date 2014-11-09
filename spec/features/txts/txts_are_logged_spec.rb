@@ -1,4 +1,4 @@
-feature 'Txts are logged' do
+feature 'Txts are logged', :txt do
   include Rack::Test::Methods
 
   def app

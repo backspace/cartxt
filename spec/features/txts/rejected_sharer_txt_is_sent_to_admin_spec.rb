@@ -1,4 +1,4 @@
-feature 'Rejected sharer sends a txt' do
+feature 'Rejected sharer sends a txt', :txt do
   include Rack::Test::Methods
 
   def app
@@ -15,8 +15,6 @@ feature 'Rejected sharer sends a txt' do
   let(:txt) { 'Hi!!!!' }
 
   scenario 'Their message is forwarded to the admin' do
-    GatewayRepository.gateway = double
-
     expect_txt_response_to admin.number, "Rejected sharer #{rejected.name} #{rejected.number} sent this and I ignored it: #{txt}"
     send_txt_from rejected.number, txt
   end

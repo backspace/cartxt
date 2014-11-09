@@ -1,4 +1,4 @@
-feature 'Admin checks who is sharing' do
+feature 'Admin checks who is sharing', :txt do
   include Rack::Test::Methods
 
   def app
@@ -13,8 +13,6 @@ feature 'Admin checks who is sharing' do
   let!(:sita) { FactoryGirl.create :sharer, name: "Sita" }
 
   scenario 'They receive a list of sharers' do
-    GatewayRepository.gateway = double
-
     expect_txt_response_to admin.number, <<-TXT.strip_heredoc
       Admin #{admin.number}: $10.00 (pending $5.50)
       Rama #{rama.number}: $0.00
