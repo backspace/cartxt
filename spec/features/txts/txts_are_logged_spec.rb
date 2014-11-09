@@ -1,6 +1,5 @@
 feature 'Txts are logged', :txt do
   scenario 'A user can view the txts' do
-    # FIXME centralise gateway double?
     GatewayRepository.gateway = NullGateway.new
 
     # FIXME use Warden login?
