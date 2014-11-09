@@ -29,4 +29,11 @@ describe Formatters::Booking do
       "2015-06-01 9:00pm",
     )).to eq("from 8:00AM to 9:00PM on 2015-06-01")
   end
+
+  it "uses relative dates in the next month" do
+    expect(format(
+      "2014-11-09 16:55",
+      "2014-11-09 19:00",
+    )).to eq("from 4:55PM to 7:00PM on Sunday the 9th")
+  end
 end
