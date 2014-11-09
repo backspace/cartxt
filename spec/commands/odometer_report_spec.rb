@@ -17,7 +17,7 @@ describe Commands::OdometerReport do
       end
 
       it "delegates to borrowing odometer report" do
-        expect(Commands::OdometerReportBorrowing).to receive(:new).with(car: car, sharer: sharer, reading: reading).and_return(delegate = double)
+        expect(Commands::OdometerReportBorrowing).to receive(:new).with(car: car, sharer: sharer, reading: reading, original_reading: original_reading).and_return(delegate = double)
         expect(delegate).to receive(:execute)
         expect(delegate).to receive(:responses).and_return(responses = double)
 
