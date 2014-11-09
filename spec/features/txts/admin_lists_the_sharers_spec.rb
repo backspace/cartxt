@@ -1,10 +1,10 @@
 feature 'Admin checks who is sharing', :txt do
-  let!(:car) { FactoryGirl.create :car }
+  let!(:car) { create :car }
 
-  let!(:admin) { FactoryGirl.create :sharer, :admin, name: "Admin", balance: 10, pending_payments: 5.50 }
+  let!(:admin) { create :sharer, :admin, name: "Admin", balance: 10, pending_payments: 5.50 }
 
-  let!(:rama) { FactoryGirl.create :sharer, name: "Rama" }
-  let!(:sita) { FactoryGirl.create :sharer, name: "Sita" }
+  let!(:rama) { create :sharer, name: "Rama" }
+  let!(:sita) { create :sharer, name: "Sita" }
 
   scenario 'They receive a list of sharers' do
     expect("who").to produce_response({admin.number => <<-TXT.strip_heredoc

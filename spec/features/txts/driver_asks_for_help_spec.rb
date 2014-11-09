@@ -1,6 +1,6 @@
 feature 'Driver asks for help', :txt do
-  let!(:car) { FactoryGirl.create :car }
-  let!(:sharer) { FactoryGirl.create :sharer }
+  let!(:car) { create :car }
+  let!(:sharer) { create :sharer }
 
   let(:commands_response) do
     <<-TXT.strip_heredoc

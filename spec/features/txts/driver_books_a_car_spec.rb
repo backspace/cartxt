@@ -1,6 +1,6 @@
 feature 'Driver books a car', :txt do
-  let!(:car) { FactoryGirl.create :car, location_information: "I am parked somewhere." }
-  let!(:booker) { FactoryGirl.create :sharer }
+  let!(:car) { create :car, location_information: "I am parked somewhere." }
+  let!(:booker) { create :sharer }
 
   let!(:booking_begins_at) { (Time.now + 1.day).change(hour: 15, min: 0, sec: 0) }
   let!(:booking_ends_at) { booking_begins_at + 2.hours }
@@ -33,14 +33,14 @@ feature 'Driver books a car', :txt do
   scenario 'They receive a reply that they have booked the car, admins are notified, and the booking is visible on the site', js: true do
     expect(booker.number => booking_command).to produce_response booking_response
 
-    nosy_admin = FactoryGirl.create :sharer, :admin, :notified_of_bookings
+    nosy_admin = create :sharer, :admin, :notified_of_bookings
 
     expect(booker.number => "confirm").to produce_responses({
       nosy_admin.number => admin_booking_notification_for(booker, booking_begins_at, booking_ends_at),
       booker.number => booking_confirmation_response_for(booking_begins_at, booking_ends_at)
     })
 
-    user = FactoryGirl.create :user
+    user = create :user
     signin(user.email, user.password)
 
     visit bookings_path

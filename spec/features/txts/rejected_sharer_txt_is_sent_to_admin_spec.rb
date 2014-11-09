@@ -1,10 +1,10 @@
 feature 'Rejected sharer sends a txt', :txt do
   before do
-    FactoryGirl.create(:car)
+    create(:car)
   end
 
-  let(:admin) { FactoryGirl.create :sharer, :admin, number: "#admin" }
-  let(:rejected) { FactoryGirl.create :sharer, :rejected }
+  let(:admin) { create :sharer, :admin, number: "#admin" }
+  let(:rejected) { create :sharer, :rejected }
 
   let(:txt) { 'Hi!!!!' }
 

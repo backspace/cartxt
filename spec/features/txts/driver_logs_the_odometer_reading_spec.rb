@@ -3,7 +3,7 @@ feature 'Driver logs the odometer reading', :txt do
     @car = Car.new(number: 'Bot', status: 'borrowed')
     @car.save
 
-    FactoryGirl.create :sharer
+    create :sharer
   end
 
   scenario 'They receive a rejection when the new reading is lower than the current one' do

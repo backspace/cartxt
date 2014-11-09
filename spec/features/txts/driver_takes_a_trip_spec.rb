@@ -1,6 +1,6 @@
 feature 'Driver takes a trip', :txt do
-  let!(:car) { FactoryGirl.create(:car, rate: 0.32, location_information: "I am parked behind 100 Main St.", lockbox_information: "The key is in a lockbox at the top of the fire escape, the combination is 1234.") }
-  let!(:sharer) { FactoryGirl.create :sharer, balance: 0.32 }
+  let!(:car) { create(:car, rate: 0.32, location_information: "I am parked behind 100 Main St.", lockbox_information: "The key is in a lockbox at the top of the fire escape, the combination is 1234.") }
+  let!(:sharer) { create :sharer, balance: 0.32 }
 
   scenario 'They receive their total owing at the end' do
     expect("borrow").to produce_response "I am yours! My current rate is $0.32/km. #{car.location_information} #{car.lockbox_information} What is my odometer reading?"

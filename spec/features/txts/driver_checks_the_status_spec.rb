@@ -1,8 +1,8 @@
 feature 'Driver checks the status', :txt do
-  let!(:sharer) { FactoryGirl.create :sharer }
+  let!(:sharer) { create :sharer }
 
   context 'when the car is being borrowed' do
-    let!(:car) { FactoryGirl.create(:car, :borrowed) }
+    let!(:car) { create(:car, :borrowed) }
 
     scenario 'they receive a reply that the car is not available' do
       expect("status").to produce_response "Sorry, I am being borrowed."
@@ -10,7 +10,7 @@ feature 'Driver checks the status', :txt do
   end
 
   context 'when the car is returned' do
-    let!(:car) { FactoryGirl.create(:car) }
+    let!(:car) { create(:car) }
 
     scenario 'they receive a reply that the car is available' do
       expect("status").to produce_response "I am available to borrow!"

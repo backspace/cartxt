@@ -1,7 +1,7 @@
 feature 'Driver checks and updates their balance', :txt do
-  let!(:car) { FactoryGirl.create :car, lockbox_information: "The lockbox is somewhere." }
-  let!(:sharer) { FactoryGirl.create :sharer, balance: 12.34 }
-  let!(:admin) { FactoryGirl.create :sharer, :admin, number: '#admin' }
+  let!(:car) { create :car, lockbox_information: "The lockbox is somewhere." }
+  let!(:sharer) { create :sharer, balance: 12.34 }
+  let!(:admin) { create :sharer, :admin, number: '#admin' }
 
   scenario 'They receive a reply with their current balance' do
     expect("balance").to produce_response "Your balance owing is $12.34, with pending payments of $0.00."

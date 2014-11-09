@@ -1,8 +1,8 @@
 feature 'Driver joins the share', :txt do
-  let!(:car) { FactoryGirl.create :car, number: 'Bot', description: "I am an ugly car." }
+  let!(:car) { create :car, number: 'Bot', description: "I am an ugly car." }
 
-  let(:joiner) { FactoryGirl.create :sharer, :unknown, name: "Joiner", number: "#joiner" }
-  let(:admin) { FactoryGirl.create :sharer, :admin, number: '#admin' }
+  let(:joiner) { create :sharer, :unknown, name: "Joiner", number: "#joiner" }
+  let(:admin) { create :sharer, :admin, number: '#admin' }
 
   scenario 'They are asked their name and the admin approves' do
     expect(joiner.number => "join").to produce_response({

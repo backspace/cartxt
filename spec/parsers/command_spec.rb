@@ -11,7 +11,7 @@ describe Parsers::Command do
   end
 
   context 'when the sender exists' do
-    let(:sharer) { FactoryGirl.create(:sharer, :unknown, number: :from) }
+    let(:sharer) { create(:sharer, :unknown, number: :from) }
 
     before do
       sharer.know!

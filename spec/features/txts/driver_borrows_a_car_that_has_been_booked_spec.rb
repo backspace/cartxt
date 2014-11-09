@@ -1,8 +1,8 @@
 feature 'Driver borrows a car that has been booked', :txt do
-  let!(:car) { FactoryGirl.create :car, rate: 1 }
+  let!(:car) { create :car, rate: 1 }
 
-  let!(:booker) { FactoryGirl.create :sharer }
-  let!(:borrower) { FactoryGirl.create :sharer, number: '#borrower' }
+  let!(:booker) { create :sharer }
+  let!(:borrower) { create :sharer, number: '#borrower' }
 
   let!(:booking_begins_at) { (Time.now + 1.day).change(hour: 15, min: 0, sec: 0) }
   let!(:booking_ends_at) { booking_begins_at + 2.hours }

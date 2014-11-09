@@ -5,11 +5,11 @@ feature "Admin can edit responses" do
     Rails.application
   end
 
-  let!(:car) { FactoryGirl.create(:car) }
-  let!(:sharer) { FactoryGirl.create(:sharer) }
+  let!(:car) { create(:car) }
+  let!(:sharer) { create(:sharer) }
 
   before do
-    admin = FactoryGirl.create(:user, :admin)
+    admin = create(:user, :admin)
     signin(admin.email, admin.password)
   end
 
