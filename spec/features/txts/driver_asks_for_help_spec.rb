@@ -16,6 +16,8 @@ feature 'Driver asks for help', :txt do
 
       status
 
+      email
+
 
       For help on a specific command, say:
       \"commands commandname\"

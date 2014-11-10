@@ -15,6 +15,8 @@ module Responses
 
       status
 
+      email
+
 
       For help on a specific command, say:
       \"commands commandname\"

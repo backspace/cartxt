@@ -14,6 +14,7 @@ module Commands
         gas
         pay
         status
+        email
       )
     end
 

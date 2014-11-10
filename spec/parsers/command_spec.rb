@@ -206,6 +206,15 @@ describe Parsers::Command do
         end
       end
 
+      context "when the command is an email address" do
+        let(:body) { "email address" }
+
+        it "returns an email command" do
+          expect(Commands::Email).to receive(:new).with(car: car, sharer: sharer, address: "address").and_return(email = double)
+          expect(parsed_command).to be(email)
+        end
+      end
+
       context 'when the command is unknown' do
         let(:body) { 'something' }
 
