@@ -30,7 +30,7 @@ feature 'Driver books a car', :txt do
   let(:booking_command) { booking_command_for(booking_begins_at, booking_ends_at) }
   let(:booking_response) { booking_response_for(booking_begins_at, booking_ends_at) }
 
-  scenario 'They receive a reply that they have booked the car, admins are notified, and the booking is visible on the site', js: true do
+  scenario 'They receive a reply that they have booked the car, admins are notified' do
     expect(booker.number => booking_command).to produce_response booking_response
 
     nosy_admin = create :sharer, :admin, :notified_of_bookings
@@ -39,22 +39,6 @@ feature 'Driver books a car', :txt do
       nosy_admin.number => admin_booking_notification_for(booker, booking_begins_at, booking_ends_at),
       booker.number => booking_confirmation_response_for(booking_begins_at, booking_ends_at)
     })
-
-    user = create :user
-    signin(user.email, user.password)
-
-    visit bookings_path
-
-    find(".fc-agendaDay-button").click
-
-    # Assuming booking does not span days
-    booking_date_string = booking_begins_at.strftime("%B %-d, %Y")
-    until page.has_content?(booking_date_string) do
-      find(".fc-icon-right-single-arrow").click
-    end
-
-    booking_time_string = "#{booking_begins_at.strftime("%l:%M")} - #{booking_ends_at.strftime("%l:%M")}"
-    expect(page).to have_content(booking_time_string)
   end
 
   scenario 'They receive a reply that the car is already booked at that time' do
