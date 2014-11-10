@@ -23,3 +23,17 @@ RSpec::Matchers.define :produce_response do |expected|
 end
 
 RSpec::Matchers.alias_matcher :produce_responses, :produce_response
+
+RSpec::Matchers.define :produce_irrelevant_response do |expected|
+  match do |actual|
+    expect(GatewayRepository.gateway).to receive(:deliver)
+
+    if actual.is_a? Hash
+      actual.each do |number, txt|
+        send_txt_from(number, txt)
+      end
+    else
+      send_txt(actual)
+    end
+  end
+end
