@@ -32,7 +32,7 @@ module Parsers
       elsif command == 'confirm'
         Commands::Confirm.new(car: car, sharer: sharer)
       elsif command == 'abandon'
-        Commands::Abandon.new(car: car, sharer: sharer)
+        Commands::Abandon.new(car: car, sharer: sharer, identifier: command_parameters)
       elsif command == 'gas'
         Commands::Gas.new(car: car, sharer: sharer, cost_string: command_parameters)
       elsif command == 'pay'

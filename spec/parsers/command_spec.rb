@@ -198,10 +198,10 @@ describe Parsers::Command do
       end
 
       context 'when the command is a booking abandonment' do
-        let(:body) { 'abandon' }
+        let(:body) { 'abandon X' }
 
         it 'returns a Abandon command' do
-          expect(Commands::Abandon).to receive(:new).with(car: car, sharer: sharer).and_return(abandon = double)
+          expect(Commands::Abandon).to receive(:new).with(car: car, sharer: sharer, identifier: "X").and_return(abandon = double)
           expect(parsed_command).to be(abandon)
         end
       end
