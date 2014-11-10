@@ -215,6 +215,16 @@ describe Parsers::Command do
         end
       end
 
+      context "when the command is a bookings request" do
+        let(:body) { "bookings" }
+
+        it "returns a Bookings command" do
+          expect(Commands::Bookings).to receive(:new).with(car: car, sharer: sharer).and_return(bookings = double)
+
+          expect(parsed_command).to be(bookings)
+        end
+      end
+
       context 'when the command is unknown' do
         let(:body) { 'something' }
 

@@ -7,7 +7,7 @@ feature 'Driver asks for help', :txt do
       Available commands:
 
       balance
-      book, confirm, abandon
+      book, confirm, abandon, bookings
       borrow, return
 
       gas

@@ -1,6 +1,8 @@
 class Sharer < ActiveRecord::Base
   include AASM
 
+  has_many :bookings
+
   enum role: [:user, :admin]
 
   scope :notify_of_bookings, -> { where(notify_of_bookings: true) }

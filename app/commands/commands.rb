@@ -15,6 +15,7 @@ module Commands
         pay
         status
         email
+        bookings
       )
     end
 

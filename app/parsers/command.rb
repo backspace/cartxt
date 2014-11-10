@@ -39,6 +39,8 @@ module Parsers
         Commands::Pay.new(car: car, sharer: sharer, amount_string: command_parameters)
       elsif command == "email"
         Commands::Email.new(car: car, sharer: sharer, address: command_parameters)
+      elsif command == "bookings"
+        Commands::Bookings.new(car: car, sharer: sharer)
       elsif command == 'commands'
         Commands::Commands.new(car: car, sharer: sharer, parameter: command_parameters)
       elsif command_is_integer?
