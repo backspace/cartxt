@@ -17,6 +17,8 @@ feature "Driver lists their bookings", :txt do
       Your bookings:
       #1: tomorrow from 8:00AM to 9:00AM
       #2: tomorrow from 7:00PM to 9:00PM
+
+      To abandon booking #1, send \"abandon #1\".
     TXT
   end
 

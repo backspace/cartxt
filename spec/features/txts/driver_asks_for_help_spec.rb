@@ -36,7 +36,7 @@ feature 'Driver asks for help', :txt do
 
     expect("commands confirm").to produce_response "confirm: when you have issued a \"book\" command, use \"confirm\" to confirm that the booking start and end were correctly interpreted."
 
-    expect("commands abandon").to produce_response "abandon: when you have issued a \"book\" command, use \"abandon\" to abandon it before confirming it."
+    expect("commands abandon").to produce_response "abandon: when you have issued a \"book\" command, use \"abandon\" to abandon it before confirming it. When it is confirmed, you can abandon it by number as listed by the \"bookings\" command with \"abandon #1\"."
 
     expect("commands borrow").to produce_response "borrow: start the process of borrowing the car right now."
 
