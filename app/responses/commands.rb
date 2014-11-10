@@ -5,15 +5,11 @@ module Responses
     default_body <<-TXT.strip_heredoc
       Available commands:
 
-      balance
       book, confirm, abandon, bookings
       borrow, return
-
-      gas
-
-      pay
-
       status
+
+      gas, pay, balance
 
       email
 
