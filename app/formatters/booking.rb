@@ -6,11 +6,36 @@ module Formatters
     end
 
     def format
-      if @from.to_date == @to.to_date
-        "from #{@from.to_formatted_s.split.last} to #{@to.to_formatted_s.split.last} on #{format_date(@from)}"
+      if within_a_day?
+        if in_the_next_day?
+          if not_today?
+            format_tomorrow
+          else
+            format_today
+          end
+        else
+          format_in_the_next_month
+        end
       else
-        "from #{@from.to_formatted_s} to #{@to.to_formatted_s}".gsub("  ", " ")
+        format_in_the_future
       end
+    end
+
+    protected
+    def format_tomorrow
+      "tomorrow from #{@from.to_formatted_s.split.last} to #{@to.to_formatted_s.split.last}"
+    end
+
+    def format_today
+      "today from #{@from.to_formatted_s.split.last} to #{@to.to_formatted_s.split.last}"
+    end
+
+    def format_in_the_next_month
+      "from #{@from.to_formatted_s.split.last} to #{@to.to_formatted_s.split.last} on #{format_date(@from)}"
+    end
+
+    def format_in_the_future
+      "from #{@from.to_formatted_s} to #{@to.to_formatted_s}".gsub("  ", " ")
     end
 
     private
@@ -20,6 +45,18 @@ module Formatters
       else
         date.to_formatted_s.split.first
       end
+    end
+
+    def within_a_day?
+      @from.to_date == @to.to_date
+    end
+
+    def in_the_next_day?
+      @from <= Time.zone.now + 1.day
+    end
+
+    def not_today?
+      @from.day != Time.zone.now.day
     end
   end
 end
