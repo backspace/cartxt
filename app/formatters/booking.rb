@@ -6,7 +6,9 @@ module Formatters
     end
 
     def format
-      if within_a_day?
+      if in_the_past?
+        format_in_the_past
+      elsif within_a_day?
         if in_the_next_day?
           if not_today?
             format_tomorrow
@@ -38,6 +40,10 @@ module Formatters
       "from #{@from.to_formatted_s} to #{@to.to_formatted_s}".gsub("  ", " ")
     end
 
+    def format_in_the_past
+      format_in_the_future
+    end
+
     private
     def format_date(date)
       if date <= Time.now + 1.month
@@ -57,6 +63,10 @@ module Formatters
 
     def not_today?
       @from.day != Time.zone.now.day
+    end
+
+    def in_the_past?
+      @from < Time.zone.now
     end
   end
 end

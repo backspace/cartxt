@@ -50,4 +50,11 @@ describe Formatters::Booking do
       "2014-10-31 10:30pm"
     )).to eq("today from 9:30PM to 10:30PM")
   end
+
+  it "uses full dates in the past" do
+    expect(format(
+      "2014-10-31 9:00am",
+      "2014-10-31 9:30am"
+    )).to eq("from 2014-10-31 9:00AM to 2014-10-31 9:30AM")
+  end
 end
