@@ -2,7 +2,9 @@ feature "Driver lists their bookings", :txt do
   let!(:car) { create :car }
   let!(:sharer) { create :sharer }
 
-  scenario "They see their bookings" do
+  let!(:old_booking) { create :booking, sharer: sharer, car: car, begins_at: Time.now - 5.days, ends_at: Time.now - 5.days + 1.hour }
+
+  scenario "They see their upcoming bookings" do
     expect("book tomorrow from 8a to 9a").to produce_irrelevant_response
     expect("confirm").to produce_irrelevant_response
 
