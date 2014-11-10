@@ -11,13 +11,16 @@ feature "Driver abandons their booking", :txt do
   let!(:sharer) { create :sharer }
 
   scenario "They see no upcoming bookings" do
-    expect("book tomorrow from 6a to 7a").to produce_irrelevant_response
-    expect("confirm").to produce_irrelevant_response
-
+    # Booking #2:
     expect("book tomorrow from 8a to 9a").to produce_irrelevant_response
     expect("confirm").to produce_irrelevant_response
 
+    # Booking #3:
     expect("book tomorrow from 10a to 11a").to produce_irrelevant_response
+    expect("confirm").to produce_irrelevant_response
+
+    # Booking #1:
+    expect("book tomorrow from 6a to 7a").to produce_irrelevant_response
     expect("confirm").to produce_irrelevant_response
 
     expect("abandon #2").to produce_response "Abandoned your booking tomorrow (Tuesday) from 8:00AM to 9:00AM."

@@ -2,6 +2,7 @@ class Booking < ActiveRecord::Base
   belongs_to :car
   belongs_to :sharer
 
+  default_scope { order("begins_at") }
   scope :upcoming, -> { where("begins_at > ?", Time.now) }
   scope :overlapping, ->(start, finish) { where.not("ends_at < ? OR begins_at > ?", start, finish) }
   scope :unconfirmed_for, ->(car, sharer) { where(car: car, sharer: sharer).unconfirmed }
