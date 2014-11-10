@@ -25,11 +25,11 @@ module Formatters
 
     protected
     def format_tomorrow
-      "tomorrow from #{@from.to_formatted_s.split.last} to #{@to.to_formatted_s.split.last}"
+      "tomorrow (#{@from.strftime "%A"}) from #{@from.to_formatted_s.split.last} to #{@to.to_formatted_s.split.last}"
     end
 
     def format_today
-      "today from #{@from.to_formatted_s.split.last} to #{@to.to_formatted_s.split.last}"
+      "today (#{@from.strftime "%A"}) from #{@from.to_formatted_s.split.last} to #{@to.to_formatted_s.split.last}"
     end
 
     def format_in_the_next_month
