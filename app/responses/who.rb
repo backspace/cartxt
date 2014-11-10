@@ -1,5 +1,7 @@
 module Responses
   class Who < DynamicResponse
+    description "The list of sharers viewable by an admin."
+
     expose :sharers, presenter: 'SharerArray'
 
     default_body <<-TXT.strip_heredoc
