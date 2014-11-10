@@ -3,12 +3,12 @@ module Commands
     def initialize(options)
       super
       @identifier = options[:identifier]
-      @identifier = @identifier.to_i if @identifier.present?
     end
 
     def execute
       if @identifier.present?
-        booking = sharer.bookings.upcoming[@identifier - 1]
+        index = Parsers::BookingIndex.new(@identifier).parse
+        booking = sharer.bookings.upcoming[index]
 
         if booking
           booking.abandon!

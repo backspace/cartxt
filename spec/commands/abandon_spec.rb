@@ -12,6 +12,11 @@ describe Commands::Abandon do
 
   context "when an identifier is given" do
     let(:identifier) { "1" }
+    let(:index) { :index }
+
+    before do
+      expect(Parsers::BookingIndex).to receive(:new).with(identifier).and_return(double(:parser, parse: index))
+    end
 
     context "when there is a corresponding booking" do
       let(:booking) { double(:booking) }
@@ -19,7 +24,7 @@ describe Commands::Abandon do
 
       it "abandons the booking and responds" do
         expect(sharer).to receive(:bookings).and_return(double(upcoming: found_bookings))
-        expect(found_bookings).to receive(:[]).with(identifier.to_i - 1).and_return booking
+        expect(found_bookings).to receive(:[]).with(index).and_return booking
         expect(booking).to receive(:abandon!)
 
         expect(Responses::AbandonExistingBooking).to receive(:new).with(car: car, sharer: sharer, booking: booking).and_return(response = double)
@@ -34,7 +39,7 @@ describe Commands::Abandon do
 
       it "responds with a failure" do
         expect(sharer).to receive(:bookings).and_return(double(upcoming: found_bookings))
-        expect(found_bookings).to receive(:[]).with(identifier.to_i - 1).and_return nil
+        expect(found_bookings).to receive(:[]).with(index).and_return nil
 
         expect(Responses::AbandonExistingBookingNotFoundFailure).to receive(:new).with(car: car, sharer: sharer).and_return(response = double)
 
