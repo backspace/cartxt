@@ -17,4 +17,8 @@ feature "Driver lists their bookings", :txt do
       tomorrow from 7:00PM to 9:00PM
     TXT
   end
+
+  scenario "They see no upcoming bookings" do
+    expect("bookings").to produce_response "You have no upcoming bookings.\n"
+  end
 end

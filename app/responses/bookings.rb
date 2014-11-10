@@ -6,9 +6,9 @@ module Responses
 
     # FIXME unless forloop.last only for tests
     default_body <<-TXT.strip_heredoc
-      Your bookings:
+      {% if bookings == empty %}You have no upcoming bookings.{% else %}Your bookings:
       {% for booking in bookings %}{{ booking.formatted }}{% unless forloop.last %}
-      {% endunless %}{% endfor %}
+      {% endunless %}{% endfor %}{% endif %}
     TXT
   end
 end
