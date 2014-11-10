@@ -44,6 +44,13 @@ describe Formatters::Booking do
     )).to eq("tomorrow from 9:00AM to 10:00AM")
   end
 
+  it "uses tomorrow even for late tomorrow" do
+    expect(format(
+      "2014-11-01 11:00pm",
+      "2014-11-01 11:15pm"
+    )).to eq("tomorrow from 11:00PM to 11:15PM")
+  end
+
   it "uses today for today" do
     expect(format(
       "2014-10-31 9:30pm",

@@ -58,7 +58,7 @@ module Formatters
     end
 
     def in_the_next_day?
-      @from <= Time.zone.now + 1.day
+      @from <= (Time.zone.now + 2.days).midnight
     end
 
     def not_today?
