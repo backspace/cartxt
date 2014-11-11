@@ -1,4 +1,15 @@
--car = Car.new
+-car = Car.new(rate: 0.25)
+-sharer = Sharer.new(name: "Francine", number: "#12345")
+
+-if user_signed_in?
+  -car = Car.first || car
+  -car.lockbox_information = "The key is in a lockbox whose combination is XXXX."
+
+  -if current_user.sharer
+    -sharer = current_user.sharer
+
+-car.odometer_reading = 19105
+-car.rate = 0.25 unless car.rate?
 
 .section
   .conversation
@@ -12,37 +23,61 @@
     .outgoing status
     .incoming=render_response(Responses::Status, car: car)
     .outgoing borrow
-    .incoming I am yours! I am parked behind 100 Ridgeway Road. The lockbox combination is 8421.
+    .incoming=render_response(Responses::Borrow, car: car)
 
   =image_tag "safe.svg"
   =image_tag "key.svg"
 
   .conversation
-    .incoming What is my odometer reading?
-    .outgoing 19105
-    .incoming Thanks, I updated the records with an odometer reading of 19105.
+    .outgoing #{car.odometer_reading}
+    .incoming=render_response(Responses::OdometerReportBorrowing, car: car)
 
   =image_tag "wheel.svg"
   =image_tag "gas.svg"
 
+  -gas = 12.76
+
   .conversation
-    .outgoing gas 25.50
-    .incoming I deducted your gas cost of $25.50. Your balance is now $12.75. Please submit the receipt when you return the key.
+    .outgoing gas #{gas}
+    -sharer.pending_payments += gas
+    .incoming=render_response(Responses::Gas, sharer: sharer, cost: gas)
+
+  -distance = 84
 
   .conversation
     .outgoing return
-    .incoming Thanks for the ride! Please return me to 100 Ridgeway Road. The lockbox combination is 8421.
-    .incoming What is the odometer reading?
-    .outgoing 19189
-    .incoming Wow, we drove 84km! That brings your balance to $33.75.
+    .incoming=render_response(Responses::Return, car: car)
+
+  -car.odometer_reading += distance
+  -sharer.balance += car.rate*distance
+  -borrowing = OpenStruct.new(span: distance)
+
+  .conversation
+    .outgoing=car.odometer_reading
+    .incoming=render_response(Responses::OdometerReportReturning, car: car, borrowing: borrowing, sharer: sharer)
+
+  =image_tag "pay.svg"
+
+  -payment = 17.25
+  .conversation
+    .outgoing pay #{payment}
+    -sharer.pending_payments += payment
+    .incoming=render_response(Responses::Pay, car: car, amount: payment, sharer: sharer)
+
+    -sharer.balance -= payment
+    -sharer.pending_payments -= payment
+    .incoming=render_response(Responses::CollectSharerNotification, sharer: sharer, amount: payment)
 
   =image_tag "calendar.svg"
 
+  -booking_string = "tomorrow from 2p to 10p"
+  -booking = Parsers::Booking.new(booking_string).parse
+
   .conversation
-    .outgoing book tomorrow from 2pm to 10
-    .incoming You want to book me tomorrow from 2pm to 10pm? Say “confirm”, “abandon”, or another “book from X to Y”.
+    .outgoing book #{booking_string}
+    .incoming=render_response(Responses::Book, booking: booking)
     .outgoing confirm
-    .incoming Great, see you then!
+    .incoming=render_response(Responses::Confirm, booking: booking, car: car)
 
 -if user_signed_in? && current_user.admin?
   %h2 Admin commands
