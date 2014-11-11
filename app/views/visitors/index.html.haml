@@ -4,8 +4,8 @@
   .conversation
     .outgoing join
     .incoming Hello there! To join the car share, please reply with your name.
-    .outgoing Nancy
-    .incoming Nice to meet you, Nancy. Please wait while I check in.
+    .outgoing Francine
+    .incoming Nice to meet you, Francine. Please wait while I check in.
     .incoming=render_response(Responses::Approve)
 
   .conversation
@@ -44,6 +44,32 @@
     .outgoing confirm
     .incoming Great, see you then!
 
+-if user_signed_in? && current_user.admin?
+  %h2 Admin commands
+  %h3 Who
+  .conversation
+    .outgoing who
+    .incoming.pre=Responses::Who.new(sharers: Sharer.all + [Sharer.new(name: "Ex.", number: "#123", pending_payments: 5.5, balance: 3.25)]).body.gsub("\n", "&#x000A;").html_safe
+  %h3 Approve
+  -prospective_approvee = Sharer.new(name: "Francine", number: "#12345")
+  .conversation
+    .incoming=Responses::ApproveAdminRequest.new(sharer: prospective_approvee).body
+    .outgoing approve #{prospective_approvee.number}
+    .incoming=Responses::ApproveAdmin.new(approvee: prospective_approvee).body
+  %h3 Reject
+  -sharer_to_reject= Sharer.new(name: "Pascal", number: "#67890")
+  .conversation
+    .incoming=Responses::ApproveAdminRequest.new(sharer: sharer_to_reject).body
+    .outgoing reject #{sharer_to_reject.number}
+    .incoming=Responses::Reject.new(rejectee: sharer_to_reject).body
+  %h3 Collect
+  -sharer = prospective_approvee
+  -sharer.balance = 9.75
+  -amount = 7.50
+  .conversation
+    .incoming=Responses::PayAdminNotification.new(sharer: sharer, amount: amount).body
+    .outgoing collect #{number_to_currency amount}
+    .incoming=Responses::Collect.new(amount: amount, collectee: sharer).body
 
 %h2 Credits
 
