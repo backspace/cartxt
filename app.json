@@ -69,7 +69,7 @@
     "SMTP_STARTTLS": {
       "description": "Whether to use STARTTLS for email encryption",
       "required": true,
-      "value": true
+      "value": "true"
     },
     "SMTP_USERNAME": {
       "description": "Email username for the outgoing email account",
