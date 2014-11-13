@@ -5,4 +5,4 @@ cartxt
 
 A txt-driven car-sharing application.
 
-Not production-ready yet, more to come.
+Not quite production-ready, more to come.
