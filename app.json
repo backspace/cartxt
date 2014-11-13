@@ -25,7 +25,10 @@
       "value": "myapp.herokuapp.com",
       "required": false
     },
-    "RAILS_ENV": "production",
+    "RAILS_ENV": {
+      "description": "The Rails environment name to start up in, probably \"production\".",
+      "value": "production"
+    },
     "SECRET_KEY_BASE": {
       "description": "An auto-generated secret key for authentication.",
       "required": true,
