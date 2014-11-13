@@ -24,3 +24,8 @@ en:
     #     username: 'User name to sign in.'
     #     password: 'No special characters, please.'
 
+    hints:
+      car:
+        description: Used when someone wants to join the car share.
+        location_information: Tells the sharer where the car is parked.
+        lockbox_information: Tells the sharer how and where to get the car keys.
