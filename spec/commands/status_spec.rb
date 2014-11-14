@@ -1,11 +1,22 @@
 describe Commands::Status, :command do
-  let(:car) { double(odometer_reading: :reading) }
+  let(:car) { double(returned?: returned) }
   let(:sharer) { :sharer }
 
-  it 'generates a status response' do
-    response = double
-    expect(Responses::Status).to receive(:new).with(car: car, sharer: sharer).and_return response
+  context "when the car is not returned" do
+    let(:returned) { false }
 
-    expect(responses).to include(response)
+    it "generates a StatusBorrowed response" do
+      expect(Responses::StatusBorrowed).to receive(:new).with(car: car, sharer: sharer).and_return response = double
+      expect(responses).to include(response)
+    end
+  end
+
+  context "when the car is returned" do
+    let(:returned) { true }
+
+    it "generates a StatusAvailable response" do
+      expect(Responses::StatusAvailable).to receive(:new).with(car: car, sharer: sharer).and_return response = double
+      expect(responses).to include(response)
+    end
   end
 end

@@ -5,7 +5,11 @@ module Commands
     end
 
     def execute
-      @responses.push Responses::Status.new(car: car, sharer: sharer)
+      if car.returned?
+        @responses.push Responses::StatusAvailable.new(car: car, sharer: sharer)
+      else
+        @responses.push Responses::StatusBorrowed.new(car: car, sharer: sharer)
+      end
     end
   end
 end

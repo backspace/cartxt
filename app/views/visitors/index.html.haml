@@ -21,7 +21,7 @@
 
   .conversation
     .outgoing status
-    .incoming=render_response(Responses::Status, car: car)
+    .incoming=render_response(Responses::StatusAvailable, car: car)
     .outgoing borrow
     .incoming=render_response(Responses::Borrow, car: car)
 

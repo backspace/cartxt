@@ -6,7 +6,7 @@ feature "Admin updates car details", :txt do
 
   before do
     # Hack the status response to include all car information
-    Response.create(name: "status", body: "{{car.description}} {{car.location_information}} {{car.lockbox_information}}")
+    Response.create(name: "status_available", body: "{{car.description}} {{car.location_information}} {{car.lockbox_information}}")
   end
 
   scenario "Car details are saved" do
