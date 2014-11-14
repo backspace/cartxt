@@ -10,10 +10,10 @@ feature "Site displays bookings", :txt do
   let!(:rama_phone) { create :sharer, name: "rama", email: rama_site.email }
 
   before do
-    expect(sita_phone.number => "book tomorrow from 8a to 9a").to produce_irrelevant_response
+    expect(sita_phone.number => "book tomorrow from 8am to 9am").to produce_irrelevant_response
     expect(sita_phone.number => "confirm").to produce_irrelevant_response
 
-    expect(rama_phone.number => "book tomorrow from 1p to 3p").to produce_irrelevant_response
+    expect(rama_phone.number => "book tomorrow from 1pm to 3pm").to produce_irrelevant_response
     expect(rama_phone.number => "confirm").to produce_irrelevant_response
   end
 

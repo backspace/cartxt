@@ -5,9 +5,9 @@ module Responses
     default_body <<-TXT.strip_heredoc
       book: lets you book the car in the future. Examples:
 
-      book tomorrow from 9a to 1p
-      book on friday from 5p to 7p
-      book from monday at 5p to tuesday at 10a
+      book tomorrow from 9am to 1pm
+      book on friday from 5pm to 7pm
+      book from monday at 5pm to tuesday at 10am
 
       I will ask for your confirmation before making the booking. If you have trouble getting me to understand, it is easier for me if you are very specific:
 
