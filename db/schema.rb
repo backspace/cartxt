@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141110003950) do
+ActiveRecord::Schema.define(version: 20141114185847) do
 
   create_table "bookings", force: true do |t|
     t.integer  "car_id"
@@ -34,7 +34,10 @@ ActiveRecord::Schema.define(version: 20141110003950) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.float    "rate"
+    t.integer  "booking_id"
   end
+
+  add_index "borrowings", ["booking_id"], name: "index_borrowings_on_booking_id"
 
   create_table "cars", force: true do |t|
     t.integer  "odometer_reading"

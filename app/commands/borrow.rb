@@ -6,8 +6,14 @@ module Commands
 
     def execute
       if car.may_borrow?
-        car.borrow!
-        @responses.push Responses::Borrow.new(car: car, sharer: sharer)
+        booking = Booking.has_current_booking?(car: car, sharer: sharer)
+        if booking.present?
+          car.borrow!
+          Borrowing.create(car: car, sharer: sharer, rate: car.rate, booking: booking)
+          @responses.push Responses::Borrow.new(car: car, sharer: sharer, booking: booking)
+        else
+          @responses.push Responses::BorrowAdHoc.new(car: car, sharer: sharer)
+        end
       else
         @responses.push Responses::BorrowFailure.new(car: car, sharer: sharer)
       end

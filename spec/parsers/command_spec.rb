@@ -225,6 +225,15 @@ describe Parsers::Command do
         end
       end
 
+      context "when the command is an adhoc until" do
+        let(:body) { "until X" }
+
+        it "returns an until command" do
+          expect(Commands::Until).to receive(:new).with(car: car, sharer: sharer, until_string: "X").and_return until_command = double
+          expect(parsed_command).to be(until_command)
+        end
+      end
+
       context 'when the command is unknown' do
         let(:body) { 'something' }
 

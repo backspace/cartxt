@@ -6,6 +6,9 @@ module Validators
 
       @conflict_finder = BookingConflictFinder.new(car: @car, proposed_booking: @booking)
 
+      # FIXME hackish
+      @exception = options[:exception]
+
       valid?
     end
 
@@ -13,7 +16,7 @@ module Validators
       @reason = nil
 
       @reason = :reversed if booking_reversed?
-      @reason = :past if booking_in_past?
+      @reason = :past if booking_in_past? && @exception != :past
       @reason = :conflict if @conflict_finder.conflict?
 
       @reason == nil

@@ -9,7 +9,9 @@ describe Commands::OdometerReportBorrowing do
     let(:original_reading) { reading - 50 }
 
     it 'notifies the admin, sets the odometer reading, creates a borrowing, and generates a response' do
-      expect(Borrowing).to receive(:create).with(car: car, sharer: sharer, initial: reading, rate: car.rate)
+      expect(car).to receive(:current_borrowing).and_return borrowing = double
+      expect(borrowing).to receive(:initial=).with(reading)
+      expect(borrowing).to receive(:save)
 
       expect(Responses::OdometerReportBorrowing).to receive(:new).with(car: car, sharer: sharer).and_return(response = double)
 
@@ -27,7 +29,9 @@ describe Commands::OdometerReportBorrowing do
     let(:original_reading) { reading }
 
     it 'sets the odometer reading, creates a borrowing, and generates a response' do
-      expect(Borrowing).to receive(:create).with(car: car, sharer: sharer, initial: reading, rate: car.rate)
+      expect(car).to receive(:current_borrowing).and_return borrowing = double
+      expect(borrowing).to receive(:initial=).with(reading)
+      expect(borrowing).to receive(:save)
 
       expect(Responses::OdometerReportBorrowing).to receive(:new).with(car: car, sharer: sharer).and_return(response = double)
 

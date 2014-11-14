@@ -23,7 +23,12 @@
     .outgoing status
     .incoming=render_response(Responses::StatusAvailable, car: car)
     .outgoing borrow
-    .incoming=render_response(Responses::Borrow, car: car)
+    .incoming=render_response(Responses::BorrowAdHoc, car: car)
+    -until_string = "until tomorrow at 1300"
+    -ends_at = Parsers::FutureTime.new(until_string).parse
+    -booking = Booking.new(ends_at: ends_at)
+    .outgoing=until_string
+    .incoming=render_response(Responses::Borrow, car: car, booking: booking)
 
   =image_tag "safe.svg"
   =image_tag "key.svg"

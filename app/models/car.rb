@@ -41,4 +41,8 @@ class Car < ActiveRecord::Base
     # FIXME assumes one current borrowing
     borrowings.incomplete.first.sharer == sharer
   end
+
+  def current_borrowing
+    borrowings.incomplete.first
+  end
 end

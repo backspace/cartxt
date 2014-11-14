@@ -3,6 +3,8 @@ feature "Admin is notified of an unexplained odometer jump", :txt do
   let!(:sharer) { create :sharer }
   let!(:admin) { create :sharer, :admin }
 
+  let!(:booking) { create :booking, :current, car: car, sharer: sharer }
+
   scenario "The reading is accepted but the admin is notified" do
     expect(sharer.number => "borrow").to produce_irrelevant_response
 

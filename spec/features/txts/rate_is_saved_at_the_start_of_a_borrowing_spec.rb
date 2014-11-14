@@ -2,8 +2,10 @@ feature "Rate is saved at the beginning of a borrowing", :txt do
   let!(:car) { create(:car, rate: 0.1) }
   let!(:sharer) { create :sharer }
 
+  let!(:booking) { create :booking, :current, car: car, sharer: sharer }
+
   scenario "The borrowing is isolated from the rate change" do
-    expect("borrow").to produce_response "I am yours! My current rate is $0.10/km. What is my odometer reading?"
+    expect("borrow").to produce_response "I am yours until #{Formatters::RelativeTime.new(booking.ends_at).format}. My current rate is $0.10/km. What is my odometer reading?"
 
     expect("0").to produce_irrelevant_response
 

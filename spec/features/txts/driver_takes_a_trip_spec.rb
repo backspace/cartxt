@@ -3,7 +3,9 @@ feature 'Driver takes a trip', :txt do
   let!(:sharer) { create :sharer, balance: 0.32 }
 
   scenario 'They receive their total owing at the end' do
-    expect("borrow").to produce_response "I am yours! My current rate is $0.32/km. #{car.location_information} #{car.lockbox_information} What is my odometer reading?"
+    expect("borrow").to produce_response "Yay! How long do you want me for? Say something like \"until tomorrow at 10AM\" or \"until 1pm\"."
+
+    expect("until tomorrow at 1pm").to produce_response "I am yours until tomorrow (#{(Time.now + 1.day).strftime("%A")}) at 1:00PM. My current rate is $0.32/km. #{car.location_information} #{car.lockbox_information} What is my odometer reading?"
 
     expect("0").to produce_response "Thanks, I updated the records with a reading of 0km. When our time together is finished, just say \"return\". If you buy gas, say \"gas 25.50\" or however much you spend, and make sure to save the receipt!"
 

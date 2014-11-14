@@ -1,7 +1,9 @@
 RSpec.configure do |config|
   config.before(command: true) do
     def command
-      described_class.new(car: car, sharer: sharer)
+      parameters = {car: car, sharer: sharer}
+      parameters.merge!(additional_parameters) if defined?(additional_parameters)
+      described_class.new(parameters)
     end
 
     def responses

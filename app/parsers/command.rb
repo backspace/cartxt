@@ -41,6 +41,8 @@ module Parsers
         Commands::Email.new(car: car, sharer: sharer, address: command_parameters)
       elsif command == "bookings"
         Commands::Bookings.new(car: car, sharer: sharer)
+      elsif command == "until"
+        Commands::Until.new(car: car, sharer: sharer, until_string: command_parameters)
       elsif command == 'commands'
         Commands::Commands.new(car: car, sharer: sharer, parameter: command_parameters)
       elsif command_is_integer?
