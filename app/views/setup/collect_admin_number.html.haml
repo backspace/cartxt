@@ -1,5 +1,7 @@
+%h2 Car txt number set
 %p The car has been assigned the phone number #{@car.number} for txting purposes.
 
+%p Now set your name and phone number to administer the car-share by txt.
 .authform
   =simple_form_for @sharer, url: wizard_path, method: :put do |f|
     .form-inputs
@@ -7,4 +9,4 @@
         =f.input :name
         =f.input :number
     .form-actions
-      =f.button :submit, "Txt Admin"
+      =f.button :submit, "Txt Admin", class: "button"
