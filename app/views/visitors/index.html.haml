@@ -79,6 +79,9 @@
     .outgoing confirm
     .incoming=render_response(Responses::Confirm, booking: booking, car: car)
 
+    .outgoing bookings
+    .incoming.pre=render_response(Responses::Bookings, bookings: [booking]).gsub("\n", "&#x00A;").html_safe
+
 -if user_signed_in? && current_user.admin?
   %h2 Admin commands
   %h3 Who
