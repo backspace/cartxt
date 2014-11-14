@@ -2,6 +2,7 @@ class SetupController < ApplicationController
   include Wicked::Wizard
 
   before_filter :require_admin
+  before_filter :setup_complete?
 
   steps :define_car, :collect_car_number, :collect_admin_number, :finish
 
@@ -79,6 +80,10 @@ class SetupController < ApplicationController
 
   def sharer_params
     params.require(:sharer).permit(:name, :number)
+  end
+
+  def setup_complete?
+    redirect_to root_path unless setup_required?
   end
 end
 
