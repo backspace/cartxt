@@ -19,7 +19,7 @@ class ApplicationController < ActionController::Base
   end
 
   def setup_required?
-    !Car.any?
+    !Car.any? || !Sharer.any?
   end
 
   def gateway
