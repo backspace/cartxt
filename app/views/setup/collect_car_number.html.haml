@@ -1,0 +1,20 @@
+%h2 Car txting number
+%p Do you already have a number from Twilio you want to use?
+.authform
+  =simple_form_for @car, url: wizard_path, method: :put do |f|
+    =f.error_notification
+    .form-inputs
+      .form-group
+        =f.input :number
+      .form-actions
+        =f.button :submit, class: "button"
+%p If not, we will buy a number from Twilio for you. In Canada and the US, a number costs $1/month. For more information on pricing, visit the #{link_to "Twilio pricing page", "https://www.twilio.com/sms/pricing", target: :new}.
+.authform
+  =simple_form_for @number, url: wizard_path, method: :put do |f|
+    =f.error_notification
+    .form-inputs
+      .form-group
+        =f.input :country, as: :select, collection: @countries
+        =f.input :area_code, as: :select, collection: @area_codes
+      .form-actions
+        =f.button :submit, "Buy Number", class: "button"

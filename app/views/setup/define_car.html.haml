@@ -1,0 +1,3 @@
+%h2 Car details
+%p Enter the specifics of the car being shared.
+=render partial: "cars/form", locals: {car: @car, action: wizard_path, method: :put}

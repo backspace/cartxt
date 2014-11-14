@@ -32,19 +32,6 @@ class TxtsController < ApplicationController
     txt
   end
 
-  def gateway
-    if ENV['TWILIO_ACCOUNT_SID'].present?
-      @gateway ||= TwilioGateway.new(Twilio::REST::Client.new(ENV['TWILIO_ACCOUNT_SID'], ENV['TWILIO_AUTH_TOKEN']))
-    elsif GatewayRepository.gateway.present?
-      # FIXME figure out better dependency injection for testing?
-      @gateway = GatewayRepository.gateway
-    else
-      @gateway ||= NullGateway.new
-    end
-
-    @gateway
-  end
-
   # FIXME couples to Twilio
   def validate_twilio_request
     # https://github.com/twilio/twilio-ruby/wiki/RequestValidator

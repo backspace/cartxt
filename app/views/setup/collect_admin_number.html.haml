@@ -1,0 +1,10 @@
+%p The car has been assigned the phone number #{@car.number} for txting purposes.
+
+.authform
+  =simple_form_for @sharer, url: wizard_path, method: :put do |f|
+    .form-inputs
+      .form-group
+        =f.input :name
+        =f.input :number
+    .form-actions
+      =f.button :submit, "Txt Admin"

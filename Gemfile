@@ -27,6 +27,10 @@ gem 'fullcalendar-rails'
 gem 'liquid'
 
 gem 'chronic'
+gem "countries"
+gem "area"
+
+gem "wicked"
 
 gem 'exception_notification'
 

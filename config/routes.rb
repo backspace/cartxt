@@ -10,4 +10,5 @@ Rails.application.routes.draw do
   resources :bookings
   resources :responses
   resources :cars
+  resources :setup
 end

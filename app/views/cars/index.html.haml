@@ -1,11 +1,2 @@
 -@cars.each do |car|
-  .authform
-    =simple_form_for car do |f|
-      =f.error_notification
-      .form-inputs
-        .form-group
-          =f.input :description, as: :text
-          =f.input :location_information, as: :text
-          =f.input :lockbox_information, as: :text
-      .form-actions
-        =f.button :submit, class: "button"
+  =render partial: "form", locals: {car: car}

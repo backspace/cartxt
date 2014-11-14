@@ -13,7 +13,11 @@ module Features
     end
 
     def expect_txt_response_to(to, body)
-      expect(GatewayRepository.gateway).to receive(:deliver).with(from: 'Bot', to: to, body: body)
+      expect_txt_response_from_and_to("Bot", to, body)
+    end
+
+    def expect_txt_response_from_and_to(from, to, body)
+      expect(GatewayRepository.gateway).to receive(:deliver).with(from: from, to: to, body: body)
     end
   end
 end
