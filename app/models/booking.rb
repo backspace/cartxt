@@ -9,7 +9,7 @@ class Booking < ActiveRecord::Base
 
   scope :of, ->(car) { where(car: car) }
   scope :for, ->(sharer) { where(sharer: sharer) }
-  scope :current, -> { where("begins_at < ? AND ends_at > ?", Time.zone.now, Time.zone.now) }
+  scope :current, -> { where("begins_at <= ? AND ends_at >= ?", Time.zone.now, Time.zone.now) }
 
   include AASM
 

@@ -39,12 +39,14 @@ describe Commands::Until, :command do
     end
   end
 
-  xcontext "when the booking is invalid" do
+  context "when the booking is invalid" do
     before do
-      expect(Validators::Booking).to receive(:new).with(car: car, booking: booking).and_return validator = double(:validator, valid?: false)
+      expect(Validators::Booking).to receive(:new).with(car: car, booking: booking, exception: :past).and_return @validator = double(:validator, valid?: false)
     end
 
     it "delegates to the BookFailure generator" do
+      expect(Responses::Generators::BookFailure).to receive(:new).with(car: car, sharer: sharer, validator: @validator).and_return double(:generator, responses: generated_responses = double)
+      expect(responses).to eq(generated_responses)
     end
   end
 end

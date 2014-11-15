@@ -17,6 +17,8 @@ module Commands
         borrow = Borrow.new(car: car, sharer: sharer)
         borrow.execute
         @responses = borrow.responses
+      else
+        @responses = Responses::Generators::BookFailure.new(car: car, sharer: sharer, validator: validator).responses
       end
     end
   end
