@@ -22,6 +22,8 @@ feature "Site displays bookings", :txt do
 
     visit bookings_path
 
+    ensure_page_displays_date(page, Time.now + 1.day)
+
     within :xpath, "//*[*[@data-start = '8:00']]" do
       expect(page).to have_content "sita"
     end
@@ -36,12 +38,21 @@ feature "Site displays bookings", :txt do
 
     visit bookings_path
 
+    ensure_page_displays_date(page, Time.now + 1.day)
+
     within :xpath, "//*[*[@data-start = '8:00']]" do
       expect(page).to have_content "sita"
     end
 
     within :xpath, "//*[*[@data-start = '1:00']]" do
       expect(page).to have_content "rama"
+    end
+  end
+
+  def ensure_page_displays_date(page ,date)
+    booking_date_string = date.strftime("%a %-m/%-d")
+    until page.has_content?(booking_date_string) do
+      find(".fc-icon-right-single-arrow").click
     end
   end
 end
