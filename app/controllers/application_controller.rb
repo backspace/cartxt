@@ -18,6 +18,10 @@ class ApplicationController < ActionController::Base
     redirect_to root_path unless current_user.admin?
   end
 
+  def require_login
+    authenticate_user!
+  end
+
   def setup_required?
     !Car.any? || !Sharer.any?
   end
