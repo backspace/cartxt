@@ -77,6 +77,12 @@
     "SMTP_USERNAME": {
       "description": "Email username for the outgoing email account",
       "required": true
+    },
+    "EXCEPTION_EMAIL_SENDER": {
+      "description": "Email address to send exception notifications from"
+    },
+    "EXCEPTION_EMAIL_RECIPIENTS": {
+      "description": "Comma-separated email addresses to send exception notifications to"
     }
   }
 }

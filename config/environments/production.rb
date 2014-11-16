@@ -92,6 +92,6 @@ end
 Cartxt::Application.config.middleware.use ExceptionNotification::Rack,
   :email => {
     :email_prefix => "[cartxt] ",
-    :sender_address => %{"car" <car@chromatin.ca>},
-    :exception_recipients => %w{car@chromatin.ca}
+    :sender_address => ENV["EXCEPTION_EMAIL_SENDER"],
+    :exception_recipients => ENV["EXCEPTION_EMAIL_RECIPIENTS"]
   }
