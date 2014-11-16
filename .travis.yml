@@ -4,4 +4,4 @@ rvm:
 before_script:
   - bundle exec rake db:schema:load
 script:
-  - bundle exec rspec
+  - bundle exec rspec --color --format documentation --require spec_helper --require rails_helper
