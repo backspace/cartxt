@@ -45,4 +45,8 @@ class Car < ActiveRecord::Base
   def current_borrowing
     borrowings.incomplete.first
   end
+
+  def current_booking
+    current_borrowing.booking
+  end
 end

@@ -17,6 +17,10 @@ module Responses
           ''
         end
       end
+
+      def current_booking
+        Presenters::Booking.new(@car.current_booking)
+      end
     end
   end
 end
