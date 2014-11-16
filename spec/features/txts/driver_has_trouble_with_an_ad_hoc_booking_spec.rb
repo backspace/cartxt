@@ -13,7 +13,7 @@ feature "Driver has trouble with an ad hoc booking", :txt do
   let!(:existing_booking) { create :booking, car: car, begins_at: Time.now + 2.hours, ends_at: Time.now + 3.hours }
 
   scenario "They try to book past an existing booking" do
-    expect("borrow").to produce_response "Yay! How long do you want me for? Say something like \"until tomorrow at 10AM\" or \"until 1pm\"."
+    expect("borrow").to produce_response "Yay! How long do you want me for? Say something like \"until tomorrow at 10AM\" or \"until 1pm\". My next booking begins today (Saturday) at 5:00PM."
 
     expect("until 7pm").to produce_response "Sorry, I am already booked today (Saturday) from 5:00PM to 6:00PM."
 
