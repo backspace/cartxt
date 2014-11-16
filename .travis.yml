@@ -2,6 +2,8 @@ language: ruby
 rvm:
   - 2.1.5
 before_script:
+  - echo 'Canada/Eastern' | sudo tee /etc/timezone
+  - sudo dpkg-reconfigure --frontend noninteractive tzdata
   - bundle exec rake db:schema:load
 script:
   - bundle exec rspec --color --format documentation --require spec_helper --require rails_helper
