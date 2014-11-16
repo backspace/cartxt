@@ -3,3 +3,5 @@ rvm:
   - 2.1.5
 before_script:
   - bundle exec rake db:schema:load
+script:
+  - rspec
