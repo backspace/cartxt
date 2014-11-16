@@ -90,8 +90,6 @@ GEM
     factory_girl_rails (4.5.0)
       factory_girl (~> 4.5.0)
       railties (>= 3.0.0)
-    faker (1.4.3)
-      i18n (~> 0.5)
     fastercsv (1.5.5)
     foreman (0.75.0)
       dotenv (~> 0.11.1)
@@ -178,7 +176,6 @@ GEM
     rails_12factor (0.0.3)
       rails_serve_static_assets
       rails_stdout_logging
-    rails_layout (1.0.23)
     rails_serve_static_assets (0.0.2)
     rails_stdout_logging (0.0.3)
     railties (4.1.6)
@@ -194,8 +191,6 @@ GEM
       activesupport (>= 3.0)
       i18n
       polyamorous (~> 1.1)
-    rdoc (4.1.2)
-      json (~> 1.4)
     responders (1.1.1)
       railties (>= 3.2, < 4.2)
     rspec-core (3.1.7)
@@ -222,9 +217,6 @@ GEM
       sass (~> 3.2.0)
       sprockets (~> 2.8, <= 2.11.0)
       sprockets-rails (~> 2.0)
-    sdoc (0.4.1)
-      json (~> 1.7, >= 1.7.7)
-      rdoc (~> 4.0)
     sexp_processor (4.4.4)
     simple_form (3.0.2)
       actionpack (~> 4.0)
@@ -295,7 +287,6 @@ DEPENDENCIES
   devise
   exception_notification
   factory_girl_rails
-  faker
   foreman
   fullcalendar-rails
   haml-rails
@@ -312,10 +303,8 @@ DEPENDENCIES
   pry-rescue
   rails (= 4.1.6)
   rails_12factor
-  rails_layout
   rspec-rails
   sass-rails (~> 4.0.3)
-  sdoc (~> 0.4.0)
   simple_form
   spring
   sqlite3
