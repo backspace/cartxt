@@ -14,5 +14,14 @@ module Features
       fill_in 'Password', with: password
       click_button 'Sign in'
     end
+
+    def in_browser(name)
+      old_session_name = Capybara.session_name
+
+      Capybara.session_name = name
+      yield
+
+      Capybara.session_name = old_session_name
+    end
   end
 end

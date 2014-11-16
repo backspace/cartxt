@@ -8,6 +8,8 @@ FactoryGirl.define do
     email
     password "please123"
 
+    approved true
+
     trait :admin do
       role 'admin'
     end

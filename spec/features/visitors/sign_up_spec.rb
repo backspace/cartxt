@@ -8,10 +8,38 @@ feature 'Sign Up', :devise do
   #   Given I am not signed in
   #   When I sign up with a valid email address and password
   #   Then I see a successful sign up message
-  scenario 'visitor can sign up with valid email address and password' do
-    sign_up_with('test@example.com', 'please123', 'please123')
-    txts = [I18n.t( 'devise.registrations.signed_up'), I18n.t( 'devise.registrations.signed_up_but_unconfirmed')]
-    expect(page).to have_content(/.*#{txts[0]}.*|.*#{txts[1]}.*/)
+  scenario 'visitor can sign up with valid email address and password, must be approved' do
+    user_email = "test@example.com"
+    user_password = "please123"
+
+    admin = create :user, :admin
+
+    sign_up_with(user_email, user_password, user_password)
+
+    expect(page).to have_content I18n.t("devise.registrations.user.signed_up_but_not_approved")
+
+    signin user_email, user_password
+    expect(page).to have_content I18n.t("devise.failure.not_approved")
+
+    # check email for link
+    email = ActionMailer::Base.deliveries.last
+    expect(email.to).to include(admin.email)
+    expect(email.subject).to include(user_email)
+
+    in_browser(:admin) do
+      signin admin.email, admin.password
+
+      visit upmin_path
+
+      click_link "Users"
+
+      find("a", text: user_email).click
+      check "Approved"
+      click_button "Save"
+    end
+
+    signin user_email, user_password
+    expect(page).to have_content I18n.t "devise.sessions.signed_in"
   end
 
   # Scenario: Visitor cannot sign up with invalid email address

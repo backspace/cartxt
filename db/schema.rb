@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141114185847) do
+ActiveRecord::Schema.define(version: 20141116192014) do
 
   create_table "bookings", force: true do |t|
     t.integer  "car_id"
@@ -110,6 +110,7 @@ ActiveRecord::Schema.define(version: 20141114185847) do
     t.datetime "updated_at"
     t.string   "name"
     t.integer  "role"
+    t.boolean  "approved"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
