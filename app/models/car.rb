@@ -37,6 +37,10 @@ class Car < ActiveRecord::Base
     bookings.upcoming.first
   end
 
+  def upcoming_booking?
+    next_booking.present?
+  end
+
   def borrowed_by?(sharer)
     # FIXME assumes one current borrowing
     borrowings.incomplete.first.sharer == sharer

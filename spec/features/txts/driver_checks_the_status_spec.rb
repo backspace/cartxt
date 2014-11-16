@@ -26,6 +26,17 @@ feature 'Driver checks the status', :txt do
   context 'when the car is returned' do
     let!(:car) { create(:car) }
 
+    context "and there is an upcoming booking" do
+      let(:begins_at) { Time.zone.parse("2014-11-17 10AM") }
+      let(:ends_at) { begins_at + 2.hours }
+
+      let!(:booking) { create :booking, car: car, begins_at: begins_at, ends_at: ends_at }
+
+      scenario "they receive a reply that the car is available until the next booking" do
+        expect("status").to produce_response "I am available to borrow! My next booking begins tomorrow (Monday) at 10:00AM."
+      end
+    end
+
     scenario 'they receive a reply that the car is available' do
       expect("status").to produce_response "I am available to borrow!"
     end

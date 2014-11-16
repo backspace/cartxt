@@ -17,6 +17,6 @@ feature "Driver has trouble with an ad hoc booking", :txt do
 
     expect("until 7pm").to produce_response "Sorry, I am already booked today (Saturday) from 5:00PM to 6:00PM."
 
-    expect("until 430pm").to produce_response "I am yours until today (Saturday) at 4:30PM. My current rate is $0.00/km. Note that it is booked as of 2014-11-15  5:00PM. What is my odometer reading?"
+    expect("until 430pm").to produce_response "I am yours until today (Saturday) at 4:30PM. My current rate is $0.00/km. What is my odometer reading?"
   end
 end
