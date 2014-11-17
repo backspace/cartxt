@@ -11,4 +11,5 @@ Rails.application.routes.draw do
   resources :responses
   resources :cars
   resources :setup
+  resources :users, only: [:index]
 end
