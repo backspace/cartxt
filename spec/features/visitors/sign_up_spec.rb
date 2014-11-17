@@ -21,15 +21,18 @@ feature 'Sign Up', :devise do
     signin user_email, user_password
     expect(page).to have_content I18n.t("devise.failure.not_approved")
 
-    # check email for link
-    email = ActionMailer::Base.deliveries.last
-    expect(email.to).to include(admin.email)
-    expect(email.subject).to include(user_email)
-
     in_browser(:admin) do
       signin admin.email, admin.password
 
-      click_link "Users"
+      # check email for link
+      email = ActionMailer::Base.deliveries.last
+      expect(email.to).to include(admin.email)
+      expect(email.subject).to include(user_email)
+
+      email_link = email.body.raw_source.split.last
+      email_link_path = email_link.split(Capybara.server_port.to_s).last
+
+      visit email_link_path
 
       within "tr", text: user_email do
         check "user[approved]"

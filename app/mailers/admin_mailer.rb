@@ -4,6 +4,7 @@ class AdminMailer < ActionMailer::Base
 
   def user_awaits_approval(user)
     @user = user
+    @url = users_url
 
     mail subject: "[cartxt] New user #{user.email} requires approval" if User.admin.any?
   end
