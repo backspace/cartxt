@@ -87,6 +87,8 @@ Rails.application.configure do
     enable_starttls_auto: ENV["SMTP_STARTTLS"],
     openssl_verify_mode: ENV["SMTP_OPENSSL_VERIFY_MODE"]
   }
+
+  config.action_mailer.default_url_options = {host: ENV["DOMAIN_NAME"] }
 end
 
 Cartxt::Application.config.middleware.use ExceptionNotification::Rack,

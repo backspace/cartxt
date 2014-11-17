@@ -22,8 +22,7 @@
     },
     "DOMAIN_NAME": {
       "description": "Required for sending mail. Give an app name or use a custom domain.",
-      "value": "myapp.herokuapp.com",
-      "required": false
+      "required": true
     },
     "RAILS_ENV": {
       "description": "The Rails environment name to start up in, probably \"production\".",
