@@ -2,6 +2,7 @@ class User < ActiveRecord::Base
   enum role: [:user, :vip, :admin]
   after_initialize :set_default_role, :if => :new_record?
   after_create :email_admin
+  after_update :email_approval
 
   def set_default_role
     self.role ||= :user
@@ -41,5 +42,11 @@ class User < ActiveRecord::Base
   private
   def email_admin
     AdminMailer.user_awaits_approval(self).deliver
+  end
+
+  def email_approval
+    if self.changes.include? :approved
+      UserMailer.approved(self).deliver
+    end
   end
 end

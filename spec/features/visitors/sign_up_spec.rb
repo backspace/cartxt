@@ -40,6 +40,11 @@ feature 'Sign Up', :devise do
       end
     end
 
+    # check for approval email
+    email = ActionMailer::Base.deliveries.last
+    expect(email.to).to include(user_email)
+    expect(email.subject).to include("approved")
+
     signin user_email, user_password
     expect(page).to have_content I18n.t "devise.sessions.signed_in"
   end
