@@ -14,6 +14,7 @@
       %td=user.email
       %td
         -unless user == current_user
-          =simple_form_for user do |f|
-            =f.input :approved, label: false
-            =f.button :submit, "Save", class: "btn-xs"
+          =simple_form_for user, html: {class: "form-inline"} do |f|
+            .controls.controls-row
+              =f.input_field :approved, label: false
+              =f.button :submit, "Save", class: "btn-xs"
