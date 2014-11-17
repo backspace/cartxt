@@ -7,7 +7,7 @@
     %tr
       %td Name
       %td Email
-      %td Approved?
+      %td Approved? Admin?
   -@users.each do |user|
     %tr
       %td=user.name
@@ -17,4 +17,5 @@
           =simple_form_for user, html: {class: "form-inline"} do |f|
             .controls.controls-row
               =f.input_field :approved, label: false
+              =f.input_field :admin, as: :boolean, label: false
               =f.button :submit, "Save", class: "btn-xs"

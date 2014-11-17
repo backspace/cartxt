@@ -39,6 +39,20 @@ class User < ActiveRecord::Base
     recoverable
   end
 
+  def admin
+    self.admin?
+  end
+
+  def admin=(value)
+    if value == "0"
+      self.role = :user
+    else
+      self.role = :admin
+    end
+
+    save
+  end
+
   private
   def email_admin
     AdminMailer.user_awaits_approval(self).deliver
