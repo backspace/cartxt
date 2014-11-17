@@ -1,7 +1,19 @@
+-@body_class = "wide"
+
 %h2 User list
 
 %table
+  %thead
+    %tr
+      %td Name
+      %td Email
+      %td Approved?
   -@users.each do |user|
     %tr
       %td=user.name
       %td=user.email
+      %td
+        -unless user == current_user
+          =simple_form_for user do |f|
+            =f.input :approved, label: false
+            =f.button :submit, "Save", class: "btn-xs"

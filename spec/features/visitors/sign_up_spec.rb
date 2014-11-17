@@ -29,13 +29,12 @@ feature 'Sign Up', :devise do
     in_browser(:admin) do
       signin admin.email, admin.password
 
-      visit upmin_path
-
       click_link "Users"
 
-      find("a", text: user_email).click
-      check "Approved"
-      click_button "Save"
+      within "tr", text: user_email do
+        check "user[approved]"
+        click_button "Save"
+      end
     end
 
     signin user_email, user_password
