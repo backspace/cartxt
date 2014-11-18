@@ -16,7 +16,7 @@ class Car < ActiveRecord::Base
     end
 
     event :return do
-      transitions from: :borrowed, to: :awaiting_final_report
+      transitions from: :borrowed, to: :awaiting_final_report, on_transition: Proc.new { |obj| obj.current_booking.update_attribute(:ends_at, Time.now) }
     end
 
     event :accept_report do
