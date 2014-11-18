@@ -11,8 +11,8 @@ module Commands
       validator = Validators::Booking.new(car: car, booking: booking, exception: :past)
 
       if validator.valid?
-        booking.save
         booking.confirm
+        booking.save
 
         borrow = Borrow.new(car: car, sharer: sharer)
         borrow.execute

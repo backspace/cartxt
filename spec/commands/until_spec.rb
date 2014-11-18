@@ -28,8 +28,8 @@ describe Commands::Until, :command do
     end
 
     it "saves the booking and delegates to the Borrow command" do
-      expect(booking).to receive(:save)
       expect(booking).to receive(:confirm)
+      expect(booking).to receive(:save)
 
       expect(Commands::Borrow).to receive(:new).with(car: car, sharer: sharer).and_return borrow = double
       expect(borrow).to receive(:execute)
