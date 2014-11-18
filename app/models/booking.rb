@@ -1,4 +1,6 @@
 class Booking < ActiveRecord::Base
+  has_paper_trail
+
   belongs_to :car
   belongs_to :sharer
 

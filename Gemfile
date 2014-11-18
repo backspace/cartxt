@@ -35,6 +35,8 @@ gem "area"
 
 gem "wicked"
 
+gem "paper_trail"
+
 gem "exception_notification"
 
 group :development do

@@ -8,7 +8,7 @@ feature "Driver returns the car early", :txt do
     Timecop.return
   end
 
-  scenario "The booking end time is adjusted" do
+  scenario "The booking end time is adjusted", versioning: true do
     Timecop.freeze start
 
     expect("borrow").to produce_response "Yay! How long do you want me for? Say something like \"until tomorrow at 10AM\" or \"until 1pm\"."
@@ -26,5 +26,6 @@ feature "Driver returns the car early", :txt do
 
     # TODO expose booking time?
     expect(Booking.first.ends_at).to eq(start + 1.hour)
+    expect(Booking.first.previous_version.ends_at).to eq(start + 2.hours)
   end
 end
