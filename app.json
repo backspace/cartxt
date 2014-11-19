@@ -77,6 +77,10 @@
       "description": "Email username for the outgoing email account",
       "required": true
     },
+    "EMAIL_SENDER": {
+      "description": "Email address to send approval and other notifications from",
+      "required": true
+    },
     "EXCEPTION_EMAIL_SENDER": {
       "description": "Email address to send exception notifications from"
     },

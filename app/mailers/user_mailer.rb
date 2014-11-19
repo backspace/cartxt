@@ -1,6 +1,5 @@
 class UserMailer < ActionMailer::Base
-  # FIXME get from address from ENV
-  default from: ENV["SMTP_USERNAME"] || "cartxt@example.com"
+  default from: ENV["EMAIL_SENDER"] || "cartxt@example.com"
 
   def approved(user)
     @user = user
