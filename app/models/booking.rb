@@ -11,7 +11,11 @@ class Booking < ActiveRecord::Base
 
   scope :of, ->(car) { where(car: car) }
   scope :for, ->(sharer) { where(sharer: sharer) }
-  scope :current, -> { where("begins_at <= ? AND ends_at >= ?", Time.zone.now, Time.zone.now) }
+
+  # TODO parameterise?
+  CURRENT_EARLINESS_WINDOW = 30.minutes
+
+  scope :current, -> { where("begins_at <= ? AND ends_at >= ?", Time.zone.now + CURRENT_EARLINESS_WINDOW, Time.zone.now) }
 
   include AASM
 
@@ -26,6 +30,10 @@ class Booking < ActiveRecord::Base
 
   def abandon!
     self.delete
+  end
+
+  def begin!
+    update_attributes begins_at: Time.zone.now
   end
 
   def self.has_current_booking?(options)

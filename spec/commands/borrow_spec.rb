@@ -14,6 +14,7 @@ describe Commands::Borrow do
         borrow = Commands::Borrow.new(car: car, sharer: sharer)
 
         expect(car).to receive(:borrow!)
+        expect(booking).to receive(:begin!)
 
         expect(Borrowing).to receive(:create).with(car: car, sharer: sharer, rate: car.rate, booking: booking)
 
