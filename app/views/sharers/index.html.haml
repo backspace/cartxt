@@ -1,0 +1,15 @@
+-@body_class = "wide"
+
+%h2 Sharer list
+
+%table
+  %thead
+    %tr
+      %th Name
+      %th Number
+      %th Email
+  -@sharers.each do |sharer|
+    %tr
+      %td=sharer.name
+      %td=sharer.number
+      %td=sharer.email
