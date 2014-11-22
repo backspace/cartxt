@@ -1,7 +1,10 @@
 module Parsers
   class Command
-    def initialize(txt)
+    def initialize(txt, context = {})
       @txt = txt
+
+      # FIXME should be available to all responses?
+      @context = context
     end
 
     def parse
@@ -38,7 +41,7 @@ module Parsers
       elsif command == 'pay'
         Commands::Pay.new(car: car, sharer: sharer, amount_string: command_parameters)
       elsif command == "email"
-        Commands::Email.new(car: car, sharer: sharer, address: command_parameters)
+        Commands::Email.new(car: car, sharer: sharer, address: command_parameters, context: @context)
       elsif command == "bookings"
         Commands::Bookings.new(car: car, sharer: sharer)
       elsif command == "until"

@@ -1,11 +1,12 @@
 class ProcessIncomingTxtService
-  def initialize(txt, gateway = NullGateway.new)
+  def initialize(txt, gateway = NullGateway.new, context = {})
     @txt = txt
     @gateway = gateway
+    @context = context
   end
 
   def process
-    parser = Parsers::Command.new(@txt)
+    parser = Parsers::Command.new(@txt, @context)
     command = parser.parse
 
     command.execute

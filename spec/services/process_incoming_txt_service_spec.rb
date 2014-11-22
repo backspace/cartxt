@@ -1,10 +1,11 @@
 describe ProcessIncomingTxtService do
   let(:txt) { Txt.new(from: :from, to: :to, body: :body) }
   let(:gateway) { double }
+  let(:context) { double }
 
   it 'delegates to the parser and delivers the responses' do
     parser = double
-    expect(Parsers::Command).to receive(:new).with(txt).and_return parser
+    expect(Parsers::Command).to receive(:new).with(txt, context).and_return parser
 
     command = double
     expect(parser).to receive(:parse).and_return command
@@ -18,6 +19,6 @@ describe ProcessIncomingTxtService do
     expect(Txt).to receive(:new).with(from: :from, to: :to, body: :body, originator: txt).and_return(outgoing_txt = double(from: :from, to: :to, body: :body))
     expect(outgoing_txt).to receive(:save)
 
-    ProcessIncomingTxtService.new(txt, gateway).process
+    ProcessIncomingTxtService.new(txt, gateway, context).process
   end
 end

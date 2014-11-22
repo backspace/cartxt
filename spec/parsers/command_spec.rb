@@ -1,9 +1,10 @@
 describe Parsers::Command do
   let(:txt) { Txt.new(from: :from, to: :to, body: body) }
   let(:car) { :car }
+  let(:application_context) { double :context }
 
   def parsed_command
-    Parsers::Command.new(txt).parse
+    Parsers::Command.new(txt, application_context).parse
   end
 
   before do
@@ -210,7 +211,7 @@ describe Parsers::Command do
         let(:body) { "email address" }
 
         it "returns an email command" do
-          expect(Commands::Email).to receive(:new).with(car: car, sharer: sharer, address: "address").and_return(email = double)
+          expect(Commands::Email).to receive(:new).with(car: car, sharer: sharer, address: "address", context: application_context).and_return(email = double)
           expect(parsed_command).to be(email)
         end
       end

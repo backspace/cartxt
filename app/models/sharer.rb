@@ -49,4 +49,12 @@ class Sharer < ActiveRecord::Base
   def pending_payments?
     pending_payments > 0
   end
+
+  def user
+    User.find_by(email: email)
+  end
+
+  def user?
+    user.present?
+  end
 end
