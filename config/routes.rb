@@ -12,5 +12,5 @@ Rails.application.routes.draw do
   resources :cars
   resources :setup
   resources :users, only: [:index, :update]
-  resources :sharers, only: [:index]
+  resources :sharers, only: [:index, :update]
 end

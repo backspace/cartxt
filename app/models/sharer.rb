@@ -57,4 +57,18 @@ class Sharer < ActiveRecord::Base
   def user?
     user.present?
   end
+
+  def admin
+    self.admin?
+  end
+
+  def admin=(value)
+    if value == "0"
+      self.role = :user
+    else
+      self.role = :admin
+    end
+
+    save
+  end
 end

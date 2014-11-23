@@ -8,8 +8,15 @@
       %th Name
       %th Number
       %th Email
+      %th
   -@sharers.each do |sharer|
     %tr
       %td=sharer.name
       %td=sharer.number
       %td=sharer.email
+      %td
+        -unless sharer.user == current_user
+          =simple_form_for sharer, html: {class: "form-inline"} do |f|
+            .controls.controls-row
+              =f.input :admin, as: :boolean
+              =f.button :submit, "Save", class: "btn-xs"
