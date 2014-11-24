@@ -12,14 +12,14 @@ class ResponsesController < ApplicationController
     @response = Response.new(response_params)
 
     if @response.save
-      redirect_to responses_path
+      redirect_to responses_path(anchor: @response.name.classify)
     end
   end
 
   def update
     @response = Response.find(params[:id])
     @response.update!(response_params)
-    redirect_to responses_path
+    redirect_to responses_path(anchor: @response.name.classify)
   end
 
   private

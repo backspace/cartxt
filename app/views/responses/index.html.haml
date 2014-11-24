@@ -6,7 +6,7 @@
       %th Description
       %th Default response
   -@responses.each do |klass, response_model|
-    %tr
+    %tr{id: klass.name.demodulize}
       %td=klass.name.demodulize
       %td=klass.description
       %td=klass.default_body
