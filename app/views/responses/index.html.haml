@@ -13,5 +13,5 @@
       %td
         =form_for response_model do |f|
           =f.hidden_field :name
-          =f.text_area :body, id: response_model.name
+          =f.text_area :body, id: response_model.name, rows: 5, cols: 50
           =f.submit 'Save', id: "#{response_model.name}_submit"
