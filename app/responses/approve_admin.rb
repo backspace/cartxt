@@ -4,7 +4,7 @@ module Responses
 
     expose :approvee, presenter: "Sharer"
 
-    default_body "I have welcomed {{approvee.name}} to share me."
+    default_body "Welcomed {{approvee.name}} to share the car."
 
     def initialize(options)
       super

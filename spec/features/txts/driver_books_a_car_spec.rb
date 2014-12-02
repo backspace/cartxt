@@ -1,5 +1,5 @@
 feature 'Driver books a car', :txt do
-  let!(:car) { create :car, location_information: "I am parked somewhere." }
+  let!(:car) { create :car, location_information: "The car is parked somewhere." }
   let!(:booker) { create :sharer }
 
   let!(:booking_begins_at) { (Time.now + 1.day).change(hour: 15, min: 0, sec: 0) }
@@ -16,15 +16,15 @@ feature 'Driver books a car', :txt do
   # FIXME maybe questionable to use a formatter here?
 
   def booking_response_for(begins_at, ends_at)
-    "You wish to book me #{Formatters::Booking.new(OpenStruct.new(begins_at: begins_at, ends_at: ends_at)).format}? Reply with 'confirm', try another 'book from X to Y', or 'abandon'."
+    "You wish to book the car #{Formatters::Booking.new(OpenStruct.new(begins_at: begins_at, ends_at: ends_at)).format}? Reply with 'confirm', try another 'book from X to Y', or 'abandon'."
   end
 
   def booking_confirmation_response_for(begins_at, ends_at)
-    "You have booked me #{Formatters::Booking.new(OpenStruct.new(begins_at: begins_at, ends_at: ends_at)).format}. I am parked somewhere. When the time comes, send \"borrow\"."
+    "You have booked the car #{Formatters::Booking.new(OpenStruct.new(begins_at: begins_at, ends_at: ends_at)).format}. The car is parked somewhere. When the time comes, send \"borrow\"."
   end
 
   def admin_booking_notification_for(sharer, begins_at, ends_at)
-    "#{sharer.name} #{sharer.number}, has booked me #{Formatters::Booking.new(OpenStruct.new(begins_at: begins_at, ends_at: ends_at)).format}."
+    "#{sharer.name} #{sharer.number}, has booked the car #{Formatters::Booking.new(OpenStruct.new(begins_at: begins_at, ends_at: ends_at)).format}."
   end
 
   let(:booking_command) { booking_command_for(booking_begins_at, booking_ends_at) }
@@ -44,12 +44,12 @@ feature 'Driver books a car', :txt do
   scenario 'They receive a reply that the car is already booked at that time' do
     existing_booking = Booking.create(car: car, begins_at: booking_begins_at - 15.minutes, ends_at: booking_ends_at + 15.minutes)
 
-    expect(booker.number => booking_command_for(booking_begins_at, booking_ends_at)).to produce_response "Sorry, I am already booked #{Formatters::Booking.new(existing_booking).format}."
+    expect(booker.number => booking_command_for(booking_begins_at, booking_ends_at)).to produce_response "Sorry, the car is already booked #{Formatters::Booking.new(existing_booking).format}."
   end
 
   scenario 'They change their mind about the booking' do
     expect(booking_command).to produce_response booking_response
-    expect("abandon").to produce_response "Okay, I abandoned your booking request."
+    expect("abandon").to produce_response "Abandoned your booking request."
   end
 
   scenario 'They tweak the booking before confirming' do
@@ -74,10 +74,10 @@ feature 'Driver books a car', :txt do
     past_begins_at = booking_begins_at - 5.days
     past_ends_at = booking_ends_at - 5.days
 
-    expect(booking_command_for(past_begins_at, past_ends_at)).to produce_response "Sorry, you cannot book me in the past. You tried to book me #{format_booking(past_begins_at, past_ends_at)}."
+    expect(booking_command_for(past_begins_at, past_ends_at)).to produce_response "Sorry, you cannot book the car in the past. You tried to book #{format_booking(past_begins_at, past_ends_at)}."
   end
 
   scenario "They get a failure if the booking end is before the beginning" do
-    expect(booking_command_for(booking_ends_at, booking_begins_at)).to produce_response "Sorry, you cannot make a booking where the end is before the beginning. You tried to book me #{format_booking(booking_ends_at, booking_begins_at)}."
+    expect(booking_command_for(booking_ends_at, booking_begins_at)).to produce_response "Sorry, you cannot make a booking where the end is before the beginning. You tried to book #{format_booking(booking_ends_at, booking_begins_at)}."
   end
 end

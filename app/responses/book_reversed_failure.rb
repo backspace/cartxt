@@ -4,6 +4,6 @@ module Responses
 
     expose :booking, presenter: "Booking"
 
-    default_body "Sorry, you cannot make a booking where the end is before the beginning. You tried to book me {{booking.formatted}}."
+    default_body "Sorry, you cannot make a booking where the end is before the beginning. You tried to book {{booking.formatted}}."
   end
 end

@@ -4,7 +4,7 @@ module Responses
 
     expose :rejectee, presenter: "Sharer"
 
-    default_body "I silently rejected {{rejectee.formatted}}."
+    default_body "Silently rejected {{rejectee.formatted}}."
 
     def initialize(options)
       super

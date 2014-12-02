@@ -4,6 +4,6 @@ module Responses
 
     expose :conflicting_booking, presenter: "Booking"
 
-    default_body "Sorry, I am already booked {{conflicting_booking.formatted}}."
+    default_body "Sorry, the car is already booked {{conflicting_booking.formatted}}."
   end
 end

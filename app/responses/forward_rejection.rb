@@ -5,7 +5,7 @@ module Responses
     expose :rejected_sharer, presenter: "Sharer"
     expose :rejected_txt
 
-    default_body "Rejected sharer {{rejected_sharer.formatted}} sent this and I ignored it: {{rejected_txt}}"
+    default_body "Rejected sharer {{rejected_sharer.formatted}} sent this but it was ignored: {{rejected_txt}}"
 
     def initialize(options)
       super

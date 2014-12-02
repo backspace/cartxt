@@ -4,7 +4,7 @@ module Responses
 
     expose :borrowing, presenter: "Borrowing"
 
-    default_body "Thanks, I updated the records with a reading of {{car.odometer_reading}}km. Wow, we drove {{borrowing.span}}km! That brings your balance to {{sender.balance | as_currency }}."
+    default_body "Updated the records with a reading of {{car.odometer_reading}}km. You drove {{borrowing.span}}km. That brings your balance to {{sender.balance | as_currency }}."
   end
 end
 

@@ -19,7 +19,7 @@ feature 'Driver checks the status', :txt do
     let!(:borrowing) { create :borrowing, :incomplete, car: car, booking: booking }
 
     scenario 'they receive a reply that the car is not available' do
-      expect("status").to produce_response "Sorry, I am booked until #{Formatters::RelativeTime.new(ends_at).format}."
+      expect("status").to produce_response "Sorry, the car is booked until #{Formatters::RelativeTime.new(ends_at).format}."
     end
   end
 
@@ -32,13 +32,13 @@ feature 'Driver checks the status', :txt do
 
       let!(:booking) { create :booking, car: car, begins_at: begins_at, ends_at: ends_at }
 
-      scenario "they receive a reply that the car is available until the next booking" do
-        expect("status").to produce_response "I am available to borrow! My next booking begins tomorrow (Monday) at 10:00AM."
+      scenario "They receive a reply that the car is available until the next booking" do
+        expect("status").to produce_response "The car is available to borrow. The next booking begins tomorrow (Monday) at 10:00AM."
       end
     end
 
     scenario 'they receive a reply that the car is available' do
-      expect("status").to produce_response "I am available to borrow!"
+      expect("status").to produce_response "The car is available to borrow."
     end
   end
 end

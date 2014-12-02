@@ -4,6 +4,6 @@ module Responses
 
     expose :booking, presenter: "Booking"
 
-    default_body "Sorry, you cannot book me in the past. You tried to book me {{booking.formatted}}."
+    default_body "Sorry, you cannot book the car in the past. You tried to book {{booking.formatted}}."
   end
 end

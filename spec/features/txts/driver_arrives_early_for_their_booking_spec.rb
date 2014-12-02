@@ -19,7 +19,7 @@ feature "Driver arrives early for their booking", :txt do
     # FIXME could note earliness (had "Ooo, early! I forgive you.")
     # How to detect with versioning though?
 
-    expect("borrow").to produce_response "I am yours until today (Thursday) at 11:00AM. My current rate is $0.00/km. What is my odometer reading?"
+    expect("borrow").to produce_response "The car is yours until today (Thursday) at 11:00AM. The current rate is $0.00/km. What is the odometer reading?"
 
     booking.reload
 

@@ -5,6 +5,6 @@ module Responses
     expose :site_url
     expose :sign_up_url
 
-    default_body "I recorded your email address as {{sender.email}}. {% if sender.user? %}You can now check your balance on the site: {{site_url}}{% else %}Visit {{sign_up_url}} and register that address.{% endif %}"
+    default_body "Recorded your email address as {{sender.email}}. {% if sender.user? %}You can now check your balance on the site: {{site_url}}{% else %}Visit {{sign_up_url}} and register that address.{% endif %}"
   end
 end

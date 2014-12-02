@@ -9,7 +9,7 @@ module Responses
       book on friday from 5pm to 7pm
       book from monday at 5pm to tuesday at 10am
 
-      I will ask for your confirmation before making the booking. If you have trouble getting me to understand, it is easier for me if you are very specific:
+      The system will ask for your confirmation before making the booking. If you have trouble getting it to understand, try being very specific:
 
       book from 2014-11-08 5:00pm to 2014-11-09 10:00am
     TXT
