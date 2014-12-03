@@ -5,7 +5,7 @@ class TxtsController < ApplicationController
   before_filter :require_admin, only: :index
 
   def index
-    @txts = Txt.all
+    @txts = Txt.originals
   end
 
   def create

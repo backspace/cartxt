@@ -3,12 +3,21 @@
   %thead
     %tr
       %th Date
+      %th Time
       %th From
       %th To
       %th Body
   -@txts.each do |txt|
     %tr
-      %td=txt.created_at
+      %td=txt.created_at.to_date
+      %td=txt.created_at.to_time.to_formatted_s.split.last
       %td=txt.from
       %td=txt.to
       %td=txt.body
+    -txt.responses.each do |response|
+      %tr
+        %td
+        %td=response.created_at.to_time.to_formatted_s.split.last
+        %td=response.from
+        %td=response.to
+        %td=response.body
