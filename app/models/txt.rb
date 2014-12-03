@@ -3,4 +3,6 @@ class Txt < ActiveRecord::Base
   has_many :responses, foreign_key: "originator_id", class_name: "Txt"
 
   scope :originals, ->{ where(originator_id: nil) }
+
+  paginates_per 50
 end

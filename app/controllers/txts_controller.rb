@@ -5,7 +5,7 @@ class TxtsController < ApplicationController
   before_filter :require_admin, only: :index
 
   def index
-    @txts = Txt.originals
+    @txts = Txt.originals.page params[:page]
   end
 
   def create

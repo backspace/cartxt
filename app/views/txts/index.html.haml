@@ -1,4 +1,5 @@
 -@body_class = "wide"
+=paginate @txts
 %table
   %thead
     %tr
@@ -21,3 +22,4 @@
         %td=response.from
         %td=response.to
         %td.body=response.body
+=paginate @txts

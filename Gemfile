@@ -33,6 +33,7 @@ gem "chronic"
 gem "countries"
 gem "area"
 
+gem "kaminari"
 gem "wicked"
 
 gem "paper_trail"

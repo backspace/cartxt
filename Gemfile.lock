@@ -296,6 +296,7 @@ DEPENDENCIES
   html2haml
   jbuilder (~> 2.0)
   jquery-rails
+  kaminari
   launchy
   liquid
   momentjs-rails
