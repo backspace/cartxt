@@ -13,11 +13,11 @@
       %td=txt.created_at.to_time.to_formatted_s.split.last
       %td=txt.from
       %td=txt.to
-      %td=txt.body
+      %td.body=txt.body
     -txt.responses.each do |response|
       %tr
         %td
         %td=response.created_at.to_time.to_formatted_s.split.last
         %td=response.from
         %td=response.to
-        %td=response.body
+        %td.body=response.body
