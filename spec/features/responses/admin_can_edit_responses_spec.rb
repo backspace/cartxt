@@ -17,6 +17,8 @@ feature "Admin can edit responses" do
     return_failure_response = "The new return failure response"
 
     GatewayRepository.gateway = double
+    # FIXME this is scattered everywhere
+    allow(GatewayRepository.gateway).to receive(:deliver_original_copies)
 
     visit responses_path
     fill_in "return_failure", with: return_failure_response
@@ -33,6 +35,7 @@ feature "Admin can edit responses" do
     name_response = "Hello, {{sender.name}}!"
 
     GatewayRepository.gateway = double
+    allow(GatewayRepository.gateway).to receive(:deliver_original_copies)
 
     visit responses_path
     fill_in "name", with: name_response

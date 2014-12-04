@@ -4,6 +4,8 @@ describe ProcessIncomingTxtService do
   let(:context) { double }
 
   it 'delegates to the parser and delivers the responses' do
+    expect(gateway).to receive(:deliver_original_copies).with(txt)
+
     parser = double
     expect(Parsers::Command).to receive(:new).with(txt, context).and_return parser
 

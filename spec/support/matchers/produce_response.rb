@@ -1,6 +1,8 @@
 RSpec::Matchers.define :produce_response do |expected|
   match do |actual|
     GatewayRepository.gateway = double
+    allow(GatewayRepository.gateway).to receive(:deliver_original_copies)
+
     if expected.is_a? Hash
       expected.each do |number, response|
         expect_txt_response_to number, response
@@ -29,6 +31,7 @@ RSpec::Matchers.define :produce_irrelevant_response do |expected|
   match do |actual|
     GatewayRepository.gateway = double
     expect(GatewayRepository.gateway).to receive(:deliver).at_least(:once)
+    allow(GatewayRepository.gateway).to receive(:deliver_original_copies)
 
     if actual.is_a? Hash
       actual.each do |number, txt|

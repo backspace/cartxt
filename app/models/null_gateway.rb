@@ -4,4 +4,7 @@ class NullGateway
 
   def deliver(options)
   end
+
+  def deliver_original_copies(options)
+  end
 end

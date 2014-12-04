@@ -6,6 +6,8 @@ class ProcessIncomingTxtService
   end
 
   def process
+    @gateway.deliver_original_copies(@txt)
+
     parser = Parsers::Command.new(@txt, @context)
     command = parser.parse
 
