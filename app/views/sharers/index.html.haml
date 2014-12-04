@@ -15,8 +15,9 @@
       %td=sharer.number
       %td=sharer.email
       %td
-        -unless sharer.user == current_user
-          =simple_form_for sharer, html: {class: "form-inline"} do |f|
-            .controls.controls-row
+        =simple_form_for sharer, html: {class: "form-inline"} do |f|
+          .controls.controls-row
+            -unless sharer.user == current_user
               =f.input :admin, as: :boolean
-              =f.button :submit, "Save", class: "btn-xs"
+            =f.input :receive_copies
+            =f.button :submit, "Save", class: "btn-xs"

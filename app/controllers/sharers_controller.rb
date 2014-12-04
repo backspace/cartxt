@@ -13,6 +13,6 @@ class SharersController < ApplicationController
 
   private
   def sharer_params
-    params.require(:sharer).permit(:admin)
+    params.require(:sharer).permit(:admin, :receive_copies)
   end
 end
