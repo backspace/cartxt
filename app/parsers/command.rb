@@ -10,6 +10,12 @@ module Parsers
     def parse
       if sharer.rejected?
         Commands::ForwardRejection.new(car: car, sharer: sharer, txt: @txt.body)
+      elsif sharer.unknown?
+        if command == 'join'
+          Commands::Join.new(car: car, sharer: sharer)
+        else
+          Commands::UnknownSharer.new(car: car, sharer: sharer)
+        end
       elsif sharer.unnamed?
         Commands::Name.new(car: car, sharer: sharer, name: @txt.body)
       elsif sharer.admin? && command == 'approve'
@@ -28,8 +34,6 @@ module Parsers
         Commands::Return.new(car: car, sharer: sharer)
       elsif command == 'balance'
         Commands::Balance.new(car: car, sharer: sharer)
-      elsif command == 'join'
-        Commands::Join.new(car: car, sharer: sharer)
       elsif command == 'book'
         Commands::Book.new(car: car, sharer: sharer, booking_string: command_parameters)
       elsif command == 'confirm'

@@ -11,6 +11,28 @@ describe Parsers::Command do
     expect(Car).to receive(:find_by).with(number: :to).and_return car
   end
 
+  context 'when the sender is unknown' do
+    let(:sharer) { create(:sharer, :unknown, number: :from) }
+
+    context 'and the command is Join' do
+      let(:body) { 'join' }
+
+      it 'returns a Join command' do
+        expect(Commands::Join).to receive(:new).with(car: car, sharer: sharer).and_return join = double
+        expect(parsed_command).to be(join)
+      end
+    end
+
+    context 'and the command is anything else' do
+      let(:body) { 'status' }
+
+      it 'returns an UnknownSharer command' do
+        expect(Commands::UnknownSharer).to receive(:new).with(car: car, sharer: sharer).and_return unknown_sharer = double
+        expect(parsed_command).to be(unknown_sharer)
+      end
+    end
+  end
+
   context 'when the sender exists' do
     let(:sharer) { create(:sharer, :unknown, number: :from) }
 
@@ -156,17 +178,6 @@ describe Parsers::Command do
             expect(Commands::Book).to receive(:new).with(car: car, sharer: sharer, booking_string: "something else and  so on").and_return book
 
             expect(parsed_command).to be(book)
-          end
-        end
-
-        context 'when the command is a join request' do
-          let(:body) { 'join' }
-
-          it 'returns a Join command' do
-            join = double
-            expect(Commands::Join).to receive(:new).with(car: car, sharer: sharer).and_return join
-
-            expect(parsed_command).to be(join)
           end
         end
       end

@@ -4,6 +4,16 @@ feature 'Driver joins the share', :txt do
   let(:joiner) { create :sharer, :unknown, name: "Joiner", number: "#joiner" }
   let(:admin) { create :sharer, :admin, number: '#admin' }
 
+  scenario 'They are asked to join before sending other commands' do
+    expect(joiner.number => "hello").to produce_response({
+      joiner.number => "Please join the car share by sending \"join\"."
+    })
+
+    expect(joiner.number => "status").to produce_response({
+      joiner.number => "Please join the car share by sending \"join\"."
+    })
+  end
+
   scenario 'They are asked their name and the admin approves' do
     expect(joiner.number => "join").to produce_response({
       joiner.number => "#{car.description} To join in sharing the car, please reply with your name."
