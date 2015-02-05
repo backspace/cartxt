@@ -5,9 +5,7 @@
     %title= content_for?(:title) ? yield(:title) : 'cartxt'
     %meta{:name => "description", :content => "#{content_for?(:description) ? yield(:description) : 'cartxt'}"}
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true
-    -# TODO would be preferable to blacklist this but Poltergeist doesn’t support that
-    -unless Rails.env.test?
-      =stylesheet_link_tag "https://fonts.googleapis.com/css?family=Dosis:400,800"
+    =stylesheet_link_tag "https://fonts.googleapis.com/css?family=Dosis:400,800"
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
   %body{class: "#{controller_name} #{defined?(@body_class) ? @body_class : ""}", id: action_name}
