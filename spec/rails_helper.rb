@@ -49,6 +49,6 @@ RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
 
   config.before(:each, js: true) do
-    page.driver.browser.url_blacklist = ["https://fonts.googleapis.com"]
+    page.driver.browser.url_blacklist = ["fonts.googleapis.com"]
   end
 end
